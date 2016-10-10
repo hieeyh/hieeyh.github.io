@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>怎么用github+hexo搭建博客--优化篇 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="博客搭建," />
+  
+
+  <meta name="description" content="按照github+hexo博客搭建基础篇已经可以搭建一个基本的博客了，但那还不能满足我的一些需求。hexo给我们提供了很多的主题，我挑选了一款叫fexo的主题，下面以fexo主题为例，来看看怎么安装配置主题。
+安装主题在你的博客目录(D:\hexo)下右键，选择Git Bash Here，输入以下命令：
+&amp;#124;&amp;nbsp;&amp;nbsp;clone https://github.com/fors">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么用github+hexo搭建博客--优化篇">
+<meta property="og:url" content="http://yuhan.com/2016/08/11/how-to-build-a-personalwebsite2/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="按照github+hexo博客搭建基础篇已经可以搭建一个基本的博客了，但那还不能满足我的一些需求。hexo给我们提供了很多的主题，我挑选了一款叫fexo的主题，下面以fexo主题为例，来看看怎么安装配置主题。
+安装主题在你的博客目录(D:\hexo)下右键，选择Git Bash Here，输入以下命令：
+&amp;#124;&amp;nbsp;&amp;nbsp;clone https://github.com/fors">
+<meta property="og:image" content="http://yuhan.com/img/head.png">
+<meta property="og:updated_time" content="2016-08-11T06:38:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="怎么用github+hexo搭建博客--优化篇">
+<meta name="twitter:description" content="按照github+hexo博客搭建基础篇已经可以搭建一个基本的博客了，但那还不能满足我的一些需求。hexo给我们提供了很多的主题，我挑选了一款叫fexo的主题，下面以fexo主题为例，来看看怎么安装配置主题。
+安装主题在你的博客目录(D:\hexo)下右键，选择Git Bash Here，输入以下命令：
+&amp;#124;&amp;nbsp;&amp;nbsp;clone https://github.com/fors">
+<meta name="twitter:image" content="http://yuhan.com/img/head.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装主题"><span class="toc-text">安装主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用主题"><span class="toc-text">使用主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新主题"><span class="toc-text">更新主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主题配置"><span class="toc-text">主题配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设置面包屑"><span class="toc-text">设置面包屑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启用分类页面"><span class="toc-text">启用分类页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加RSS"><span class="toc-text">添加RSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加“多说”"><span class="toc-text">添加“多说”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更换域名"><span class="toc-text">更换域名</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-how-to-build-a-personalwebsite2" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">怎么用github+hexo搭建博客--优化篇</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.11</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/博客搭建/">博客搭建</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>按照github+hexo博客搭建基础篇已经可以搭建一个基本的博客了，但那还不能满足我的一些需求。hexo给我们提供了很多的主题，我挑选了一款叫<a href="https://github.com/forsigner/fexo" target="_blank" rel="external">fexo</a>的主题，下面以fexo主题为例，来看看怎么安装配置主题。</p>
+<h2 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h2><p>在你的博客目录(<em>D:\hexo</em>)下右键，选择Git Bash Here，输入以下命令：</p>
+<p>&#124;&nbsp;&nbsp;<code>clone https://github.com/forsigner/fexo.git themes/fexo</code></p>
+<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>修改博客整站配置文件(<em>D:\hexo_config.yml</em>)中的theme属性，如下：</p>
+<p>&#124;&nbsp;&nbsp;theme: fexo</p>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><p>输入如下命令，就可以对主题进行更新了：</p>
+<p>&#124;&nbsp;&nbsp;cd themes/fexo<br>&#124;&nbsp;&nbsp;git pull origin master</p>
+<p>现在就可以将最新的博客部署到github上，然后就可以看到更换主题后的博客啦。</p>
+<h2 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h2><p>在主题目录下的配置文件（<em>D:\hexo\themes_config.yml</em>）中可以对主题进行配置，fexo主题的<a href="http://forsigner.com/2016/03/10/fexo-doc-zh-cn/" target="_blank" rel="external">配置文档</a>已经说明的很清楚了，这里只做一些补充。</p>
+<h3 id="设置面包屑"><a href="#设置面包屑" class="headerlink" title="设置面包屑"></a>设置面包屑</h3><p>面包屑就是Archives，分类等页面最上面的一部分，如下图：</p>
+<p><img src="/img/head.png" alt="head"></p>
+<p>若将breadcrumb的isShow属性，则上图中的部分就不会在博客在显示。</p>
+<h3 id="启用分类页面"><a href="#启用分类页面" class="headerlink" title="启用分类页面"></a>启用分类页面</h3><p>刚开始启用完分类页面之后我很疑惑，分类的那些类名是从哪儿来的，然后看fexo主题的源码，发现就是在每一篇博客的开头设置的，博客开头的categories属性就是用来设置该博客的分类的，在生成分类标签的时候会自动遍历每一篇博客的开头，获取所有的分类，重复的分类不再重复获取。标签页面的实现也是这个道理，设置博客开头的tags属性，多个标签用数组的形式表示，如下：</p>
+<p>&#124;&nbsp;&nbsp;tags:[总结,前端]</p>
+<h2 id="添加RSS"><a href="#添加RSS" class="headerlink" title="添加RSS"></a>添加RSS</h2><p>fexo主题中有RSS导航，但是只是在配置文件中只说了怎么在页面导航中添加RSS选项，并没有说怎么生成RSS文件。</p>
+<p>hexo提供了RSS的生成插件，但是是需要手动安装的。安装RSS插件到博客根目录：</p>
+<p>&#124;&nbsp;&nbsp;npm install hexo-generate-feed –save</p>
+<p>由于fexo主题中已经给RSS添加了连接，这里就不需要收到添加了。将代码部署到giuthub，访问博客，点击导航栏中RSS，就可以看到博客的RSS文件了。</p>
+<p><strong>说明：</strong>最新版本的hexo是不需要在博客整站配置文件中（<em>D:\hexo_config.yml</em>）添加plugins属性的。</p>
+<h2 id="添加“多说”"><a href="#添加“多说”" class="headerlink" title="添加“多说”"></a>添加“多说”</h2><p>hexo默认使用国外比较流行的disqus评论系统，我的博客还是使用了国内的“多说”评论系统。</p>
+<ol>
+<li>在<a href="">多说</a>进行注册，社交账号就能登陆，fexo主题中已经帮我们写好了代码，就不需要获取通用代码了。</li>
+<li>在多说首页点击我要安装，创建站点。</li>
+<li>设置fexo主题配置文件（<em>D:\hexo\themes_config.yml</em>）中的duoshuo_shortname值为你刚刚创建站点时设置的多说域名的二级域名。</li>
+</ol>
+<p>将代码部署，访问博客，就可以看到文章下有多说评论框啦。</p>
+<h2 id="更换域名"><a href="#更换域名" class="headerlink" title="更换域名"></a>更换域名</h2><p>首先要去购买一个域名，然后设置DNS，网上很多教程，这里不细说了。但要注意，需要在本地博客根目录的source文件夹中新建一个CNAME文件，内容就是你购买的域名，没有其他多余的内容，我的是hyuhan.com。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="怎么用github+hexo搭建博客--优化篇" data-url="http://yuhan.com/2016/08/11/how-to-build-a-personalwebsite2/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"hyuhan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>谈谈CSS预处理器 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端工具,CSS预处理," />
+  
+
+  <meta name="description" content="在写CSS的时候我们会发现，为了兼容浏览器等原因，我们往往需要写很多冗余的代码，CSS预处理器就是为了解决CSS的这些问题，简化CSS代码的编写。
+目前最主流的CSS预处理器是LESS、SASS和Stylus，最近花了几天时间学习并使用了它们，于是就想对这三个预处理器做个比较。根据这三种语言的特性，主要从一下几个方面进行讨论：
+
+基本语法
+变量
+嵌套
+混入(mixin)
+继承
+函数
+@import">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈CSS预处理器">
+<meta property="og:url" content="http://yuhan.com/2016/09/07/compares-less-sass-and-stylus/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="在写CSS的时候我们会发现，为了兼容浏览器等原因，我们往往需要写很多冗余的代码，CSS预处理器就是为了解决CSS的这些问题，简化CSS代码的编写。
+目前最主流的CSS预处理器是LESS、SASS和Stylus，最近花了几天时间学习并使用了它们，于是就想对这三个预处理器做个比较。根据这三种语言的特性，主要从一下几个方面进行讨论：
+
+基本语法
+变量
+嵌套
+混入(mixin)
+继承
+函数
+@import">
+<meta property="og:updated_time" content="2016-09-08T01:44:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈CSS预处理器">
+<meta name="twitter:description" content="在写CSS的时候我们会发现，为了兼容浏览器等原因，我们往往需要写很多冗余的代码，CSS预处理器就是为了解决CSS的这些问题，简化CSS代码的编写。
+目前最主流的CSS预处理器是LESS、SASS和Stylus，最近花了几天时间学习并使用了它们，于是就想对这三个预处理器做个比较。根据这三种语言的特性，主要从一下几个方面进行讨论：
+
+基本语法
+变量
+嵌套
+混入(mixin)
+继承
+函数
+@import">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本语法"><span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#变量"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#变量作用域"><span class="toc-text">变量作用域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量插值"><span class="toc-text">变量插值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#变量名插值"><span class="toc-text">变量名插值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择器插值"><span class="toc-text">选择器插值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#import插值"><span class="toc-text">@import插值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#属性名插值"><span class="toc-text">属性名插值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#嵌套"><span class="toc-text">嵌套</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#混入-mixin"><span class="toc-text">混入(mixin)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#继承"><span class="toc-text">继承</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#import"><span class="toc-text">@import</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运算符"><span class="toc-text">运算符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#逻辑控制"><span class="toc-text">逻辑控制</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-compares-less-sass-and-stylus" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">谈谈CSS预处理器</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.07</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/CSS/">CSS</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>在写CSS的时候我们会发现，为了兼容浏览器等原因，我们往往需要写很多冗余的代码，CSS预处理器就是为了解决CSS的这些问题，简化CSS代码的编写。</p>
+<p>目前最主流的CSS预处理器是LESS、SASS和Stylus，最近花了几天时间学习并使用了它们，于是就想对这三个预处理器做个比较。根据这三种语言的特性，主要从一下几个方面进行讨论：</p>
+<ol>
+<li>基本语法</li>
+<li>变量</li>
+<li>嵌套</li>
+<li>混入(mixin)</li>
+<li>继承</li>
+<li>函数</li>
+<li>@import</li>
+<li>运算符</li>
+<li>逻辑控制</li>
+</ol>
+<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><p>LESS的基本语法和CSS差不多，SASS和Stylus都可以利用缩进代替花括号，并且空格有重要的意义。SASS保存为”<em>.sass”是缩进格式，保存为”</em>.scss”是非缩进格式。SASS一般使用”.scss”扩展名。LESS的扩展名为”.less”，Stylus的扩展名为”.styl”。</p>
+<p><strong>注意</strong>：SASS依赖于Ruby，安装前必须先安装Ruby。</p>
+<p>LESS &amp; SCSS:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">ul</span> &#123;</div><div class="line">    <span class="attribute">list-style</span>: none;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SASS:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">ul</span></div><div class="line">    <span class="selector-tag">list-style</span>: <span class="selector-tag">none</span></div></pre></td></tr></table></figure>
+<p>Stylus:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">ul</span></div><div class="line">    <span class="selector-tag">list-style</span> <span class="selector-tag">none</span></div></pre></td></tr></table></figure></p>
+<p><strong>注意：以下SASS代码都以扩展名为”.scss”的方式书写。</strong></p>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>CSS预处理器中可以定义变量，并且可以在样式表中使用，变量类型没有限制，这样就可以一定程度上减少CSS中无法避免的重复问题。</p>
+<p>LESS变量名必须以@符号开头，变量名和变量值之间以冒号隔开。有个问题是@规则在CSS中算是一种<strong>原生</strong>的扩展方式，变量名用@开头很可能会和以后CSS中的新@规则冲突。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@orange: #feb914；</div><div class="line">header &#123;</div><div class="line">    background-color: @orange;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SASS变量名必须以$开始，变量名和变量值之间以冒号隔开。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$orange: #feb914；</div><div class="line">header &#123;</div><div class="line">    background-color: $orange;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Stylus对变量名没有任何限定，变量名与变量值之间可以用冒号、空格和等号隔开。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bgorange = #feb914；</div><div class="line">header</div><div class="line">    background-color bgorange</div></pre></td></tr></table></figure>
+<p>上面三种不同的写法都会产生相同的结果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">header</span> &#123;</div><div class="line">    <span class="attribute">background-color</span>: <span class="number">#feb914</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Stylus还有一个独特功能，它不需要分配值给变量就可以定义引用属性。如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#logo</div><div class="line">    position: absolute</div><div class="line">    top: 50%</div><div class="line">    left: 50%</div><div class="line">    width: w = 150px</div><div class="line">    height: h = 80px</div><div class="line">    margin-left: -(w / 2)</div><div class="line">    margin-top: -(h / 2)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#logo</span></div><div class="line">    <span class="selector-tag">position</span>: <span class="selector-tag">absolute</span></div><div class="line">    <span class="selector-tag">top</span>: 50%</div><div class="line">    <span class="selector-tag">left</span>: 50%</div><div class="line">    <span class="selector-tag">width</span>: 150<span class="selector-tag">px</span></div><div class="line">    <span class="selector-tag">height</span>: 80<span class="selector-tag">px</span></div><div class="line">    <span class="selector-tag">margin-left</span>: <span class="selector-tag">-</span>(@<span class="keyword">width</span> / <span class="number">2</span>)</div><div class="line">    margin-top: -(@height / <span class="number">2</span>)</div></pre></td></tr></table></figure>
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>三种预处理器中定义的变量都是有作用域的，查找变量的顺序是先在局部定义中查找，如果找不到，则逐级向上查找。</p>
+<p>如果我们在代码中重写某个已经定义的变量，Less的处理逻辑和其他两个有区别。Less中，这个行为叫懒加载（Lazy Loading）。<strong>注意</strong>Less中所有变量的计算，都是以这个变量最后一次被定义的值为准。</p>
+<p>LESS：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@size: 40px;</div><div class="line">.content &#123;</div><div class="line">    width: @size;</div><div class="line">&#125;</div><div class="line">@size: 60px;</div><div class="line">.container &#123;</div><div class="line">    width: @size;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译输出为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.content</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">60px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">60px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在SASS中情况如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$size: 40px;</div><div class="line">.content &#123;</div><div class="line">    width: $size;</div><div class="line">&#125;</div><div class="line">$size: 60px;</div><div class="line">.container &#123;</div><div class="line">    width: $size;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译输出为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.content</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">40px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">60px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Stylus和SASS行为相同，变量的计算以变量最近一次的定义为准。</p>
+<h2 id="变量插值"><a href="#变量插值" class="headerlink" title="变量插值"></a>变量插值</h2><p>预处理器中定义的变量不仅可以用作属性值，还可以用作选择器，属性名等，这就是变量插值。</p>
+<h3 id="变量名插值"><a href="#变量名插值" class="headerlink" title="变量名插值"></a>变量名插值</h3><p>Less中支持以@@var的形式引用变量，即该变量的名字是由@var的值决定的。</p>
+<h3 id="选择器插值"><a href="#选择器插值" class="headerlink" title="选择器插值"></a>选择器插值</h3><p>以类选择器为例</p>
+<p>LESS:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@way: new;</div><div class="line">.@&#123;way&#125;-task &#123;</div><div class="line">    font-size: 18px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SASS:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$way: new;</div><div class="line">.#&#123;$way&#125;-task &#123;</div><div class="line">    font-size: 18px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Stylus:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">way: new;</div><div class="line">.&#123;way&#125;-task</div><div class="line">    font-size 18px</div></pre></td></tr></table></figure>
+<p>解析结果都是：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.new-task</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">18px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong>在Less中，通过选择器插值生成的规则无法被继承。</p>
+<h3 id="import插值"><a href="#import插值" class="headerlink" title="@import插值"></a>@import插值</h3><p>Sass中只能在使用url()表达式时进行变量@import插值：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$device: mobile;</div><div class="line">@import url(styles.#&#123;$device&#125;.css);</div></pre></td></tr></table></figure>
+<p>Less中可以在字符串中进行插值：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@device: mobile;</div><div class="line">@import "styles.@&#123;device&#125;.css";</div></pre></td></tr></table></figure>
+<p>Stylus中没有@import插值，但是可以利用其字符串拼接的功能实现：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">device = "mobile"</div><div class="line">@import "styles." + device + ".css"</div></pre></td></tr></table></figure>
+<h3 id="属性名插值"><a href="#属性名插值" class="headerlink" title="属性名插值"></a>属性名插值</h3><p>三个预处理器均支持属性名插值，使用方式且和上述插值类似。</p>
+<h1 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h1><p>如果需要在相同的父元素中选择多个子元素，需要一遍又一遍地写父元素，如果用CSS预处理器就可以不用重复写父元素，并且父元素和子元素的关系一目了然。</p>
+<p>三种预处理器的嵌套语法是一致的，引用父级选择器的标记&amp;也相同。除了&amp;，Sass和Stylus还分别用@at-root和”/“符号作为嵌套时根规则集的选择器引用。首先以LESS为例讨论嵌套语法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#sort &#123;</div><div class="line">    margin-top: 24px;</div><div class="line">    ul &#123;</div><div class="line">        margin-left: 8px;</div><div class="line">        line-height: 36px;</div><div class="line">        vertical-align: middle;    </div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">input &#123;</div><div class="line">    width: 80px;</div><div class="line">    &amp;:-ms-input-placeholder &#123;</div><div class="line">    font-size: 16px;</div><div class="line">    color: @white;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译结果为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#sort</span> &#123;</div><div class="line">    <span class="attribute">margin-top</span>: <span class="number">24px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#sort</span> <span class="selector-tag">ul</span> &#123;</div><div class="line">    <span class="attribute">margin-left</span>: <span class="number">8px</span>;</div><div class="line">    <span class="attribute">line-height</span>: <span class="number">36px</span>;</div><div class="line">    <span class="attribute">vertical-align</span>: middle;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">input</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">80px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">input</span><span class="selector-pseudo">:-ms-input-placeholder</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">    <span class="attribute">color</span>: @white;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SASS还提出了属性嵌套，属性嵌套指的是有些属性拥有相同的开始单词，如border-width，border-color都是以border开头。官网的实例如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.fakeshadow</span> &#123;</div><div class="line">    <span class="attribute">border</span>: &#123;</div><div class="line">        style: solid;</div><div class="line">        <span class="attribute">left</span>: &#123;</div><div class="line">            width: <span class="number">4px</span>;</div><div class="line">            <span class="attribute">color</span>: <span class="number">#888</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="selector-tag">right</span>: &#123;</div><div class="line">            <span class="attribute">width</span>: <span class="number">2px</span>;</div><div class="line">            <span class="attribute">color</span>: <span class="number">#ccc</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>生成的CSS为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.fakeshadow</span> &#123;</div><div class="line">    <span class="attribute">border-style</span>: solid;</div><div class="line">    <span class="attribute">border-left-width</span>: <span class="number">4px</span>;</div><div class="line">    <span class="attribute">border-left-color</span>: <span class="number">#888</span>;</div><div class="line">    <span class="attribute">border-right-width</span>: <span class="number">2px</span>;</div><div class="line">    <span class="attribute">border-right-color</span>: <span class="number">#ccc</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="混入-mixin"><a href="#混入-mixin" class="headerlink" title="混入(mixin)"></a>混入(mixin)</h1><p>mixins有点像C语言中的宏，当某段CSS经常需要在多个元素中使用时，可以为这些共用的CSS定义一个mixin，然后只需要在需要引用这些CSS地方调用该mixin即可。</p>
+<p>三种预处理器的mixin使用方式的差异比较大，下面分别说明。</p>
+<p>LESS混入方式如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">.my-mixin &#123;</div><div class="line">    color: black;</div><div class="line">&#125;</div><div class="line">.my-other-mixin() &#123;</div><div class="line">    background: white;</div><div class="line">&#125;</div><div class="line">.my-hover-mixin() &#123;</div><div class="line">    &amp;:hover &#123;</div><div class="line">        border: 1px solid red;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">.border-radius(@radius: 5px) &#123;</div><div class="line">    -webkit-border-radius: @radius;</div><div class="line">        -moz-border-radius: @radius;</div><div class="line">            border-radius: @radius;</div><div class="line">&#125;</div><div class="line">.class &#123;</div><div class="line">    .my-mixin;</div><div class="line">    .my-other-mixin;</div><div class="line">&#125;</div><div class="line">button &#123;</div><div class="line">    .my-hover-mixin();</div><div class="line">&#125;</div><div class="line">#header &#123;</div><div class="line">    .border-radius(4px);</div><div class="line">&#125;</div><div class="line">.button &#123;</div><div class="line">    .border-radius;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译输出为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.my-mixin</span> &#123;</div><div class="line">    <span class="attribute">color</span>: black;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.class</span> &#123;</div><div class="line">    <span class="attribute">color</span>: black;</div><div class="line">    <span class="attribute">background</span>: white;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">button</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#header</span> &#123;</div><div class="line">    <span class="attribute">-webkit-border-radius</span>: <span class="number">4px</span>;</div><div class="line">        <span class="attribute">-moz-border-radius</span>: <span class="number">4px</span>;</div><div class="line">            <span class="attribute">border-radius</span>: <span class="number">4px</span>;    </div><div class="line">&#125;</div><div class="line"><span class="selector-class">.button</span> &#123;</div><div class="line">    <span class="attribute">-webkit-border-radius</span>: <span class="number">5px</span>;</div><div class="line">        <span class="attribute">-moz-border-radius</span>: <span class="number">5px</span>;</div><div class="line">            <span class="attribute">border-radius</span>: <span class="number">5px</span>;    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>LESS的mixin需要注意的是同名的mixin不是后面的覆盖前面的，而是会累加输出。这就会产生一个问题，如果存在和mixin同名的class样式，并且mixin没有参数，则在调用时会把对应的class样式一起输出，这显然不是我们所需要的。</p>
+<p>SASS的mixin用法如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@mixin center-block &#123;</div><div class="line">    margin-left:auto;</div><div class="line">    margin-right:auto;</div><div class="line">&#125;</div><div class="line">.demo&#123;</div><div class="line">    @include center-block;</div><div class="line">&#125;</div><div class="line">@mixin horizontal-line($border:1px dashed #ccc, $padding:10px)&#123;</div><div class="line">    border-bottom:$border;</div><div class="line">    padding-top:$padding;</div><div class="line">    padding-bottom:$padding;  </div><div class="line">&#125;</div><div class="line">.imgtext-h li&#123;</div><div class="line">    @include horizontal-line(1px solid #ccc);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译结果为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.demo</span>&#123;</div><div class="line">    <span class="attribute">margin-left</span>:auto;</div><div class="line">    <span class="attribute">margin-right</span>:auto;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.imgtext-h</span> <span class="selector-tag">li</span> &#123;</div><div class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#cccccc</span>;</div><div class="line">    <span class="attribute">padding-top</span>: <span class="number">10px</span>;</div><div class="line">    <span class="attribute">padding-bottom</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Sass用@mixin和@include两个指令清楚地说明了mixin的定义和引用方式。</p>
+<p>Stylus的mixin和Sass的类似：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">border-radius</span>(<span class="selector-tag">n</span>)</div><div class="line">    <span class="selector-tag">-webkit-border-radius</span> <span class="selector-tag">n</span></div><div class="line">    <span class="selector-tag">-moz-border-radius</span> <span class="selector-tag">n</span></div><div class="line">    <span class="selector-tag">border-radius</span> <span class="selector-tag">n</span></div><div class="line"><span class="selector-tag">form</span> <span class="selector-tag">input</span><span class="selector-attr">[type=button]</span></div><div class="line">    <span class="selector-tag">border-radius</span> 5<span class="selector-tag">px</span></div></pre></td></tr></table></figure>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>继承其实和混入的作用差不多，那为什么还需要继承呢？混入确实很好用，但是如果多个地方都混入同样的代码，会造成代码的重复。例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.block &#123;</div><div class="line">    margin: 10px 5px;</div><div class="line">    padding: 2px;</div><div class="line">&#125;</div><div class="line">p &#123;</div><div class="line">    .block; </div><div class="line">    border: 1px solid #EEE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>会输出：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.block</span> &#123;</div><div class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">5px</span>;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">2px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">p</span> &#123;</div><div class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">5px</span>;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">2px</span>; </div><div class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#EEE</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而我们期望的输出实际是：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.block</span>,</div><div class="line"><span class="selector-tag">p</span> &#123;</div><div class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">5px</span>;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">2px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">p</span> &#123;</div><div class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#EEE</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>用继承就可以实现上面的输出，不会有重复的代码（以SASS为例）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.block &#123;</div><div class="line">    margin: 10px 5px;</div><div class="line">    padding: 2px;</div><div class="line">&#125;</div><div class="line">p &#123;</div><div class="line">    @extend .block; </div><div class="line">    border: 1px solid #EEE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Stylus的继承来源于SASS，两者使用方式相同。而LESS则用伪类来实现继承：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.block &#123;</div><div class="line">    margin: 10px 5px;</div><div class="line">    padding: 2px;</div><div class="line">&#125;</div><div class="line">p &#123;</div><div class="line">    &amp;:extend(.block); </div><div class="line">    border: 1px solid #EEE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Less默认只继承父类本身的样式，如果要同时继承嵌套定义在父类作用域下的样式，得使用关键字all，比如&amp;:extend(.block all)。</p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>三种预处理器都有自己的内置函数，例如颜色处理，类型判断等。LESS中不能自定义函数，SASS和Stylus可以。</p>
+<p>SASS自定义函数用法如下，需要使用@function，并用@return指令返回结果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">function</span> pxToRem($px) &#123;</div><div class="line">    @<span class="keyword">return</span> $px / <span class="number">2</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="built_in">pxToRem</span>(32px);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Stylus中则无需这些指令：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pxToRem(n)</div><div class="line">    n / 2</div><div class="line">body</div><div class="line">    font-size: pxToRem(32px)</div></pre></td></tr></table></figure>
+<h1 id="import"><a href="#import" class="headerlink" title="@import"></a>@import</h1><p>@import的作用是从其他样式表导入样式，三种预处理器的@import的使用方式各不相同。</p>
+<p>除了基本的功能外，LESS引入了import选项来扩展@import的语法。语法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">import</span> (keyword) <span class="string">"filename"</span>;</div></pre></td></tr></table></figure>
+<p>其中keyword可以是如下几种选项（可以联合使用）。<br>1.<strong>reference:</strong>使用一个外部文件参与编译，但不输出其内容。<br>2.<strong>inline:</strong>直接将引入的文件放入输出文件中，但不处理这个引入的文件。<br>3.<strong>less:</strong>不管文件扩展名是什么都将该文件作为一个LESS文件处理。<br>4.<strong>css:</strong>不管文件扩展名是什么都将该文件作为一个CSS文件处理。<br>5.<strong>once:</strong>只引入文件一次（去重），这是默认方式。<br>6.<strong>multiple:</strong>可以引入文件多次。</p>
+<p>SASS则没有LESS的这些扩展语法，它自己推断引入的方式。它的@import 不会被去重，多次引入会导致一个样式文件被多次输出到编译结果中。</p>
+<p>Stylus的@import和SASS一样都是自己推断引入的方式，但是Stylus可以进行引入文件的去重，它有一个自定义的指令@require，用法和@import一样，但引入的文件只会编译一次。</p>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><p>三种预处理器都具有运算的特性，可以对数值型的Value(如：数字、颜色、变量等)进行加减乘除四则运算。<br>Stylus的<a href="http://www.zhangxinxu.com/jq/stylus/operators.php" target="_blank" rel="external">中文文档</a>中，详细讨论了Stylus的运算符</p>
+<h1 id="逻辑控制"><a href="#逻辑控制" class="headerlink" title="逻辑控制"></a>逻辑控制</h1><p>Sass中通过@if、@else 实现条件判断来提供语言的流控制，通过@for、@each、@while实现循环，然后配合map和list这两种数据类型可以实现多数编程语言提供的功能。<br>SASS中还实现了一个三目判断，语法为：if($condition, $if_true, $if_false) 。三个参数分别表示：条件，条件为真的值，条件为假的值。</p>
+<p>Stylus中通过if、else if、else、unless（基本与if相反）实现条件判断来提供语言的流控制，通过for/in实现循环迭代。</p>
+<p>而LESS中没有上述复杂的语法，只通过guarded mixins代替if/else实现简单的条件判断。举例如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.mixin</span> (@<span class="keyword">a</span>) when (lightness(@a) &gt;= <span class="number">50%</span>) &#123;</div><div class="line">    <span class="selector-tag">background-color</span>: <span class="selector-tag">black</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.mixin</span> (@<span class="keyword">a</span>) when (lightness(@a) &lt; <span class="number">50%</span>) &#123;</div><div class="line">    <span class="selector-tag">background-color</span>: <span class="selector-tag">white</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.mixin</span> (@<span class="keyword">a</span>) &#123;</div><div class="line">    <span class="selector-tag">color</span>: @<span class="keyword">a</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上就是三种CSS预处理器的主要区别，实际项目中使用哪种CSS预处理器还需要自己斟酌，多踩坑才能体会到哪种预处理器最适合你当前的项目。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="谈谈CSS预处理器" data-url="http://yuhan.com/2016/09/07/compares-less-sass-and-stylus/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"hyuhan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
