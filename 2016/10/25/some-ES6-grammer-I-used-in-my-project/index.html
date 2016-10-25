@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>webpack+vue项目中常用ES6语法小结 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ES6,webpack,vue," />
+  
+
+  <meta name="description" content="好久没有更新博客啦，最近入了阴阳师的坑，纯种非洲人，都没心情写博客了。这段时间在接触vue这个框架，用vue+webpack做一些小项目的时候经常会用到ES6的语法，用起来确实比较方便，今天就总结下在vue+webpack项目中经常会用到的一些ES6语法吧。首先来谈谈什么是ES6。
+什么是ES6首先要说说ECMAScript是什么，ECMAScript是JavaScript的规格，而JavaScr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack+vue项目中常用ES6语法小结">
+<meta property="og:url" content="http://yuhan.com/2016/10/25/some-ES6-grammer-I-used-in-my-project/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="好久没有更新博客啦，最近入了阴阳师的坑，纯种非洲人，都没心情写博客了。这段时间在接触vue这个框架，用vue+webpack做一些小项目的时候经常会用到ES6的语法，用起来确实比较方便，今天就总结下在vue+webpack项目中经常会用到的一些ES6语法吧。首先来谈谈什么是ES6。
+什么是ES6首先要说说ECMAScript是什么，ECMAScript是JavaScript的规格，而JavaScr">
+<meta property="og:updated_time" content="2016-10-25T12:38:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack+vue项目中常用ES6语法小结">
+<meta name="twitter:description" content="好久没有更新博客啦，最近入了阴阳师的坑，纯种非洲人，都没心情写博客了。这段时间在接触vue这个框架，用vue+webpack做一些小项目的时候经常会用到ES6的语法，用起来确实比较方便，今天就总结下在vue+webpack项目中经常会用到的一些ES6语法吧。首先来谈谈什么是ES6。
+什么是ES6首先要说说ECMAScript是什么，ECMAScript是JavaScript的规格，而JavaScr">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是ES6"><span class="toc-text">什么是ES6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Babel"><span class="toc-text">Babel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#let和const命令"><span class="toc-text">let和const命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#let命令"><span class="toc-text">let命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#const命令"><span class="toc-text">const命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数的扩展"><span class="toc-text">函数的扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数参数的默认值"><span class="toc-text">函数参数的默认值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数默认值的位置"><span class="toc-text">参数默认值的位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#箭头函数"><span class="toc-text">箭头函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Module"><span class="toc-text">Module</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#export命令"><span class="toc-text">export命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#import命令"><span class="toc-text">import命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#export-default命令"><span class="toc-text">export default命令</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-some-ES6-grammer-I-used-in-my-project" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">webpack+vue项目中常用ES6语法小结</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.10.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>好久没有更新博客啦，最近入了阴阳师的坑，纯种非洲人，都没心情写博客了。这段时间在接触vue这个框架，用vue+webpack做一些小项目的时候经常会用到ES6的语法，用起来确实比较方便，今天就总结下在vue+webpack项目中经常会用到的一些ES6语法吧。首先来谈谈什么是ES6。</p>
+<h2 id="什么是ES6"><a href="#什么是ES6" class="headerlink" title="什么是ES6"></a>什么是ES6</h2><p>首先要说说ECMAScript是什么，ECMAScript是JavaScript的规格，而JavaScript是ECMAScript的一种实现，ECMAScript的实现还有Jscript和ActionScript等。ES6（ECMAScript6）一般指ECMAScript2015标准，它是JavaScript语言的下一代标准。</p>
+<h2 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h2><p>ES6标准虽然已经发布了，但是很多浏览器环境都还不支持，webpack是通过Babel这个转码器将ES6代码转为ES5，从而在现有环境执行。babel是在webpack的配置文件webpack.config.js的module参数中的loaders中配置，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">	...</div><div class="line">	module: &#123;</div><div class="line">		loaders: [</div><div class="line">		&#123;</div><div class="line">			test: /\.js$/,</div><div class="line">			loader: &apos;babel&apos;,</div><div class="line">			exclude: /node_modules/</div><div class="line">		&#125;,</div><div class="line">		...</div><div class="line">		]</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置完成后还需要安装”babel-loader”模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install babel-loader --save-dev</div></pre></td></tr></table></figure></p>
+<p>然后webpack就可以对用了ES6语法的js文件进行转码了。下面总结一些常用到的ES6语法。</p>
+<h2 id="let和const命令"><a href="#let和const命令" class="headerlink" title="let和const命令"></a>let和const命令</h2><h3 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a>let命令</h3><p>ES6中let命令用来声明变量，用法类似于var，但是let所声明的变量是局部变量，只在let命令所在的代码块内有效。所以在for循环中很适合用let变量做计数器。<br>let变量不会像var变量那样会进行变量提升，变量一定要在声明后使用，否则会报错。<br>只要块级作用域内存在let命令，它所声明的所有变量都绑定这个作业域，不收外部变量的影响，即形成了一个封闭的作用域。<br>let不允许在相同作用域内重复声明同一个变量。可以看出，let变量实际上为JavaScript新增了块级作用域</p>
+<h3 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a>const命令</h3><p>const声明一个只读的常量，一旦声明，值就不能改变。所以，const一旦声明就必须立即初始化，不能只声明不初始化。<br>const作用域和let命令相同，只在声明所在的块级作用域中有效。const命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置后面使用。</p>
+<h2 id="函数的扩展"><a href="#函数的扩展" class="headerlink" title="函数的扩展"></a>函数的扩展</h2><h3 id="函数参数的默认值"><a href="#函数参数的默认值" class="headerlink" title="函数参数的默认值"></a>函数参数的默认值</h3><p>在ES6之前不能直接为函数的参数指定默认值，只能采用变通的方法。ES6允许为函数参数设置默认值，直接写在参数定义的后面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function log(x, y=&apos;World&apos;) &#123;</div><div class="line">	console.log(x, y);</div><div class="line">&#125;</div><div class="line">log(&apos;Hello&apos;) // Hello World</div><div class="line">log(&apos;Hello&apos;, &apos;China&apos;) // Hello China</div></pre></td></tr></table></figure></p>
+<h3 id="参数默认值的位置"><a href="#参数默认值的位置" class="headerlink" title="参数默认值的位置"></a>参数默认值的位置</h3><p>通常定义了默认值的参数应该是函数的尾参数，如果是非尾部的参数设置默认值，实际上这个参数是没法省略的。除非显式输入undefined。</p>
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p>ES6允许使用“箭头”（=&gt;）定义函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var f = v =&gt; v;</div></pre></td></tr></table></figure></p>
+<p>上述箭头定义的函数等同于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var f = function(v) &#123;</div><div class="line">	return v;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>若箭头函数不需要参数或者需要多于一个参数，就使用一个圆括号代表参数部分。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var f = () =&gt; 5;</div><div class="line">// 等同于</div><div class="line">var f = function() &#123;</div><div class="line">	return 5;</div><div class="line">&#125;</div><div class="line">var sum = (num1, num2) =&gt; num1 + num2;</div><div class="line">// 等同于</div><div class="line">var sum = function(num1, num2) &#123;</div><div class="line">	return num1 + num2;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>若箭头函数的代码部分多于一条语句，就要使用大括号将他们括起来，并且使用return语句返回。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var sum = (num1, num2) =&gt; &#123; return num1 + num2; &#125;</div></pre></td></tr></table></figure></p>
+<p><strong>使用注意点</strong></p>
+<ol>
+<li>函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</li>
+<li>不可当做构造函数，不可以使用new命令，否则会抛出错误。</li>
+<li>不可使用arguments对象，该对象在函数体内不存在，可以用Rest参数代替。</li>
+</ol>
+<h2 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h2><p>ES6之前，JavaScript一直没有模块（module）体系，ES6在语言规格的层面上，实现了模块功能，完全可以取代现有的CommonJS和AMD规范，成为浏览器和服务器通用的模块解决方案。<br>ES6模块不是对象，而是通过export命令显式指定输出的代码，输入时采用静态命令的形式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import &#123;stat, exists, readFile&#125; from &apos;fs&apos;;</div></pre></td></tr></table></figure></p>
+<p>上面代码就是从fs模块加载3个方法，其他方法不加载。这种加载成为“编译时加载”。ES6可以在编译时就完成模块加载，效率要比CommonJS模块的加载方式高。</p>
+<h3 id="export命令"><a href="#export命令" class="headerlink" title="export命令"></a>export命令</h3><p>模块功能主要由两个命令构成，export和import。export命令用于规定模块的对外接口，import命令用于输入其他模块提供的功能。<br>一个模块就是一个独立的文件。该文件内部的所有变量，外部无法获取。如果你希望外部能够读取模块内部的某个变量，就必须使用export关键字输出该变量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export var firstName = &apos;Michael&apos;;</div><div class="line">export var lastName = &apos;Jackson&apos;;</div><div class="line">export var year = 1958;</div></pre></td></tr></table></figure></p>
+<p>还可以如下书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var firstName = &apos;Michael&apos;;</div><div class="line">var lastName = &apos;Jackson&apos;;</div><div class="line">var year = 1958;</div><div class="line">export &#123;firstName, lastName, year&#125;;</div></pre></td></tr></table></figure></p>
+<p>export除了输出变量通用可以输出函数或者类，export输出的变量还可以用as关键字重命名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function v1() &#123; ... &#125;</div><div class="line">function v2() &#123; ... &#125;</div><div class="line"></div><div class="line">export &#123;</div><div class="line">  v1 as streamV1,</div><div class="line">  v2 as streamV2,</div><div class="line">  v2 as streamLatestVersion</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="import命令"><a href="#import命令" class="headerlink" title="import命令"></a>import命令</h3><p>使用export命令定义了模块的对外接口以后，其他JS文件就可以通过import命令加载这个模块（文件）。用法上面已经有介绍，如果想为输入的变量重命名，使用as关键字。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import &#123; lastName as surname &#125; from &apos;./profile&apos;;</div></pre></td></tr></table></figure></p>
+<h3 id="export-default命令"><a href="#export-default命令" class="headerlink" title="export default命令"></a>export default命令</h3><p>从前面的例子可以看出，使用import命令的时候，需要知道所要加载的变量名或函数名，否则无法加载。export default命令，为模块指定默认输出，其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。</p>
+<p>我在项目中目前用到的ES6语法就这些了，以后有机会再进一步学习ES6的新语法。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="webpack+vue项目中常用ES6语法小结" data-url="http://yuhan.com/2016/10/25/some-ES6-grammer-I-used-in-my-project/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"hyuhan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
