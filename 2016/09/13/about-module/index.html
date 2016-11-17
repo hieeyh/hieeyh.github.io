@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端模块化小结 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="总结,模块," />
+  
+
+  <meta name="description" content="随着我们的项目越来越复杂，参与项目的人员越来越多，将项目划分模块就变得十分重要，开发者只需要实现自己负责的功能，其他部分可以加载别人已经写好的模块。但是JavaScript不是一种模块化的编程语言，所以JavaScript开发人员做了很多努力，在现有的运行环境中实现了模块化的功能。
+前端的模块化开发主要解决两个问题：命名冲突和文件依赖。在前端领域探究模块化开发的过程中，产生了不同的js模块规范，目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端模块化小结">
+<meta property="og:url" content="http://yuhan.com/2016/09/13/about-module/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="随着我们的项目越来越复杂，参与项目的人员越来越多，将项目划分模块就变得十分重要，开发者只需要实现自己负责的功能，其他部分可以加载别人已经写好的模块。但是JavaScript不是一种模块化的编程语言，所以JavaScript开发人员做了很多努力，在现有的运行环境中实现了模块化的功能。
+前端的模块化开发主要解决两个问题：命名冲突和文件依赖。在前端领域探究模块化开发的过程中，产生了不同的js模块规范，目">
+<meta property="og:updated_time" content="2016-11-17T06:49:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端模块化小结">
+<meta name="twitter:description" content="随着我们的项目越来越复杂，参与项目的人员越来越多，将项目划分模块就变得十分重要，开发者只需要实现自己负责的功能，其他部分可以加载别人已经写好的模块。但是JavaScript不是一种模块化的编程语言，所以JavaScript开发人员做了很多努力，在现有的运行环境中实现了模块化的功能。
+前端的模块化开发主要解决两个问题：命名冲突和文件依赖。在前端领域探究模块化开发的过程中，产生了不同的js模块规范，目">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CommonJS"><span class="toc-text">CommonJS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AMD"><span class="toc-text">AMD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#define函数"><span class="toc-text">define函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#require函数"><span class="toc-text">require函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CMD"><span class="toc-text">CMD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#define函数-1"><span class="toc-text">define函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#require"><span class="toc-text">require</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#export"><span class="toc-text">export</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module"><span class="toc-text">module</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AMD与CMD的区别"><span class="toc-text">AMD与CMD的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RequireJS与SeaJS的区别"><span class="toc-text">RequireJS与SeaJS的区别</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-about-module" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">前端模块化小结</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.13</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/模块化/">模块化</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>随着我们的项目越来越复杂，参与项目的人员越来越多，将项目划分模块就变得十分重要，开发者只需要实现自己负责的功能，其他部分可以加载别人已经写好的模块。但是JavaScript不是一种模块化的编程语言，所以JavaScript开发人员做了很多努力，在现有的运行环境中实现了模块化的功能。</p>
+<p>前端的模块化开发主要解决两个问题：命名冲突和文件依赖。在前端领域探究模块化开发的过程中，产生了不同的js模块规范，目前通用的JavaScript模块规范主要是：<strong>CommonJS</strong>和<strong>AMD</strong>，先从CommonJS说起。</p>
+<h1 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h1><p>CommonJS是服务器端的模块的规范，NodeJS将其发扬光大，标志着JavaScript模块化编程正式登上舞台。</p>
+<ol>
+<li>定义模块：CommonJS规范规定一个单独的文件就是一个模块，每一个模块都是一个单独的作用域，在该模块内部的变量无法被其它模块读取，除非定义为global对象的属性。</li>
+<li>模块输出：想要输出模块中的变量使用module.exports对象，该对象是模块外部与内部通信的桥梁。</li>
+<li>加载模块：使用require方法加载模块，该方法读取一个文件并执行，最后返回文件内部的module.exports对象。</li>
+</ol>
+<p>下面举个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义模块 module.js</span></div><div class="line"><span class="keyword">var</span> age = <span class="number">23</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">printAge</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(age);</div><div class="line">&#125;</div><div class="line"><span class="comment">//模块输出</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">printAge</span>: printAge</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//加载模块</span></div><div class="line"><span class="keyword">var</span> myModule = <span class="built_in">require</span>(<span class="string">'./module.js'</span>);</div><div class="line">myModule.printAge();</div></pre></td></tr></table></figure>
+<p>加载模块时，一般可以省略js扩展名，可以使用相对路径也可以使用绝对路径。</p>
+<p>然而CommonJS模块加载是同步的，这在服务器端很容易实现，但是在浏览器端实现起来会出现很多问题。</p>
+<h1 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h1><p>AMD(Asynchronous Module Definition)翻译成中文是异步模块定义，它是一个在浏览器端模块化开发的规范。由于不是JavaScript原生支持的，使用AMD规范进行页面开发需要用对应的库，RequireJS就是其中最出名的一个，实际上，AMD是RequireJS在推广过程中对模块定义的规范化的产出。</p>
+<p>RequireJS主要解决了两个问题：</p>
+<ol>
+<li>实现js文件的异步加载，避免网页失去响应。</li>
+<li>管理模块之间的依赖性，便于代码的编写和维护。</li>
+</ol>
+<h2 id="define函数"><a href="#define函数" class="headerlink" title="define函数"></a>define函数</h2><p>RequireJS定义了一个define函数，它是一个全局变量，用来定义模块，描述如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">define(id?, dependencies?, factory);</div></pre></td></tr></table></figure></p>
+<ol>
+<li>id：可选参数，定义中模块的名字，若没有提供该参数，模块的名字应该默认为模块加载器请求的指定脚本的名字。</li>
+<li>dependencies：一个当前模块依赖的，已被模块定义的模块标识的数组字面量。该参数可选，若忽略该参数，它默认为[“require”, “exports”, “module”]。</li>
+<li>factory：模块初始化要执行的函数或对象。若为函数，它应该只被执行一次。若为对象，该对象应该为模块的输出值。</li>
+</ol>
+<h2 id="require函数"><a href="#require函数" class="headerlink" title="require函数"></a>require函数</h2><p>RequireJS还定义了一个require函数用来加载模块，描述如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([dependencies], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;);</div></pre></td></tr></table></figure></p>
+<p>require函数接受两个参数，第一个参数是一个数组，表示所依赖的模块。第二个参数是一个回调函数，当前面指定的模块都加载成功后，它将被调用。加载的模块要以参数形式传入该函数，在回调函数内部才可以使用这些模块。</p>
+<p>require函数在加载依赖模块的时候是异步加载的，这样浏览器就不会失去响应，它指定的回调函数，也只有在前面的模块都加载成功后，才会运行，这样就解决了依赖性的问题。</p>
+<h1 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h1><p>CMD(Common Module Definition)翻译成中文就是通用模块定义。该规范明确了模块的基本书写格式和基本交互规则。该规范是在国内发展出来的。和AMD一样，使用CMD规范也需要相应的库函数，SeaJS就是其中一个。实际上，CMD是SeaJS在推广过程中对模块定义的规范化的产出。SeaJS要解决的问题和RequireJS一样，只不过在模块定义方式和模块加载的时机上有些区别。</p>
+<h2 id="define函数-1"><a href="#define函数-1" class="headerlink" title="define函数"></a>define函数</h2><p>CMD规范的define函数和AMD规范的描述相同，也是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">define(id?, dependencies?, factory);</div></pre></td></tr></table></figure></p>
+<p>但是CMD推崇一个文件一个模块，所以经常用文件名作为模块id。同时，CMD推崇就近依赖，所以一般不在define函数的参数中写依赖，而是在factory函数中就近写。</p>
+<p>factory函数有三个参数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">factory(<span class="built_in">require</span>, exports, <span class="built_in">module</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="require"><a href="#require" class="headerlink" title="require"></a>require</h3><p>require是一个方法，它接受模块标识作为唯一的参数，用来导入其他的模块，获取其它模块提供的接口。</p>
+<h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><p>exports是一个对象，用来向外部提供接口。</p>
+<h3 id="module"><a href="#module" class="headerlink" title="module"></a>module</h3><p>module是一个对象，存储了去模块相关联的一些属性和方法。</p>
+<h1 id="AMD与CMD的区别"><a href="#AMD与CMD的区别" class="headerlink" title="AMD与CMD的区别"></a>AMD与CMD的区别</h1><p>首先我们知道，AMD是RequireJS 在推广过程中对模块定义的规范化产出。CMD是SeaJS在推广过程中对模块定义的规范化产出。他们的区别主要有以下四点。</p>
+<p>1、对于依赖的模块，AMD是提前执行（<strong>注意是执行不是加载</strong>），CMD是延迟执行。RequireJS从2.0开始，也改成可以延迟执行（根据写法不同，处理方式不同）。AMD和CMD都是异步加载的，只是AMD在加载模块完成后就会执行该模块，所有模块都加载执行完后会进入require的回调函数，执行主逻辑，这样就会导致依赖模块的执行顺序和书写顺序不一定一致，哪个先下载下来，哪个先执行，但是主逻辑一定在所有依赖加载完成后才会执行。而CMD在加载完某个依赖模块后并不执行，只是下载下来，在所有依赖模块加载完成后再进入主逻辑，遇到require语句的时候才执行对应的模块，这样模块的执行顺序和书写顺序是完全一致的。</p>
+<p>2、AMD推崇依赖前置，在定义模块的时候就要声明其依赖的模块。CMD推崇就近依赖，只有在用到某个模块的时候再去require。对比如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// AMD</span></div><div class="line">define([<span class="string">'./a'</span>, <span class="string">'./b'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123; <span class="comment">// 依赖必须一开始就写好</span></div><div class="line">    a.doSomething()</div><div class="line">    b.doSomething()</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;) </div><div class="line"><span class="comment">// CMD</span></div><div class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>)</div><div class="line">    a.doSomething()</div><div class="line">    <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>) <span class="comment">// 依赖可以就近书写，需要用到的时候才require</span></div><div class="line">    b.doSomething()</div><div class="line">    <span class="comment">// ... </span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>3、AMD的API根据使用范围有区别，但使用同一个API接口。CMD的API严格区分，推崇职责单一。</p>
+<p>4、AMD是异步并行加载，在AMD的规范下，同时异步加载是不会产生错误的。而CMD的机制不同，这种加载方式会产生错误，但是如果能规范化模块的内容形式，也可以异步并行加载。</p>
+<h1 id="RequireJS与SeaJS的区别"><a href="#RequireJS与SeaJS的区别" class="headerlink" title="RequireJS与SeaJS的区别"></a>RequireJS与SeaJS的区别</h1><p>两者遵循的规范不同，RequireJS遵循AMD规范，SeaJS遵循CMD规范。两者的区别可以参考<a href="https://github.com/seajs/seajs/issues/277" target="_blank" rel="external">SeaJS与RequireJS的异同</a>。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="前端模块化小结" data-url="http://yuhan.com/2016/09/13/about-module/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"hyuhan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
