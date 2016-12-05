@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://yuhan.com/img/xss_test2.png">
 <meta property="og:image" content="http://yuhan.com/img/xss_test2.png">
 <meta property="og:image" content="http://yuhan.com/img/dom_xss1.png">
-<meta property="og:updated_time" content="2016-09-09T13:41:52.000Z">
+<meta property="og:updated_time" content="2016-12-05T13:11:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web安全之XSS">
 <meta name="twitter:description" content="Web安全是网站开发中我们经常容易忽视的一个问题，但一旦出现问题将会带来很大的影响。这几天读了白帽子讲Web安全这本书的前半部分内容，目前还没有怎么接触过后端的东西，今天主要简单总结一下客户端脚本安全中的头号大敌——跨站脚本攻击。先说说浏览器的安全相关知识。
@@ -225,11 +225,11 @@
 <p>点击“write”按钮后，会在当前页面插入一个超链接，其地址为文本框的内容：<br><img src="/img/dom_xss1.png" alt="domxss1"></p>
 <p>“write”按钮的onclick事件调用了test()函数，在test()函数中修改了页面的DOM节点，通过innerHTML把一段用户数据当作HTML写入到页面中，就造成了DOM Based XSS。</p>
 <p>然后，我们构造如下数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos; onclick = alert(/xss/) //</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">' onclick = alert(/xss/) //</span></div></pre></td></tr></table></figure>
 <p>输入后，页面代码变成了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&apos;&apos; onclick=alert(/xss/) //&apos; &gt;testLink&lt;/a&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">''</span> <span class="attr">onclick</span>=<span class="string">alert(/xss/)</span> //' &gt;</span>testLink<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>首先第一个单引号闭合掉href的第一个单引号，然后插入一个onclick事件，最后再用注释符“//”注释掉第二个单引号。点击这个新生成的连接，脚本将被执行。<br>此外，还可以通过闭合a标签，并插入一个新的HTML标签，来利用XSS攻击。例如，进行如下输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;&gt;&lt;img src=# onerror=alert(/xss2/) /&gt;&lt;&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">'&gt;<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">#</span> <span class="attr">onerror</span>=<span class="string">alert(/xss2/)</span> /&gt;</span><span class="tag">&lt;<span class="name">'</span></span></div></pre></td></tr></table></figure>
 <p>会有什么效果可以自己下去实践一下！</p>
 <h2 id="XSS防御"><a href="#XSS防御" class="headerlink" title="XSS防御"></a>XSS防御</h2><p>XSS防御是很复杂的，前文也只是浅显地介绍了XSS，这里也只简单介绍几种易懂的XSS防御方式。</p>
 <h3 id="HttpOnly"><a href="#HttpOnly" class="headerlink" title="HttpOnly"></a>HttpOnly</h3><p>HttpOnly最早是由微软提出，并在IE6中实现的，现在已经逐渐成为一个标准。浏览器将禁止页面的JavaScript访问带有HttpOnly属性的Cookie。</p>
@@ -244,7 +244,7 @@
 <p>在button的onclick事件中，执行了test()函数，而该函数中最关键的一句是：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">"t"</span>).innerHTML = <span class="string">"&lt;a href = '"</span>+str+<span class="string">"' &gt;testLink&lt;/a&gt;"</span>;</div></pre></td></tr></table></figure>
 <p>它将HTML代码写入了DOM节点，最后导致了XSS的发生。DOM Based XSS是从JavaScript中输出数据到HTML页面中。而前面提到的方法都是针对“从服务器应用直接输出到HTML页面”的XSS漏洞，因此不适用于DOM Based XSS。先举个例子看看正确的解决方法是什么。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">    <span class="keyword">var</span> x = <span class="string">"$var"</span>;</div><div class="line">    <span class="built_in">document</span>.write(<span class="string">"&lt;a href='"</span>+x+<span class="string">"' &gt;test&lt;/a&gt;"</span>);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">    <span class="keyword">var</span> x = <span class="string">"$var"</span>;</div><div class="line">    <span class="built_in">document</span>.write(<span class="string">"&lt;a href='"</span>+x+<span class="string">"' &gt;test&lt;/a&gt;"</span>);</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
 <p>变量“$var”输出在script标签内，可是最后又被 document.write输出到HTML页面中。假设为了保护“$var”直接在script标签内产生XSS，服务器端对其进行了javascriptEscape。可是，$var在document.write时，仍然能够产生XSS。原因在于，第一次执行javascriptEscape后，只保护了：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var x = &quot;$var&quot;;</div></pre></td></tr></table></figure>
 <p>但是当 document.write输出数据到HTML页面时，浏览器重新渲染了页面。在script标签执行时，已经对变量x进行了解码，其后 document.write再运行时，其参数就变成了：</p>
