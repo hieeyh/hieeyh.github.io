@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Hieeyh's blog">
 <meta property="og:description" content="之前断断续续接触到了一些ES6的知识，异步编程方面听得比较多的就是Promise，直到最近比较系统地学习了ES6的新特性才发现Generator这个神奇的存在，它可以实现一些前所未有的事情，让我顿时对它充满了兴趣。
 为什么需要Generator？JavaScript异步编程是为解决JavaScript执行环境是“单线程”这个问题的。在JavaScript中，异步编程的使用非常频繁，也经常会出现需要">
-<meta property="og:updated_time" content="2016-12-07T03:23:02.000Z">
+<meta property="og:updated_time" content="2016-12-07T06:43:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6学习笔记之Generator函数">
 <meta name="twitter:description" content="之前断断续续接触到了一些ES6的知识，异步编程方面听得比较多的就是Promise，直到最近比较系统地学习了ES6的新特性才发现Generator这个神奇的存在，它可以实现一些前所未有的事情，让我顿时对它充满了兴趣。
@@ -217,7 +217,7 @@
 <p>从上面代码可以看出，Generator函数返回的g6，继承了gen5.prototype。</p>
 <h2 id="this咋用？"><a href="#this咋用？" class="headerlink" title="this咋用？"></a>this咋用？</h2><p>大家都知道普通函数都会有一个this对象，那么Generator的this对象怎么用呢？还是例子更直观：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen6</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.a = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> g7 = gen6();</div><div class="line">g7.a;  <span class="comment">//  undefined</span></div></pre></td></tr></table></figure></p>
 <p>上面代码中，Generator函数在this对象上添加了一个属性a，g7实例并不能取到这个属性。那么怎么让Generator函数返回一个可以正常使用this对象的实例呢？阮一峰老师提供了一种方法，首先，生成一个空对象，使用call方法绑定Generator函数内部的this。这样，构造函数调用以后，这个空对象就是Generator函数的实例对象了。参考代码在这：<a href="http://es6.ruanyifeng.com/#docs/generator" target="_blank" rel="external">http://es6.ruanyifeng.com/#docs/generator</a></p>
-<h1 id="Generator函数与Iterator"><a href="#Generator函数与Iterator" class="headerlink" title="Generator函数与Iterator"></a>Generator函数与Iterator</h1><p>Generator函数返回的是一个遍历器对象，那么它在遍历这方面肯定有用武之地，下一次讨论Iterator时候再总结吧。</p>
+<h1 id="Generator函数与Iterator"><a href="#Generator函数与Iterator" class="headerlink" title="Generator函数与Iterator"></a>Generator函数与Iterator</h1><p>Generator函数返回的是一个遍历器对象，那么它在遍历这方面肯定有用武之地。实际上遍历器最简单的实现就是使用Generator函数。遍历器（Iterator）也是ES6种一个很重要的新特性，参考资料：<a href="http://es6.ruanyifeng.com/#docs/iterator" target="_blank" rel="external">http://es6.ruanyifeng.com/#docs/iterator</a></p>
 
     
   </div>
