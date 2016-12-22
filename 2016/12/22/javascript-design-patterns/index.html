@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>《JavaScript设计模式》读后感 觉很复杂 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="学习笔记,设计模式," />
+  
+
+  <meta name="description" content="接触前端两三个月的时候，那时候只是听一些人说设计模式很重要，然后我就去读了一本设计模式的书，读得我心情很复杂，因为根本看不懂，也不知道这些设计模式到底设计出来干嘛的，看了一部分就没再看了。后来就自己做一些小项目也觉着好像不需要用到设计模式这个东西呀。现在，接触前端有半年了，决定再重新看看设计模式，说不定会有一些启发。于是发现了一本好书——《JavaScript设计模式》，写的通俗易懂，用一个个故事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《JavaScript设计模式》读后感 觉很复杂">
+<meta property="og:url" content="http://yuhan.com/2016/12/22/javascript-design-patterns/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="接触前端两三个月的时候，那时候只是听一些人说设计模式很重要，然后我就去读了一本设计模式的书，读得我心情很复杂，因为根本看不懂，也不知道这些设计模式到底设计出来干嘛的，看了一部分就没再看了。后来就自己做一些小项目也觉着好像不需要用到设计模式这个东西呀。现在，接触前端有半年了，决定再重新看看设计模式，说不定会有一些启发。于是发现了一本好书——《JavaScript设计模式》，写的通俗易懂，用一个个故事">
+<meta property="og:updated_time" content="2016-12-22T03:18:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《JavaScript设计模式》读后感 觉很复杂">
+<meta name="twitter:description" content="接触前端两三个月的时候，那时候只是听一些人说设计模式很重要，然后我就去读了一本设计模式的书，读得我心情很复杂，因为根本看不懂，也不知道这些设计模式到底设计出来干嘛的，看了一部分就没再看了。后来就自己做一些小项目也觉着好像不需要用到设计模式这个东西呀。现在，接触前端有半年了，决定再重新看看设计模式，说不定会有一些启发。于是发现了一本好书——《JavaScript设计模式》，写的通俗易懂，用一个个故事">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是设计模式"><span class="toc-text">什么是设计模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建型设计模式"><span class="toc-text">创建型设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单工厂模式"><span class="toc-text">简单工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用场景"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#收获与总结"><span class="toc-text">收获与总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工厂方法模式"><span class="toc-text">工厂方法模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义-1"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用场景-1"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#收获与总结-1"><span class="toc-text">收获与总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽象工厂模式"><span class="toc-text">抽象工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义-2"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象类"><span class="toc-text">抽象类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用场景-2"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#收获与总结-2"><span class="toc-text">收获与总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建造者模式"><span class="toc-text">建造者模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义-3"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用场景"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#收获与总结-3"><span class="toc-text">收获与总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型模式"><span class="toc-text">原型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义-4"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用场景-3"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#收获与总结-4"><span class="toc-text">收获与总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单例模式"><span class="toc-text">单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义-5"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用场景-4"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#收获与总结-5"><span class="toc-text">收获与总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结构型设计模式"><span class="toc-text">结构型设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#外观模式"><span class="toc-text">外观模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义-6"><span class="toc-text">定义</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-javascript-design-patterns" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">《JavaScript设计模式》读后感 觉很复杂</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>接触前端两三个月的时候，那时候只是听一些人说设计模式很重要，然后我就去读了一本设计模式的书，读得我心情很复杂，因为根本看不懂，也不知道这些设计模式到底设计出来干嘛的，看了一部分就没再看了。后来就自己做一些小项目也觉着好像不需要用到设计模式这个东西呀。现在，接触前端有半年了，决定再重新看看设计模式，说不定会有一些启发。于是发现了一本好书——《JavaScript设计模式》，写的通俗易懂，用一个个故事串起了一整本书，看了一部分发现原来我平时写代码的时候无意之中就用到了一些设计模式，然后就忍不住都看完了。看完整本书，让我完全改变了以前对设计模式的看法，也学到了很多在实际项目开发中的经验。这里就简单总结下这本书，也算是做个笔记，供自己以后参考。<br>先给个书的链接: <a href="https://www.amazon.cn/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%BC%A0%E5%AE%B9%E9%93%AD/dp/B013HO6DNS/ref=sr_1_2?s=books&amp;ie=UTF8&amp;qid=1482324196&amp;sr=1-2&amp;keywords=javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" target="_blank" rel="external">JavaScript设计模式-张容铭</a></p>
+<h1 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h1><p>设计模式是代码设计经验的总结，为了可重用代码，保证代码的可靠性等。设计模式主要分为三大类型，创建型模式，结构型模式和行为型模式，本书还额外写了另两类设计模式，技巧型模式和架构型模式。JavaScript设计模式是以面向对象编程为基础的，JavaScript的面向对象编程和传统的C++、Java的面向对象编程有些差别，这让我一开始接触JavaScript的时候感到十分痛苦，但是这只能靠自己慢慢积累慢慢思考。想继续了解JavaScript设计模式必须要先搞懂JavaScript面向对象编程，否则只会让你自己很痛苦。</p>
+<h1 id="创建型设计模式"><a href="#创建型设计模式" class="headerlink" title="创建型设计模式"></a>创建型设计模式</h1><p>创建型设计模式是一类处理对象创建的设计模式，通过某种方式控制对象的创建来避免基本对象创建时可能导致设计上的问题或增加设计上的复杂度。创建型设计模式主要有简单工厂模式，工厂方法模式，抽象工厂模式，建造者模式，原型模式和单例模式，下面一一道来。</p>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>作者把简单工厂模式比如成一个神奇的魔术师。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>又叫静态工厂方法，由一个工厂对象决定创建某一种产品对象类的实例，主要用来创建同一类对象。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>看完上面的定义一定很不解，说的到底是啥，现在就举个例子来解释一下。比如体育商品店卖体育器材，里面有很多体育用品及其相关介绍。当你来到体育用品店买一个篮球，只需问售货员，他会帮你找到你所要的东西。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 篮球基类</span></div><div class="line"><span class="keyword">var</span> Basketball = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.intro = <span class="string">'篮球盛行于美国'</span>;</div><div class="line">&#125;;</div><div class="line">Basketball.prototype = &#123;</div><div class="line">    <span class="attr">getMember</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'每个队伍需要5名队员'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">getBallSize</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'篮球很大'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 足球基类</span></div><div class="line"><span class="keyword">var</span> Football = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.intro = <span class="string">'足球盛行于美国'</span>;</div><div class="line">&#125;;</div><div class="line">Football.prototype = &#123;</div><div class="line">    <span class="attr">getMember</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'每个队伍需要11名队员'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">getBallSize</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'篮球很大'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 运动工厂</span></div><div class="line"><span class="keyword">var</span> SportsFactory = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(name) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'NBA'</span>: </div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Basketball();</div><div class="line">        <span class="keyword">case</span> <span class="string">'wordCup'</span>: </div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Football();</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>当你使用这个运动工厂时只需要记住SportsFactory这个工厂对象就好了，它会帮你找到你想要的。<br>简单工厂模式的理念是创建对象，上面例子是将不同的类实例化，但是简单工厂模式还可以创建相似对象，将相似的东西提取，不相似的针对性处理即可。这样只需创建一个对象就可以替代多个类了。</p>
+<h3 id="收获与总结"><a href="#收获与总结" class="headerlink" title="收获与总结"></a>收获与总结</h3><p>团队开发不同于个人，对全局变量的限制很大，要尽量少得创建全局变量。如果有同一类对象在不同需求中重复使用，那么大部分是不需要重复创建的，要学会代码复用。用简单工厂来创建对象，可以减少全局变量创建提高代码复用率，它的使用场合限制在创建单一对象。</p>
+<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><p>作者把工厂方法模式比喻成一张名片。</p>
+<h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>通过对产品类的抽象使其创建业务主要负责用于创建多类产品的实例。</p>
+<h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><p>在实际开发中，需求的变更是很正常的，开始需求简单可以直接创建对象，类似的需求多了可以用简单工厂方法重构，但是如果需求不停变化，那么不仅要修改工厂函数还要添加类，这样就没完了。而工厂方法模式本意是将实际创建对象的工作推迟到子类中。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 工厂类</span></div><div class="line"><span class="keyword">var</span> Factory = <span class="function"><span class="keyword">function</span>(<span class="params">type, content</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Factory) &#123;</div><div class="line">        <span class="keyword">var</span> s = <span class="keyword">new</span> <span class="keyword">this</span>[type](content);</div><div class="line">        <span class="keyword">return</span> s;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// 防止使用者不知道这是一个类，忘了加new操作符创建，导致全局变量污染</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Factory(type, content);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">Factory.prototype = &#123;</div><div class="line">    <span class="attr">Java</span>: <span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">JavaScript</span>: <span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">php</span>: <span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这样以后如果想添加其他类，只需要在Factory的原型里添加就可以了。</p>
+<h3 id="收获与总结-1"><a href="#收获与总结-1" class="headerlink" title="收获与总结"></a>收获与总结</h3><p>对于创建很多类的对象，简单工厂模式就不适合了，通过工厂模式可以轻松创建多个类的实例对象，而且避免了使用者与对象类之间的耦合，用户不必关心创建该对象的具体类，只需调用工厂方法即可。</p>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>通过对类的工厂抽象使其业务用于对产品类簇的创建，而不负责某一类产品的实例。</p>
+<h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><p>抽象类是一种声明但不能使用的类，当你使用的时候就会报错。JavaScript中的抽象类不能像传统面向对象语言那样轻松地创建，我们可以在类的方法中手动抛出错误来模拟抽象类。你可能会想，这样的类什么都不能做能有什么用？其实它在继承上是很有用的。</p>
+<h3 id="使用场景-2"><a href="#使用场景-2" class="headerlink" title="使用场景"></a>使用场景</h3><p>抽象工厂模式不能用来创建具体对象，一般用它作为父类类创建一些子类。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 抽象工厂方法</span></div><div class="line"><span class="keyword">var</span> VehicleFactory = <span class="function"><span class="keyword">function</span>(<span class="params">subType, superType</span>) </span>&#123;</div><div class="line">    <span class="comment">// 判断抽象工厂中是否有该抽象类</span></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> VehicleFactory[superType] === <span class="string">'function'</span>) &#123;</div><div class="line">        <span class="comment">// 缓存类</span></div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">        <span class="comment">// 继承父类属性和方法</span></div><div class="line">        F.prototype = <span class="keyword">new</span> VehicleFactory[superType]();</div><div class="line">        <span class="comment">// 将子类构造函数指向子类</span></div><div class="line">        subType.constructor = subType;</div><div class="line">        <span class="comment">// 子类原型继承父类</span></div><div class="line">        subType.prototype = <span class="keyword">new</span> F();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// 不存在该抽象类抛出错误</span></div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'未创建该抽象类'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 小汽车抽象类</span></div><div class="line">VehicleFactory.Car = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.type = <span class="string">'car'</span>;</div><div class="line">&#125;;</div><div class="line">VehicleFactory.Car.prototype = &#123;</div><div class="line">    <span class="attr">getPrice</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'抽象方法不能调用'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 公交车抽象类</span></div><div class="line">VehicleFactory.Bus = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.type = <span class="string">'bus'</span>;</div><div class="line">&#125;;</div><div class="line">VehicleFactory.Bus.prototype = &#123;</div><div class="line">    <span class="attr">getPrice</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'抽象方法不能调用'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>抽象工厂实际上是一个子类继承父类的方法，在该方法中需要通过传递子类以及继承父类的名称。</p>
+<h3 id="收获与总结-2"><a href="#收获与总结-2" class="headerlink" title="收获与总结"></a>收获与总结</h3><p>抽象工厂模式是设计模式中最抽象的一种，也是创建模式中唯一一种抽象化创建模式。该模式创建出的结果不是一个真实的对象实例，而是一个类簇，指定了类的结构。</p>
+<h2 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>将一个复杂对象的构建层与其表示层相互分离，同样的构建过程可采用不同的表示。</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>现在有一个发布简历的需求，就是帮别人在公司网站上发布简历，但是这些简历有一个需求，除了将兴趣爱好以及一些特长发布在页面里，其他信息如联系方式等不要发布在网站上，而且每个人想找的工作是可以分类的。这样一些需求我们需要创建的东西就多了，这时候前面的三种工厂模式都不适合了，这里就可以用建造者模式。<br>建造者模式和只关心创建结果的工厂模式不同，虽然其目的也是创建一个对象，但是更多关心的是创建这个对象的整个过程。在本例中，我们需要的不仅仅是应聘者的实例还要在创建过程中注意这位应聘者有哪些兴趣爱好等。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 创建一位人类</span></div><div class="line"><span class="keyword">var</span> Human = <span class="function"><span class="keyword">function</span>(<span class="params">param</span>) </span>&#123;</div><div class="line">    <span class="comment">// 技能</span></div><div class="line">    <span class="keyword">this</span>.skill = param &amp;&amp; param.skill || <span class="string">'保密'</span>;</div><div class="line">    <span class="comment">// 兴趣爱好</span></div><div class="line">    <span class="keyword">this</span>.hobby = param &amp;&amp; param.hobby || <span class="string">'保密'</span>;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 类人原型方法</span></div><div class="line">Human.prototype = &#123;</div><div class="line">    <span class="attr">getSkill</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.skill;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">getHobby</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.hobby;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 实例化姓名类</span></div><div class="line"><span class="keyword">var</span> Named = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line">    <span class="comment">// 构造器，解析姓名的姓与名</span></div><div class="line">    (<span class="function"><span class="keyword">function</span>(<span class="params">name, that</span>) </span>&#123;</div><div class="line">        that.wholeName = name;</div><div class="line">        <span class="keyword">if</span>(name.indexOf(<span class="string">' '</span>) &gt; <span class="number">-1</span>) &#123;</div><div class="line">            that.FirstName = name.slice(<span class="number">0</span>, name.indexOf(<span class="string">' '</span>));</div><div class="line">            that.FirstName = name.slice(name.indexOf(<span class="string">' '</span>));</div><div class="line">        &#125;</div><div class="line">    &#125;)(name, that);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 实例化职位类</span></div><div class="line"><span class="keyword">var</span> Work = <span class="function"><span class="keyword">function</span>(<span class="params">work</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line">    <span class="comment">// 构造器，通过传入的职位特征来设置相应职位及描述</span></div><div class="line">    (<span class="function"><span class="keyword">function</span>(<span class="params">work, that</span>) </span>&#123;</div><div class="line">        <span class="keyword">switch</span>(work) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">'code'</span>:</div><div class="line">                that.work = <span class="string">'工程师'</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'UI'</span>:</div><div class="line">            <span class="keyword">case</span> <span class="string">'UE'</span>:</div><div class="line">                that.work = <span class="string">'设计师'</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'teach'</span>:</div><div class="line">                that.work = <span class="string">'教师'</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                that.work = work;</div><div class="line">        &#125;</div><div class="line">    &#125;)(work, that);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 更换期望的职位</span></div><div class="line">Work.prototype.changeWork = <span class="function"><span class="keyword">function</span>(<span class="params">work</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.work = work;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>下面来创建以为应聘者<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 应聘者创建类</span></div><div class="line"><span class="keyword">var</span> Person = <span class="function"><span class="keyword">function</span>(<span class="params">name, work</span>) </span>&#123;</div><div class="line">    <span class="comment">// 创建应聘者缓存对象</span></div><div class="line">    <span class="keyword">var</span> _person = <span class="keyword">new</span> Human();</div><div class="line">    <span class="comment">// 创建应聘者姓名解析对象</span></div><div class="line">    _person.name = <span class="keyword">new</span> Named(name);</div><div class="line">    <span class="comment">// 创建应聘者期望职位</span></div><div class="line">    _person.work = <span class="keyword">new</span> Work(work);</div><div class="line">    <span class="comment">// 返回创建的应聘者对象</span></div><div class="line">    <span class="keyword">return</span> _person;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="收获与总结-3"><a href="#收获与总结-3" class="headerlink" title="收获与总结"></a>收获与总结</h3><p>建造者模式和前面几种创建型设计模式不同，它关心对象的整个创建过程，因此通常将创建对象的类模块化，这样使创建类的每一个模块都可以得到灵活的运用与高质量的复用。这种方式对于整个对象类的拆分无形中增加了结构的复杂性，因此如果对象粒度很小，或者模块间的复用率很低，不建议使用建造者模式。</p>
+<h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2><h3 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h3><p>用原型实例指向创建对象的类，使用于创建新的对象的类共享原型对象的属性以及方法。</p>
+<h3 id="使用场景-3"><a href="#使用场景-3" class="headerlink" title="使用场景"></a>使用场景</h3><p>还是关于子类继承父类的问题，为了提高性能，对于每次创建的一些简单的而又有差异化的属性可以放在构造函数中，将一些消耗资源比较大的方法放在基类的原型中，这样就可以避免不必要的消耗，这就是原型模式的雏形。<br>原型模式更多的是用在对象的创建上，比如创建一个实例对象的构造函数比较复杂或者耗时比较长，或者通过创建多个对象来实现。此时最好不要用new关键字去复制这些基类，可以通过对这些对象属性或者方法进行复制来实现创建。首先要有一个原型对象的复制方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 原型对象复制方法</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">prototypeExtend</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">        args = <span class="built_in">arguments</span>,</div><div class="line">        i = <span class="number">0</span>,</div><div class="line">        len = args.length;</div><div class="line">    <span class="keyword">for</span> (; i &lt; len; i++) &#123;</div><div class="line">        <span class="comment">// 遍历每个模板对象中的属性</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j <span class="keyword">in</span> args[i]) &#123;</div><div class="line">            F.prototype[j] = args[i][j];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 返回缓存类实例</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>企鹅游戏中创建一个企鹅对象，如果没有企鹅基类，只提供了一些动作模板对象，可以通过实现这些模板对象的继承来创建一个企鹅实例对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> penguin = prototypeExtend(&#123;</div><div class="line">    <span class="attr">speed</span>: <span class="number">20</span>,</div><div class="line">    <span class="attr">swim</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'游泳速度'</span> + <span class="keyword">this</span>.speed);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">run</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'奔跑速度'</span> + <span class="keyword">this</span>.speed);</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>这样通过prototypeExtend创建的就是一个对象，不用再用new去创建一个新的实例对象。</p>
+<h3 id="收获与总结-4"><a href="#收获与总结-4" class="headerlink" title="收获与总结"></a>收获与总结</h3><p>原型模式实际上也是一种继承，可以让多个对象分享同一个原型对象的属性和方法，这种继承的实现是不需要创建的，而是将原型对象分享给那些继承的对象。原型对象更适合在创建复杂的对象时，对于那些需求一直在变化而导致对象结构不停地改变时，将那些比较稳定的属性与方法共用而提取的继承的实现。</p>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h3 id="定义-5"><a href="#定义-5" class="headerlink" title="定义"></a>定义</h3><p>又被称为单体模式，只允许实例化一次的对象类。有时也可以用一个对象来规划一个命名空间，井井有条地管理对象上的属性和方法。</p>
+<h3 id="使用场景-4"><a href="#使用场景-4" class="headerlink" title="使用场景"></a>使用场景</h3><p>单例模式应该是JavaScript中最常见的一种设计模式了，经常为我们提供一个命名空间，来防止不同的人命名变量的冲突。还可以用它来创建一个小型的代码库。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> A = &#123;</div><div class="line">    <span class="attr">Util</span>: &#123;</div><div class="line">        <span class="attr">util_method1</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">        <span class="attr">util_method2</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">Tool</span>: &#123;</div><div class="line">        <span class="attr">tool_method1</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">        <span class="attr">tool_method2</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">Ajax</span>: &#123;</div><div class="line">        <span class="attr">ajax_method1</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">        <span class="attr">ajax_method2</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果想使用这个代码库，像下面这样访问即可：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">A.Util.util_method1();</div><div class="line">A.Tool.tool_method2();</div></pre></td></tr></table></figure></p>
+<h3 id="收获与总结-5"><a href="#收获与总结-5" class="headerlink" title="收获与总结"></a>收获与总结</h3><p>单例模式有时也被称为单体模式，它是只允许实例化一次的对象类，有时这么做也是为了节省系统资源。JavaScript中单例模式经常作为命名空间对象来实现，通过单例对象，我们可以将各个模块的代码井井有条地梳理在一起。</p>
+<h1 id="结构型设计模式"><a href="#结构型设计模式" class="headerlink" title="结构型设计模式"></a>结构型设计模式</h1><p>结构型设计模式关注于如何将类或对象组合成更大、更复杂的结构，以简化设计。主要有外观模式，适配器模式，代理模式，装饰者模式，桥接模式，组合模式和享元模式。</p>
+<h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><h3 id="定义-6"><a href="#定义-6" class="headerlink" title="定义"></a>定义</h3>
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="《JavaScript设计模式》读后感 觉很复杂" data-url="http://yuhan.com/2016/12/22/javascript-design-patterns/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"hyuhan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
