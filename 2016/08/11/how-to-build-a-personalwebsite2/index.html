@@ -26,7 +26,7 @@
 安装主题在你的博客目录(D:\hexo)下右键，选择Git Bash Here，输入以下命令：
 &amp;#124;&amp;nbsp;&amp;nbsp;git clone https://github.com/">
 <meta property="og:image" content="http://yuhan.com/img/head.png">
-<meta property="og:updated_time" content="2016-12-07T03:30:35.000Z">
+<meta property="og:updated_time" content="2017-03-04T03:32:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="怎么用github+hexo搭建博客--优化篇">
 <meta name="twitter:description" content="按照github+hexo博客搭建基础篇已经可以搭建一个基本的博客了，但那还不能满足我的一些需求。hexo给我们提供了很多的主题，我挑选了一款叫fexo的主题，下面以fexo主题为例，来看看怎么安装配置主题。
@@ -213,8 +213,8 @@
 <p>&#124;&nbsp;&nbsp;tags:[总结,前端]</p>
 <h2 id="添加RSS"><a href="#添加RSS" class="headerlink" title="添加RSS"></a>添加RSS</h2><p>fexo主题中有RSS导航，但是只是在配置文件中只说了怎么在页面导航中添加RSS选项，并没有说怎么生成RSS文件。</p>
 <p>hexo提供了RSS的生成插件，但是是需要手动安装的。安装RSS插件到博客根目录：</p>
-<p>&#124;&nbsp;&nbsp;npm install hexo-generate-feed –save</p>
-<p>由于fexo主题中已经给RSS添加了连接，这里就不需要收到添加了。将代码部署到giuthub，访问博客，点击导航栏中RSS，就可以看到博客的RSS文件了。</p>
+<p>&#124;&nbsp;&nbsp;npm install hexo-generator-feed  –save</p>
+<p>由于fexo主题中已经给RSS添加了连接，这里就不需要收到添加了。将代码部署到github，访问博客，点击导航栏中RSS，就可以看到博客的RSS文件了。</p>
 <p><strong>说明：</strong>最新版本的hexo是不需要在博客整站配置文件中（<em>D:\hexo_config.yml</em>）添加plugins属性的。</p>
 <h2 id="添加“多说”"><a href="#添加“多说”" class="headerlink" title="添加“多说”"></a>添加“多说”</h2><p>hexo默认使用国外比较流行的disqus评论系统，我的博客还是使用了国内的“多说”评论系统。</p>
 <ol>
