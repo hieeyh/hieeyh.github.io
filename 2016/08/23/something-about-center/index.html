@@ -25,7 +25,7 @@
 <meta property="og:description" content="最近在做百度ife上2015春季的html,css练习，印象最深的就是各种情况下的水平垂直居中了，在这里总结一下，以后要用的时候如果忘了就可以直接在自己的博客里找啦。
 水平居中首先，居中肯定是子元素在一个父元素中居中，设置水平居中的前提是父元素必须是块级元素，且宽度已经设定。
 子元素为行内元素当子元素为行内元素时，子元素的宽度是由其内容撑开的，对父元素设定“text-align:center;”，">
-<meta property="og:updated_time" content="2016-08-23T08:57:08.000Z">
+<meta property="og:updated_time" content="2017-03-04T03:21:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS水平垂直居中总结">
 <meta name="twitter:description" content="最近在做百度ife上2015春季的html,css练习，印象最深的就是各种情况下的水平垂直居中了，在这里总结一下，以后要用的时候如果忘了就可以直接在自己的博客里找啦。
@@ -207,7 +207,7 @@
 <h2 id="子元素为宽度未设定的浮动元素"><a href="#子元素为宽度未设定的浮动元素" class="headerlink" title="子元素为宽度未设定的浮动元素"></a>子元素为宽度未设定的浮动元素</h2><p>当浮动的子元素宽度未设定时，就无法通过计算padding和margin来使其水平居中了，这时可以用下面的方法。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">float</span>:left;</div><div class="line"> 	<span class="attribute">position</span>:relative;</div><div class="line"> 	<span class="attribute">left</span>:<span class="number">50%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">	<span class="attribute">float</span>:left;</div><div class="line"> 	<span class="attribute">position</span>:relative;</div><div class="line"> 	<span class="attribute">right</span>:<span class="number">50%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h1><p>显然，设置垂直居中的前提是父元素的宽度已经设定。</p>
+<h1 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h1><p>显然，设置垂直居中的前提是父元素的高度已经设定。</p>
 <h2 id="子元素为行内元素-1"><a href="#子元素为行内元素-1" class="headerlink" title="子元素为行内元素"></a>子元素为行内元素</h2><p>此时，子元素高度由其内容撑开。设置父元素的line-height等于父元素的height即可。</p>
 <h2 id="子元素为高度设定的块级元素"><a href="#子元素为高度设定的块级元素" class="headerlink" title="子元素为高度设定的块级元素"></a>子元素为高度设定的块级元素</h2><p>和水平定位一样，根据父元素子元素高度算出父元素的padding-top/padding-bottom或者子元素的margin-top/margin-bottom即可。</p>
 <p>同样，也可以利用子元素相对父元素绝对定位实现垂直居中（此时父元素需要设置定位方式为相对定位，即position:relative;）。对子元素样式设置如下：</p>
