@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-03-04T12:32:16.000Z</updated>
+  <updated>2017-03-14T07:00:11.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记一次今日头条前端视频面试</title>
+    <link href="http://yuhan.com/2017/03/14/toutiao-interview/"/>
+    <id>http://yuhan.com/2017/03/14/toutiao-interview/</id>
+    <published>2017-03-14T06:18:50.000Z</published>
+    <updated>2017-03-14T07:00:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨天也就是2017年3月13号下午三点，我进行了一次今日头条的视频面试，先是一面进行了50分钟，然后过了5分钟左右就二面了，都是视频面试，都要手撸代码。第一次参加视频面试，好紧张，当然面试之前也做好了要手敲代码的心理准备。面完之后题目基本都不记得了，只记得几个印象比较深刻的，这里分享一下。</p>
+<h1 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h1><p>一面问的都比较基础了，先是自我介绍，然后就简单的问了下项目，问项目里用到了什么，因为我那个项目用到了vue嘛，就问了我vuex的工作原理，项目问完之后就开始问基础知识了。主要问了html5的新特性，CSS3的新特性，http请求的过程等等。html5新特性我说了客户端存储方面的，然后就追问我localStorage和sessionStorage的区别嘛，反正问的基本都是网上有些同学整理的面试题里面的。</p>
+<p>后来面试官就写了一串代码，让我来判断输出，就是for循环里面用setTimeout，大家应该都懂的。我回答完之后，就让我写代码了，该来的还是会来的。让我给一个无序列表里面的每个li元素添加事件监听器，我显然知道挖了一个坑呀，然后被我机智地绕过去了。写完之后问我，如果现在要给这个列表再添加两个子元素，这个事件监听要怎么加，然后我说，那就用事件代理吧，就是给父组件绑定事件嘛。还问了我一个简单的算法题，就是判断一个字符串中出现次数最多的那个字符。</p>
+<p>就写了这么两个代码，然后又问了我一些基础题，就说准备二面，他去通知二面的面试官。</p>
+<h1 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h1><p>大概过了5分钟，二面面试官就上线了，开始也是自我介绍，还是一面的那几句。然后问了和一面基本一样的问题，html5的新特性，CSS3的新特性，追问我localStorage、sessionStorage和session的区别（这次加了个session）。然后问我addeventListener第三个参数是干嘛的，好像答错了，平时确实没怎么用到过。</p>
+<p>接着，劲爆的来的，从这个问题之后我基本就处于蒙圈的状态了。先是问我对jquery熟不熟，我说没怎么用过，平时用的比较多的是vue和react这些框架。但是，面试官仿佛对jquery有一种执念，还是继续问我jquery的问题，很崩溃，jquery我真是几乎没用过，先问我知不知道$.trim()是啥，然后让我现场写代码实现一个。然后问我$(document).ready() 与window.onload的区别，接着让我写代码实现一个$(document).ready() ，这几个问题应该都没答好，然后面试官也懒得问了，就让我实现一个快速排序，然后说一说时间和空间复杂度，然后再就问了几个基础题，就让我等消息了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>首先，我很佩服那些面试完之后居然能记得全部题目的同学，我面完之后基本都不记得了，除了几个印象比较深的题目。然后，我觉得我要去恶补jquery源码了，我以为面试官会对vue或者react这些框架比较感兴趣的，结果基本一个都没问，二面面试官提都没提到，好尴尬，哈哈。总归，还是自己太菜了，需要继续努力呀。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;昨天也就是2017年3月13号下午三点，我进行了一次今日头条的视频面试，先是一面进行了50分钟，然后过了5分钟左右就二面了，都是视频面试，都要手撸代码。第一次参加视频面试，好紧张，当然面试之前也做好了要手敲代码的心理准备。面完之后题目基本都不记得了，只记得几个印象比较深刻的
+    
+    </summary>
+    
+      <category term="面经" scheme="http://yuhan.com/categories/%E9%9D%A2%E7%BB%8F/"/>
+    
+    
+      <category term="总结" scheme="http://yuhan.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="面试" scheme="http://yuhan.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>JavaScript实现排序算法</title>
@@ -370,11 +401,11 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="vue-router" scheme="http://yuhan.com/tags/vue-router/"/>
-    
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -439,9 +470,9 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
-      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="transition" scheme="http://yuhan.com/tags/transition/"/>
     
@@ -617,7 +648,7 @@
 <li>index.html是页面入口文件</li>
 </ul>
 <h2 id="基本页面实现"><a href="#基本页面实现" class="headerlink" title="基本页面实现"></a>基本页面实现</h2><p>项目创建好之后，就开始实现自己想要的页面了，修改src文件夹下的App.vue文件，如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">import myHead from './components/header'</div><div class="line">import myNav from './components/nav'</div><div class="line">import myFoot from './components/foot'</div><div class="line"></div><div class="line">export default &#123;</div><div class="line">  name: 'app',</div><div class="line">  components: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="keyword">import</span> myHead <span class="keyword">from</span> <span class="string">'./components/header'</span></div><div class="line"><span class="keyword">import</span> myNav <span class="keyword">from</span> <span class="string">'./components/nav'</span></div><div class="line"><span class="keyword">import</span> myFoot <span class="keyword">from</span> <span class="string">'./components/foot'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">name</span>: <span class="string">'app'</span>,</div><div class="line">  <span class="attr">components</span>: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>myHead组件是页面头部，myNav组件是页面左侧导航栏，myFoot是页面底部，router-view组件是vue-router中渲染路径匹配到的视图组件。每个组件的具体实现可以去github项目地址去看源码。</p>
 <h2 id="创建配置路由"><a href="#创建配置路由" class="headerlink" title="创建配置路由"></a>创建配置路由</h2><p>显然，我要做的是一个单页面应用，要用到vue-router，先安装vue-router，输入如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save vue-router</div></pre></td></tr></table></figure></p>
 <p>然后，在src文件夹下面的main.js文件中添加路由相关的代码，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></div><div class="line"></div><div class="line">Vue.use(VueRouter) </div><div class="line"><span class="comment">// 定义路由组件</span></div><div class="line"><span class="keyword">const</span> Worldcloud = <span class="built_in">require</span>(<span class="string">'./components/cloud.vue'</span>)</div><div class="line"><span class="keyword">const</span> Building = <span class="built_in">require</span>(<span class="string">'./components/building.vue'</span>)</div><div class="line"><span class="keyword">const</span> Canteen = <span class="built_in">require</span>(<span class="string">'./components/canteen.vue'</span>)</div><div class="line"><span class="keyword">const</span> Selfstudy = <span class="built_in">require</span>(<span class="string">'./components/selfstudy.vue'</span>)</div><div class="line"><span class="keyword">const</span> Difficult = <span class="built_in">require</span>(<span class="string">'./components/difficult.vue'</span>)</div><div class="line"><span class="keyword">const</span> Interest = <span class="built_in">require</span>(<span class="string">'./components/interest.vue'</span>)</div><div class="line"><span class="keyword">const</span> Bedroom = <span class="built_in">require</span>(<span class="string">'./components/bedroom.vue'</span>)</div><div class="line"><span class="keyword">const</span> Graduate = <span class="built_in">require</span>(<span class="string">'./components/graduate.vue'</span>)</div><div class="line"><span class="keyword">const</span> Getup = <span class="built_in">require</span>(<span class="string">'./components/getup.vue'</span>)</div><div class="line"><span class="keyword">const</span> Gotobed = <span class="built_in">require</span>(<span class="string">'./components/gotobed.vue'</span>)</div><div class="line"><span class="keyword">const</span> Eat = <span class="built_in">require</span>(<span class="string">'./components/eat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Amuse = <span class="built_in">require</span>(<span class="string">'./components/amuse.vue'</span>)</div><div class="line"><span class="keyword">const</span> Single = <span class="built_in">require</span>(<span class="string">'./components/single.vue'</span>)</div><div class="line"><span class="keyword">const</span> Chat = <span class="built_in">require</span>(<span class="string">'./components/chat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Onlyme = <span class="built_in">require</span>(<span class="string">'./components/onlyme.vue'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 定义路由，配置路由映射</span></div><div class="line"><span class="keyword">const</span> routes = [</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">redirect</span>: <span class="string">'/wordcloud'</span> &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/wordcloud'</span>, <span class="attr">component</span>: Worldcloud &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/building'</span>, <span class="attr">component</span>: Building &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/canteen'</span>, <span class="attr">component</span>: Canteen &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/selfstudy'</span>, <span class="attr">component</span>: Selfstudy &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/difficult'</span>, <span class="attr">component</span>: Difficult &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/interest'</span>, <span class="attr">component</span>: Interest &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/bedroom'</span>, <span class="attr">component</span>: Bedroom &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/graduate'</span>, <span class="attr">component</span>: Graduate &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/getup'</span>, <span class="attr">component</span>: Getup &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/gotobed'</span>, <span class="attr">component</span>: Gotobed &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/eat'</span>, <span class="attr">component</span>: Eat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/amuse'</span>, <span class="attr">component</span>: Amuse &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/single'</span>, <span class="attr">component</span>: Single &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/chat'</span>, <span class="attr">component</span>: Chat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/onlyme'</span>, <span class="attr">component</span>: Onlyme &#125;</div><div class="line">]</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  <span class="attr">template</span>: <span class="string">'&lt;App/&gt;'</span>,</div><div class="line">  <span class="attr">components</span>: &#123; App &#125;,</div><div class="line">  router</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
@@ -704,9 +735,9 @@
       <category term="JavaScript" scheme="http://yuhan.com/categories/JavaScript/"/>
     
     
-      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
-    
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
+    
+      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="webpack" scheme="http://yuhan.com/tags/webpack/"/>
     
@@ -1265,43 +1296,6 @@
     
     
       <category term="博客搭建" scheme="http://yuhan.com/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>http请求方式总结</title>
-    <link href="http://yuhan.com/2016/08/09/http-request-method/"/>
-    <id>http://yuhan.com/2016/08/09/http-request-method/</id>
-    <published>2016-08-09T08:06:32.000Z</published>
-    <updated>2016-08-09T08:42:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又遇到这个问题了呢。</p>
-<p><em>下面是谢希仁著计算机网络(第5版)中的定义</em></p>
-<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>请求读取由URL所标志的信息。</p>
-<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p>给服务器添加信息（例如，注释）。</p>
-<h3 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h3><p>请求读取由URL所标志的信息的首部。</p>
-<h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h3><p>在指明的URL下存储一个文档。</p>
-<h3 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h3><p>删除指明的URL所标志的资源。</p>
-<h3 id="TRACE"><a href="#TRACE" class="headerlink" title="TRACE"></a>TRACE</h3><p>用来进行环回测试的请求报文。</p>
-<h3 id="CONNECT"><a href="#CONNECT" class="headerlink" title="CONNECT"></a>CONNECT</h3><p>用于代理服务器。</p>
-<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><p>请求查询服务器的性能，或者查询与资源相关的选项和需求。</p>
-<p>还有一些我们平时不怎么接触到的，比如PATCH，MOVE，COPY，LINK，UNLINK这些。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又
-    
-    </summary>
-    
-      <category term="计算机网络" scheme="http://yuhan.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-    
-      <category term="总结" scheme="http://yuhan.com/tags/%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="http" scheme="http://yuhan.com/tags/http/"/>
-    
-      <category term="面试" scheme="http://yuhan.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   
