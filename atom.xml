@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-03-04T12:32:16.000Z</updated>
+  <updated>2017-06-23T06:36:00.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -14,6 +14,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端面试之前端性能优化总结</title>
+    <link href="http://yuhan.com/2017/06/23/high-performance-website-construction/"/>
+    <id>http://yuhan.com/2017/06/23/high-performance-website-construction/</id>
+    <published>2017-06-23T02:13:34.000Z</published>
+    <updated>2017-06-23T06:36:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>距上次写博客已经有三个多月的时间了，三四月份一直在忙着找实习，期间还在和同学一起合作项目，五六月份时间基本都花在了项目上，本来就很懒的我，也就懒得写博客了。现在项目总算是要上线了，还是想继续把自己的博客维护下去。最近几篇文章，准备分享找实习和项目相关的，也希望大家多多支持我和同学一起合作的项目，也算是一个创业项目哈。</p>
+<p>找实习期间还是面试了很多家公司的，基本大型的互联网公司都有面试过，有一个问题是每次面试官都会问到的，那就是前端的性能优化，所以就总结一下，以备9月份的校招。这些规则呢主要是来自《高性能网站建设指南》这本书，然后雅虎军规加以补充。</p>
+<h1 id="减少http请求"><a href="#减少http请求" class="headerlink" title="减少http请求"></a>减少http请求</h1><p>学过计算机网络的同学应该都知道，http请求需要进行三次握手，这是很费时间的。通过查看流量也可以发现，大部分的时间都花在了为html文档所引用的所有组件进行的http请求上。因此减少http请求可以提高网站性能。</p>
+<h2 id="图片地图"><a href="#图片地图" class="headerlink" title="图片地图"></a>图片地图</h2><p>这个我实际用的比较少，就是在一个图片上关联多个url。</p>
+<h2 id="CSS-Sprites"><a href="#CSS-Sprites" class="headerlink" title="CSS Sprites"></a>CSS Sprites</h2><p>中文叫雪碧图，将多个图片合并到一个单独的图片中。如果用作背景图片，可以根据background-position来定位背景，这样需要很多张背景图片现在就只需要一张了。也就是本来需要发送多次http请求来请求图片现在只需要发送一次就可以了。</p>
+<h2 id="内联图片"><a href="#内联图片" class="headerlink" title="内联图片"></a>内联图片</h2><p>通过编码的字符串将图片内嵌到网页文本中。通过使用data: URL模式可以在web页面中包含图片但无需额外的http请求。</p>
+<h2 id="合并脚本和样式表"><a href="#合并脚本和样式表" class="headerlink" title="合并脚本和样式表"></a>合并脚本和样式表</h2><p>将多个js脚本文件打包成一个文件，将多个css样式表打包成一个样式表。如果分成多个小文件，每个文件都会导致一个额外的http请求。</p>
+<h1 id="使用内容发布网络（CDN）"><a href="#使用内容发布网络（CDN）" class="headerlink" title="使用内容发布网络（CDN）"></a>使用内容发布网络（CDN）</h1><p>内容发布网络是一组分布在多个不同地理位置的web服务器，用于更加有效地向用户发布内容。在优化性能时，向特定用户发布内容的服务器的选择基于对网络可用度的测量。例如，CDN可能选择网络阶数最小的服务器，或者具有最短响应时间的服务器。这样就能减短网络请求的时间。</p>
+<h1 id="添加Expires头"><a href="#添加Expires头" class="headerlink" title="添加Expires头"></a>添加Expires头</h1><p>添加Expires头可以最大化地利用浏览器的缓存能力来改善页面的性能。通过使用一个长久的Expires头，使组件被缓存，可以在后续的页面浏览中避免不必要的http请求。<br>web服务器使用Expires头来告诉web客户端它可以使用一个组件的当前副本，直到指定时间为止。</p>
+<h2 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h2><p>Expires头有一定的限制，就是要求服务器和客户端的时钟严格同步，另外，过期日期需要经常检查。HTTP 1.1引入了Cache-Control头来克服Expires头的限制。Cache-Control可以重写Expires头。</p>
+<h1 id="压缩组件"><a href="#压缩组件" class="headerlink" title="压缩组件"></a>压缩组件</h1><p>压缩组件可以减小http响应的大小，进而减少响应时间。如果http请求产生的响应包很小，传输时间就会减少。</p>
+<h1 id="将样式表放在顶部"><a href="#将样式表放在顶部" class="headerlink" title="将样式表放在顶部"></a>将样式表放在顶部</h1><p>将样式表放在文档底部会导致在浏览器中阻止内容逐步呈现，将样式表放在顶部会显得加载速度更快，这样可以是浏览器逐步呈现已经下载的网页内容。对于内容比较多的网页尤其重要，用户不用一直等待一个白屏的页面，而是可以先看已经下载的内容。</p>
+<h1 id="将脚本放在底部"><a href="#将脚本放在底部" class="headerlink" title="将脚本放在底部"></a>将脚本放在底部</h1><p>在使用样式表时，页面逐步呈现会被阻止，直到所有的样式表下载完成。将样式表移到head中，就能首先下载样式表而不会阻止页面呈现。使用脚本时，所有位于脚本以下的内容，逐步呈现都会被阻塞，将脚本放在页面越靠下的位置，意味着越多的内容能够逐步地呈现。</p>
+<h1 id="避免CSS表达式"><a href="#避免CSS表达式" class="headerlink" title="避免CSS表达式"></a>避免CSS表达式</h1><p>css表达式的问题在于对其进行求值的频率比我们期望的要高。不只是在页面呈现和大小改变时求值，当页面滚动、甚至用户鼠标在页面上移过时都要求值。</p>
+<h1 id="使用外部JavaScript和CSS"><a href="#使用外部JavaScript和CSS" class="headerlink" title="使用外部JavaScript和CSS"></a>使用外部JavaScript和CSS</h1><p>纯粹而言，内联的js和css可以产生比外部文件更快的响应速度，因为外部文件需要承担多个http请求带来的开销。尽管如此，现实中还是使用外部文件会产生较快的页面，因为外部文件有机会被浏览器缓存起来。html文档通常不会配置为可以缓存的。</p>
+<h1 id="减少DNS查找"><a href="#减少DNS查找" class="headerlink" title="减少DNS查找"></a>减少DNS查找</h1><p>Internet是通过ip地址来查找服务器的，由于IP地址很难记忆，通常使用url代替，但是当浏览器发送http请求时还是需要ip地址，DNS就是用来将url映射到ip地址上的。DNS查找当然也是有开销的，通常要花费20-120毫秒。在DNS查找完成之前，浏览器不能从主机名那下载到任何内容。</p>
+<h2 id="DNS缓存"><a href="#DNS缓存" class="headerlink" title="DNS缓存"></a>DNS缓存</h2><p>DNS查找可以被缓存起来以提高查找性能，通常浏览器和用户主机都会进行DNS缓存。</p>
+<h2 id="减少DNS查找-1"><a href="#减少DNS查找-1" class="headerlink" title="减少DNS查找"></a>减少DNS查找</h2><p>DNS查找的数量与页面中唯一主机名的数量相等，包括页面url、图片、脚本文件、样式表、Flash对象等的主机名。减少唯一主机名的数量就可以减少DNS查找的数量。</p>
+<h1 id="精简JavaScript"><a href="#精简JavaScript" class="headerlink" title="精简JavaScript"></a>精简JavaScript</h1><p>精简，就是从代码中移除不必要的字符以减小其大小，进而改善页面加载时间。同样，css文件也可以进行精简。压缩同时也可以减小所需要请求文件的大小，进而加快文件的请求。</p>
+<h1 id="避免重定向"><a href="#避免重定向" class="headerlink" title="避免重定向"></a>避免重定向</h1><p>重定向是将用户从一个url重新路由到另一个url，重定向会使页面加载变慢。</p>
+<h1 id="移除重复脚本"><a href="#移除重复脚本" class="headerlink" title="移除重复脚本"></a>移除重复脚本</h1><p>在一个页面中两次包含同样的一个js文件会损伤性能。一个大型的网站可能是多人协作或者多团队协作的，这样脚本被重复添加是很可能发生的事情。重复的脚本会增加不必要的http请求和浪费执行js所用的时间，这样会损伤页面性能，所以需要避免使用同样的脚本。</p>
+<h1 id="配置ETag"><a href="#配置ETag" class="headerlink" title="配置ETag"></a>配置ETag</h1><p>当网站被宿主在多于一台服务器上时，ETag头可能会阻碍缓存。当浏览器从一台服务器上获取原始组件，之后，又向另外一台不同的服务器发起条件GET请求时，ETag是不会匹配的，而对于使用服务器集群来处理请求的网站来说，这是很常见的一种情况。所以需要对ETag进行配置，以利用其灵活的验证能力。</p>
+<h1 id="雅虎军规补充"><a href="#雅虎军规补充" class="headerlink" title="雅虎军规补充"></a>雅虎军规补充</h1><h2 id="延迟加载"><a href="#延迟加载" class="headerlink" title="延迟加载"></a>延迟加载</h2><p>延迟加载需要知道网页最初加载需要的最小内容集是什么。剩下的内容就可以延迟加载了。</p>
+<h2 id="提前加载"><a href="#提前加载" class="headerlink" title="提前加载"></a>提前加载</h2><p>与延迟加载目的相反，提前加载的是为了提前加载接下来网页中要访问的资源。</p>
+<h2 id="减少DOM元素数量"><a href="#减少DOM元素数量" class="headerlink" title="减少DOM元素数量"></a>减少DOM元素数量</h2><p>网页中元素过多对网页的加载和脚本的执行都是沉重的负担，500个元素和5000个元素在加载速度上会有很大差别。所以减少DOM元素数量是十分有必要的。</p>
+<h2 id="减少DOM操作"><a href="#减少DOM操作" class="headerlink" title="减少DOM操作"></a>减少DOM操作</h2><p>通过js访问DOM元素没有我们想象中快，元素多的网页尤其慢，利用js对DOM的访问时要注意:</p>
+<ol>
+<li>缓存已经访问过的元素</li>
+<li>Offline更新节点然后再加回DOM Tree</li>
+<li>避免通过Javascript修复layout</li>
+</ol>
+<h2 id="根据域名划分内容"><a href="#根据域名划分内容" class="headerlink" title="根据域名划分内容"></a>根据域名划分内容</h2><p>浏览器一般对同一个域的下载链接数有所限制，按照域名划分下载内容可以增大浏览器并行下载数量，但是也不能盲目增加域名，这样会增加DNS查找的负担。</p>
+<h2 id="减少iframe负担"><a href="#减少iframe负担" class="headerlink" title="减少iframe负担"></a>减少iframe负担</h2><p>iframe会阻止页面的加载，而且即使iframe内容为空也会消耗时间，所以尽量避免使用iframe。</p>
+<h2 id="使用Ajax-GET请求"><a href="#使用Ajax-GET请求" class="headerlink" title="使用Ajax GET请求"></a>使用Ajax GET请求</h2><p>浏览器在实现XMLHttpRequest POST的时候会分成两步，先发送header，然后再发送数据。而GET却可以用一个TCP报文完成请求。另外GET从语义上来讲是去服务器取数据，而POST则是向服务器发送数据，所以我们使用Ajax请求数据的时候尽量通过GET来完成。</p>
+<h2 id="避免空的图片src"><a href="#避免空的图片src" class="headerlink" title="避免空的图片src"></a>避免空的图片src</h2><p>空的图片src仍然会使浏览器发送请求到服务器，这样完全是不必要的浪费。</p>
+<h2 id="用代替-import"><a href="#用代替-import" class="headerlink" title="用代替@import"></a>用<link>代替@import</h2><p>@import相当于将css放在网页内容底部。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;距上次写博客已经有三个多月的时间了，三四月份一直在忙着找实习，期间还在和同学一起合作项目，五六月份时间基本都花在了项目上，本来就很懒的我，也就懒得写博客了。现在项目总算是要上线了，还是想继续把自己的博客维护下去。最近几篇文章，准备分享找实习和项目相关的，也希望大家多多支持我
+    
+    </summary>
+    
+      <category term="前端性能" scheme="http://yuhan.com/categories/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD/"/>
+    
+    
+      <category term="面试" scheme="http://yuhan.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="性能" scheme="http://yuhan.com/tags/%E6%80%A7%E8%83%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>JavaScript实现排序算法</title>
@@ -370,11 +430,11 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="vue-router" scheme="http://yuhan.com/tags/vue-router/"/>
-    
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -439,9 +499,9 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
-      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="transition" scheme="http://yuhan.com/tags/transition/"/>
     
@@ -617,7 +677,7 @@
 <li>index.html是页面入口文件</li>
 </ul>
 <h2 id="基本页面实现"><a href="#基本页面实现" class="headerlink" title="基本页面实现"></a>基本页面实现</h2><p>项目创建好之后，就开始实现自己想要的页面了，修改src文件夹下的App.vue文件，如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">import myHead from './components/header'</div><div class="line">import myNav from './components/nav'</div><div class="line">import myFoot from './components/foot'</div><div class="line"></div><div class="line">export default &#123;</div><div class="line">  name: 'app',</div><div class="line">  components: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="keyword">import</span> myHead <span class="keyword">from</span> <span class="string">'./components/header'</span></div><div class="line"><span class="keyword">import</span> myNav <span class="keyword">from</span> <span class="string">'./components/nav'</span></div><div class="line"><span class="keyword">import</span> myFoot <span class="keyword">from</span> <span class="string">'./components/foot'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">name</span>: <span class="string">'app'</span>,</div><div class="line">  <span class="attr">components</span>: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>myHead组件是页面头部，myNav组件是页面左侧导航栏，myFoot是页面底部，router-view组件是vue-router中渲染路径匹配到的视图组件。每个组件的具体实现可以去github项目地址去看源码。</p>
 <h2 id="创建配置路由"><a href="#创建配置路由" class="headerlink" title="创建配置路由"></a>创建配置路由</h2><p>显然，我要做的是一个单页面应用，要用到vue-router，先安装vue-router，输入如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save vue-router</div></pre></td></tr></table></figure></p>
 <p>然后，在src文件夹下面的main.js文件中添加路由相关的代码，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></div><div class="line"></div><div class="line">Vue.use(VueRouter) </div><div class="line"><span class="comment">// 定义路由组件</span></div><div class="line"><span class="keyword">const</span> Worldcloud = <span class="built_in">require</span>(<span class="string">'./components/cloud.vue'</span>)</div><div class="line"><span class="keyword">const</span> Building = <span class="built_in">require</span>(<span class="string">'./components/building.vue'</span>)</div><div class="line"><span class="keyword">const</span> Canteen = <span class="built_in">require</span>(<span class="string">'./components/canteen.vue'</span>)</div><div class="line"><span class="keyword">const</span> Selfstudy = <span class="built_in">require</span>(<span class="string">'./components/selfstudy.vue'</span>)</div><div class="line"><span class="keyword">const</span> Difficult = <span class="built_in">require</span>(<span class="string">'./components/difficult.vue'</span>)</div><div class="line"><span class="keyword">const</span> Interest = <span class="built_in">require</span>(<span class="string">'./components/interest.vue'</span>)</div><div class="line"><span class="keyword">const</span> Bedroom = <span class="built_in">require</span>(<span class="string">'./components/bedroom.vue'</span>)</div><div class="line"><span class="keyword">const</span> Graduate = <span class="built_in">require</span>(<span class="string">'./components/graduate.vue'</span>)</div><div class="line"><span class="keyword">const</span> Getup = <span class="built_in">require</span>(<span class="string">'./components/getup.vue'</span>)</div><div class="line"><span class="keyword">const</span> Gotobed = <span class="built_in">require</span>(<span class="string">'./components/gotobed.vue'</span>)</div><div class="line"><span class="keyword">const</span> Eat = <span class="built_in">require</span>(<span class="string">'./components/eat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Amuse = <span class="built_in">require</span>(<span class="string">'./components/amuse.vue'</span>)</div><div class="line"><span class="keyword">const</span> Single = <span class="built_in">require</span>(<span class="string">'./components/single.vue'</span>)</div><div class="line"><span class="keyword">const</span> Chat = <span class="built_in">require</span>(<span class="string">'./components/chat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Onlyme = <span class="built_in">require</span>(<span class="string">'./components/onlyme.vue'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 定义路由，配置路由映射</span></div><div class="line"><span class="keyword">const</span> routes = [</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">redirect</span>: <span class="string">'/wordcloud'</span> &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/wordcloud'</span>, <span class="attr">component</span>: Worldcloud &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/building'</span>, <span class="attr">component</span>: Building &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/canteen'</span>, <span class="attr">component</span>: Canteen &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/selfstudy'</span>, <span class="attr">component</span>: Selfstudy &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/difficult'</span>, <span class="attr">component</span>: Difficult &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/interest'</span>, <span class="attr">component</span>: Interest &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/bedroom'</span>, <span class="attr">component</span>: Bedroom &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/graduate'</span>, <span class="attr">component</span>: Graduate &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/getup'</span>, <span class="attr">component</span>: Getup &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/gotobed'</span>, <span class="attr">component</span>: Gotobed &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/eat'</span>, <span class="attr">component</span>: Eat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/amuse'</span>, <span class="attr">component</span>: Amuse &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/single'</span>, <span class="attr">component</span>: Single &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/chat'</span>, <span class="attr">component</span>: Chat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/onlyme'</span>, <span class="attr">component</span>: Onlyme &#125;</div><div class="line">]</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  <span class="attr">template</span>: <span class="string">'&lt;App/&gt;'</span>,</div><div class="line">  <span class="attr">components</span>: &#123; App &#125;,</div><div class="line">  router</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
@@ -704,9 +764,9 @@
       <category term="JavaScript" scheme="http://yuhan.com/categories/JavaScript/"/>
     
     
-      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
-    
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
+    
+      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="webpack" scheme="http://yuhan.com/tags/webpack/"/>
     
@@ -1265,43 +1325,6 @@
     
     
       <category term="博客搭建" scheme="http://yuhan.com/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>http请求方式总结</title>
-    <link href="http://yuhan.com/2016/08/09/http-request-method/"/>
-    <id>http://yuhan.com/2016/08/09/http-request-method/</id>
-    <published>2016-08-09T08:06:32.000Z</published>
-    <updated>2016-08-09T08:42:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又遇到这个问题了呢。</p>
-<p><em>下面是谢希仁著计算机网络(第5版)中的定义</em></p>
-<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>请求读取由URL所标志的信息。</p>
-<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p>给服务器添加信息（例如，注释）。</p>
-<h3 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h3><p>请求读取由URL所标志的信息的首部。</p>
-<h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h3><p>在指明的URL下存储一个文档。</p>
-<h3 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h3><p>删除指明的URL所标志的资源。</p>
-<h3 id="TRACE"><a href="#TRACE" class="headerlink" title="TRACE"></a>TRACE</h3><p>用来进行环回测试的请求报文。</p>
-<h3 id="CONNECT"><a href="#CONNECT" class="headerlink" title="CONNECT"></a>CONNECT</h3><p>用于代理服务器。</p>
-<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><p>请求查询服务器的性能，或者查询与资源相关的选项和需求。</p>
-<p>还有一些我们平时不怎么接触到的，比如PATCH，MOVE，COPY，LINK，UNLINK这些。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又
-    
-    </summary>
-    
-      <category term="计算机网络" scheme="http://yuhan.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-    
-      <category term="总结" scheme="http://yuhan.com/tags/%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="http" scheme="http://yuhan.com/tags/http/"/>
-    
-      <category term="面试" scheme="http://yuhan.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   
