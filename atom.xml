@@ -587,9 +587,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
     
   </entry>
   
@@ -640,9 +640,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
