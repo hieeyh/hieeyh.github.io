@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-06-23T06:36:00.000Z</updated>
+  <updated>2017-06-27T08:27:19.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>web security csrf</title>
+    <link href="http://yuhan.com/2017/06/27/web-security-csrf/"/>
+    <id>http://yuhan.com/2017/06/27/web-security-csrf/</id>
+    <published>2017-06-27T07:26:54.000Z</published>
+    <updated>2017-06-27T08:27:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前端面试过程中遇到的另一个最多的问题就是web安全了，之前博客有分享过XSS攻击的内容，这次聊聊CSRF攻击。CSRF是一种常见的攻击，但是也是web安全中最容易被忽略的一种攻击方式。</p>
+<h1 id="什么是CSRF-跨站点请求伪造"><a href="#什么是CSRF-跨站点请求伪造" class="headerlink" title="什么是CSRF(跨站点请求伪造)"></a>什么是CSRF(跨站点请求伪造)</h1><p>根据字面意思，大概能猜到，CSRF攻击就是攻击者伪造了用户的请求，在用户不知道的情况下，以用户的名义向服务器发送恶意请求。常见的场景是，用户首先登陆一个正常（下面称为被攻击网站）的网站，攻击者诱使用户在不关闭被攻击网站的同时打开攻击者的页面，这时攻击者就可以以用户的名义给被攻击网站发送恶意请求了。可以看出CSRF是有条件的，首先用户要登陆被攻击网站，并生成Cookie，然后在不登出被攻击网站的同时，访问攻击网站。这两个条件缺一不可。</p>
+<h1 id="CSRF进阶"><a href="#CSRF进阶" class="headerlink" title="CSRF进阶"></a>CSRF进阶</h1><h2 id="浏览器Cookie策略"><a href="#浏览器Cookie策略" class="headerlink" title="浏览器Cookie策略"></a>浏览器Cookie策略</h2><p>CSRF之所以能成功，主要还是因为用户的浏览器成功发送了Cookie的缘故。浏览器所持有的Cookie分为两种：一种是“Session Cookie”，又叫“临时Cookie”；另一种是“Third-party Cookie”，也称为“本地Cookie”。<br>Third-party Cookie，服务器在Set-Cookie时指定了Expire时间，只有到了Expire时间后Cookie才会失效，而Session Cookie则没有指定Expire时间，浏览器关闭后就失效了。如果浏览器从一个域的页面中，要加载另一个域的资源，由于安全原因，某些浏览器会阻止Third-party Cookie的发送。由于新打开的页面和原来的页面在同一个浏览器进程中，所以Session Cookie将会被发送。</p>
+<p>IE浏览器处于安全考虑是禁止浏览器在<img>、<iframe>、<script>、<link>等标签中发送第三方Cookie的。当前的主流浏览器中，默认会拦截Third-party Cookie的有：IE6~8、Safari，不会拦截的有：Firefox、Opera、Chrome等。</p>
+<h2 id="只有GET请求么？"><a href="#只有GET请求么？" class="headerlink" title="只有GET请求么？"></a>只有GET请求么？</h2><p>在CSRF攻击流行之初，有一种错误的观点认为CSRF攻击只能由GET发起，这种错误观点的形成原因是大多数CSRF攻击发起时，使用的HTML标签都是<img>、<iframe>、<script>等带src属性的标签，这列标签只能够发起一次GET请求，而不能发起POST请求。然而，对于攻击者来说，有若干种方法可以构造出一个POST请求。最简单的方法就是在一个页面中构造好一个form表单，然后使用javascript自动提交这个表单。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://www.a.com/register"</span> <span class="attr">id</span>=<span class="string">"register"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">accept-charset</span>=<span class="string">"utf-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">""</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">""</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></div><div class="line">    <span class="keyword">var</span> f = <span class="built_in">document</span>.getElementById(<span class="string">"register"</span>);</div><div class="line">    f.inputs[<span class="number">0</span>].value = <span class="string">"test"</span>;</div><div class="line">    f.inputs[<span class="number">1</span>].value = <span class="string">"passwd"</span>;</div><div class="line">    f.submit();</div><div class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># CSRF防御</div><div class="line">## 验证码</div><div class="line">验证码是对抗CSRF攻击最简单有效地防御方法。CSRF攻击往往是在用户不知情的情况下构造了网络请求。而验证码则强制用户必须与应用进行交互，才能完成最终请求。</div><div class="line">但是验证码并不是万能的，我们不可能给页面的所有操作都加上验证码。</div><div class="line"></div><div class="line">## Referer Check</div><div class="line">Referer Check在互联网中最常见的应用就是“防止图片盗链”。同理，Referer Check也可以被用于检查请求是否来自合法的源。</div><div class="line"></div><div class="line">## Anti CSRF Token</div><div class="line">CSRF攻击存在的本质原因还是网页中重要操作的所有参数都是可以被攻击者猜测到的。攻击者只有预测出url所有参数与参数值，才能成功地构造一个伪造的请求。所以我们可以通过把参数加密，或者使用一些随机数，从而让攻击者无法猜测到参数值。</div><div class="line">我们可以给请求新增加一个token，这个token值是随机的。</div></pre></td></tr></table></figure>
+<p><a href="http://host/path/delete?username=abc&amp;item=123&amp;token=[random(seed">http://host/path/delete?username=abc&amp;item=123&amp;token=[random(seed</a>)]<br>```<br>由于token的存在，攻击者就无法再构造出一个完整的url来实施CSRF攻击了。</p>
+</script></iframe></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前端面试过程中遇到的另一个最多的问题就是web安全了，之前博客有分享过XSS攻击的内容，这次聊聊CSRF攻击。CSRF是一种常见的攻击，但是也是web安全中最容易被忽略的一种攻击方式。&lt;/p&gt;
+&lt;h1 id=&quot;什么是CSRF-跨站点请求伪造&quot;&gt;&lt;a href=&quot;#什么是CS
+    
+    </summary>
+    
+      <category term="web安全" scheme="http://yuhan.com/categories/web%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="安全" scheme="http://yuhan.com/tags/%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>前端面试之前端性能优化总结</title>
@@ -430,11 +461,11 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="vue-router" scheme="http://yuhan.com/tags/vue-router/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -499,9 +530,9 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="transition" scheme="http://yuhan.com/tags/transition/"/>
     
@@ -677,7 +708,7 @@
 <li>index.html是页面入口文件</li>
 </ul>
 <h2 id="基本页面实现"><a href="#基本页面实现" class="headerlink" title="基本页面实现"></a>基本页面实现</h2><p>项目创建好之后，就开始实现自己想要的页面了，修改src文件夹下的App.vue文件，如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="keyword">import</span> myHead <span class="keyword">from</span> <span class="string">'./components/header'</span></div><div class="line"><span class="keyword">import</span> myNav <span class="keyword">from</span> <span class="string">'./components/nav'</span></div><div class="line"><span class="keyword">import</span> myFoot <span class="keyword">from</span> <span class="string">'./components/foot'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">name</span>: <span class="string">'app'</span>,</div><div class="line">  <span class="attr">components</span>: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">import myHead from './components/header'</div><div class="line">import myNav from './components/nav'</div><div class="line">import myFoot from './components/foot'</div><div class="line"></div><div class="line">export default &#123;</div><div class="line">  name: 'app',</div><div class="line">  components: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>myHead组件是页面头部，myNav组件是页面左侧导航栏，myFoot是页面底部，router-view组件是vue-router中渲染路径匹配到的视图组件。每个组件的具体实现可以去github项目地址去看源码。</p>
 <h2 id="创建配置路由"><a href="#创建配置路由" class="headerlink" title="创建配置路由"></a>创建配置路由</h2><p>显然，我要做的是一个单页面应用，要用到vue-router，先安装vue-router，输入如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save vue-router</div></pre></td></tr></table></figure></p>
 <p>然后，在src文件夹下面的main.js文件中添加路由相关的代码，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></div><div class="line"></div><div class="line">Vue.use(VueRouter) </div><div class="line"><span class="comment">// 定义路由组件</span></div><div class="line"><span class="keyword">const</span> Worldcloud = <span class="built_in">require</span>(<span class="string">'./components/cloud.vue'</span>)</div><div class="line"><span class="keyword">const</span> Building = <span class="built_in">require</span>(<span class="string">'./components/building.vue'</span>)</div><div class="line"><span class="keyword">const</span> Canteen = <span class="built_in">require</span>(<span class="string">'./components/canteen.vue'</span>)</div><div class="line"><span class="keyword">const</span> Selfstudy = <span class="built_in">require</span>(<span class="string">'./components/selfstudy.vue'</span>)</div><div class="line"><span class="keyword">const</span> Difficult = <span class="built_in">require</span>(<span class="string">'./components/difficult.vue'</span>)</div><div class="line"><span class="keyword">const</span> Interest = <span class="built_in">require</span>(<span class="string">'./components/interest.vue'</span>)</div><div class="line"><span class="keyword">const</span> Bedroom = <span class="built_in">require</span>(<span class="string">'./components/bedroom.vue'</span>)</div><div class="line"><span class="keyword">const</span> Graduate = <span class="built_in">require</span>(<span class="string">'./components/graduate.vue'</span>)</div><div class="line"><span class="keyword">const</span> Getup = <span class="built_in">require</span>(<span class="string">'./components/getup.vue'</span>)</div><div class="line"><span class="keyword">const</span> Gotobed = <span class="built_in">require</span>(<span class="string">'./components/gotobed.vue'</span>)</div><div class="line"><span class="keyword">const</span> Eat = <span class="built_in">require</span>(<span class="string">'./components/eat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Amuse = <span class="built_in">require</span>(<span class="string">'./components/amuse.vue'</span>)</div><div class="line"><span class="keyword">const</span> Single = <span class="built_in">require</span>(<span class="string">'./components/single.vue'</span>)</div><div class="line"><span class="keyword">const</span> Chat = <span class="built_in">require</span>(<span class="string">'./components/chat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Onlyme = <span class="built_in">require</span>(<span class="string">'./components/onlyme.vue'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 定义路由，配置路由映射</span></div><div class="line"><span class="keyword">const</span> routes = [</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">redirect</span>: <span class="string">'/wordcloud'</span> &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/wordcloud'</span>, <span class="attr">component</span>: Worldcloud &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/building'</span>, <span class="attr">component</span>: Building &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/canteen'</span>, <span class="attr">component</span>: Canteen &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/selfstudy'</span>, <span class="attr">component</span>: Selfstudy &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/difficult'</span>, <span class="attr">component</span>: Difficult &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/interest'</span>, <span class="attr">component</span>: Interest &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/bedroom'</span>, <span class="attr">component</span>: Bedroom &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/graduate'</span>, <span class="attr">component</span>: Graduate &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/getup'</span>, <span class="attr">component</span>: Getup &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/gotobed'</span>, <span class="attr">component</span>: Gotobed &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/eat'</span>, <span class="attr">component</span>: Eat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/amuse'</span>, <span class="attr">component</span>: Amuse &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/single'</span>, <span class="attr">component</span>: Single &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/chat'</span>, <span class="attr">component</span>: Chat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/onlyme'</span>, <span class="attr">component</span>: Onlyme &#125;</div><div class="line">]</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  <span class="attr">template</span>: <span class="string">'&lt;App/&gt;'</span>,</div><div class="line">  <span class="attr">components</span>: &#123; App &#125;,</div><div class="line">  router</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
@@ -764,9 +795,9 @@
       <category term="JavaScript" scheme="http://yuhan.com/categories/JavaScript/"/>
     
     
-      <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
-    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
+    
+      <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
       <category term="webpack" scheme="http://yuhan.com/tags/webpack/"/>
     
@@ -1244,80 +1275,6 @@
     <summary type="html">
     
       &lt;p&gt;按照github+hexo博客搭建基础篇已经可以搭建一个基本的博客了，但那还不能满足我的一些需求。hexo给我们提供了很多的主题，我挑选了一款叫&lt;a href=&quot;https://github.com/forsigner/fexo&quot; target=&quot;_blank&quot; rel=&quot;
-    
-    </summary>
-    
-      <category term="博客搭建" scheme="http://yuhan.com/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-    
-      <category term="博客搭建" scheme="http://yuhan.com/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>怎么用github+hexo搭建博客--基础篇</title>
-    <link href="http://yuhan.com/2016/08/10/How-to-build-a-personalwebsite1/"/>
-    <id>http://yuhan.com/2016/08/10/How-to-build-a-personalwebsite1/</id>
-    <published>2016-08-10T11:51:02.000Z</published>
-    <updated>2016-08-11T06:30:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>网上已经有很多github+hexo搭建个人博客的教程，但在我搭建个人博客的过程中遇到了一些问题查了很多资料才解决，所以在这里细致地分享一下我搭建网站的整个过程。（本人用的Windows系统所以本教程暂时只针对Windows用户。）</p>
-<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>到<a href="https://git-scm.com/" target="_blank" rel="external">git</a>官网下载相应版本,安装即可。</p>
-<h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p>到<a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a>官网下载相应版本，安装即可。</p>
-<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>打开Git Bash，输入<br>&#124;&nbsp;&nbsp;npm install -g hexo</p>
-<p> (<em>npm是Node自带的包管理工具</em>)</p>
-<h2 id="创建hexo文件夹"><a href="#创建hexo文件夹" class="headerlink" title="创建hexo文件夹"></a>创建hexo文件夹</h2><p>在想要创建hexo的地方新建hexo文件夹（如：<em>D:\hexo</em>）,在hexo文件夹中，右键选择Git Bash Here（若右键没出现Git Bash可以直接进入开始菜单找到git bash，再进入相应目录），执行以下命令：</p>
-<p>&#124;&nbsp;&nbsp;hexo init</p>
-<p>hexo会自动在你的hexo文件夹下创建搭建网站需要的所有文件，再执行以下命令安装所需的依赖包：</p>
-<p>&#124;&nbsp;&nbsp;npm install</p>
-<h2 id="本地运行"><a href="#本地运行" class="headerlink" title="本地运行"></a>本地运行</h2><p>目前为止已经搭建好本地的hexo博客了，在Git Bash中执行如下命令：</p>
-<p>&#124;&nbsp;&nbsp;hexo generate （或者hexo g）</p>
-<p>&#124;&nbsp;&nbsp;hexo server （或者hexo s）</p>
-<p>然后打开浏览器，在地址栏输入localhost:4000，就可以看到我们搭建好的本地博客了。到此只是搭建好了本地博客，还需要将博客部署到github上，显然，需要注册一个github账号。</p>
-<h2 id="注册Github账号"><a href="#注册Github账号" class="headerlink" title="注册Github账号"></a>注册Github账号</h2><p>进入<a href="https://github.com/" target="_blank" rel="external">github</a>官网注册就好了，记住不要忘了验证邮件。我的github的名字是hieeyh。</p>
-<h2 id="新建repository"><a href="#新建repository" class="headerlink" title="新建repository"></a>新建repository</h2><p>新建一个repository，名字是yourgithubname.github.io，比如我的是hieeyh.github.io。</p>
-<h2 id="部署博客"><a href="#部署博客" class="headerlink" title="部署博客"></a>部署博客</h2><p>进入你的hexo文件夹根目录下，用编辑器打开_config.yml，修改deploy项，如下（根据你的github进行相应更改）：</p>
-<p>&#124;&nbsp;&nbsp;deploy:</p>
-<p>&#124;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;&nbsp;git</p>
-<p>&#124;&nbsp;&nbsp;&nbsp;&nbsp;repo:&nbsp;&nbsp;<code>https://github.com/hieeyh/hieeyh.github.io.git</code></p>
-<p>&#124;&nbsp;&nbsp;&nbsp;&nbsp;branch:&nbsp;&nbsp;master</p>
-<p>然后执行以下命令：</p>
-<p>&#124;&nbsp;&nbsp;hexo generate （或者hexo g）</p>
-<p>&#124;&nbsp;&nbsp;hexo deploy （或者hexo d）</p>
-<p>此时就完成部署了，用浏览器访问hieeyh.github.io即可。</p>
-<p>每次修改完本地的文件后要执行以下命令，重新部署到github上：</p>
-<p>&#124;&nbsp;&nbsp;hexo clean </p>
-<p>&#124;&nbsp;&nbsp;hexo generate （或者hexo g）</p>
-<p>&#124;&nbsp;&nbsp;hexo deploy （或者hexo d）</p>
-<p><strong>注意：</strong>如果是第一次使用github，则需要设置ssh,可以参考<a href="http://mp.weixin.qq.com/s?__biz=MzA4NTQwNDcyMA==&amp;mid=2650661821&amp;idx=1&amp;sn=c6116ed82bff2d083bb152fbd8cbc38d&amp;scene=1&amp;srcid=0621l9okMDolnRp9zG9xHx9E#wechat_redirect" target="_blank" rel="external">教程</a>。</p>
-<h2 id="整站配置"><a href="#整站配置" class="headerlink" title="整站配置"></a>整站配置</h2><p>hexo根目录下的_config.yml（<em>D:\hexo_config.yml</em>）中是对整个站点的基本配置。除了之前配置的deploy项和默认的以外，我目前还配置了以下项：</p>
-<p>&#124;&nbsp;&nbsp;# Site</p>
-<p>&#124;&nbsp;&nbsp;title: Hieeyh’s blog</p>
-<p>&#124;&nbsp;&nbsp;subtitle:  一只前端小菜鸟的成长日记</p>
-<p>&#124;&nbsp;&nbsp;description: 前端博客</p>
-<p>&#124;&nbsp;&nbsp;author: hieeyh</p>
-<p>&#124;&nbsp;&nbsp;language: zh-CN</p>
-<p>分别是站点名，站点副标题，对站点的描述，作者名字，语言。</p>
-<p>当然主题也可以做相应的配置，这里先不细说。</p>
-<h2 id="发表文章"><a href="#发表文章" class="headerlink" title="发表文章"></a>发表文章</h2><p>首先在命令行中输入：</p>
-<p>&#124;&nbsp;&nbsp;hexo new “your article name”</p>
-<p>然后打开这个文件（在D:\hexo\source_posts下），就可以编辑你的博客了。</p>
-<p>首先要配置开头：</p>
-<p>&#124;&nbsp;&nbsp;—</p>
-<p>&#124;&nbsp;&nbsp;title: your article name</p>
-<p>&#124;&nbsp;&nbsp;date: 2016-08-10 19:51:02</p>
-<p>&#124;&nbsp;&nbsp;categories: blog</p>
-<p>&#124;&nbsp;&nbsp;tags: [博客，前端]</p>
-<p>&#124;&nbsp;&nbsp;—</p>
-<p><strong>其中</strong>，catogories之后引入文章分类会用到，tags之后引入标签会用到。在开头后面就可以接着写我们博客的内容了，博客内容是用markdown写的。可以去网上找些教程学一学，并不难。</p>
-<p>然后，将博客部署到github上，就能看见我们写的博客啦。</p>
-<p>这篇文章就先写到这吧，之后再分享关于主题配置修改，RSS，多说插件使用和域名相关的一些经验。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;网上已经有很多github+hexo搭建个人博客的教程，但在我搭建个人博客的过程中遇到了一些问题查了很多资料才解决，所以在这里细致地分享一下我搭建网站的整个过程。（本人用的Windows系统所以本教程暂时只针对Windows用户。）&lt;/p&gt;
-&lt;h2 id=&quot;安装Git&quot;&gt;&lt;
     
     </summary>
     

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>web security csrf | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="安全," />
+  
+
+  <meta name="description" content="前端面试过程中遇到的另一个最多的问题就是web安全了，之前博客有分享过XSS攻击的内容，这次聊聊CSRF攻击。CSRF是一种常见的攻击，但是也是web安全中最容易被忽略的一种攻击方式。
+什么是CSRF(跨站点请求伪造)根据字面意思，大概能猜到，CSRF攻击就是攻击者伪造了用户的请求，在用户不知道的情况下，以用户的名义向服务器发送恶意请求。常见的场景是，用户首先登陆一个正常（下面称为被攻击网站）的网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web security csrf">
+<meta property="og:url" content="http://yuhan.com/2017/06/27/web-security-csrf/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="前端面试过程中遇到的另一个最多的问题就是web安全了，之前博客有分享过XSS攻击的内容，这次聊聊CSRF攻击。CSRF是一种常见的攻击，但是也是web安全中最容易被忽略的一种攻击方式。
+什么是CSRF(跨站点请求伪造)根据字面意思，大概能猜到，CSRF攻击就是攻击者伪造了用户的请求，在用户不知道的情况下，以用户的名义向服务器发送恶意请求。常见的场景是，用户首先登陆一个正常（下面称为被攻击网站）的网">
+<meta property="og:updated_time" content="2017-06-27T08:27:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web security csrf">
+<meta name="twitter:description" content="前端面试过程中遇到的另一个最多的问题就是web安全了，之前博客有分享过XSS攻击的内容，这次聊聊CSRF攻击。CSRF是一种常见的攻击，但是也是web安全中最容易被忽略的一种攻击方式。
+什么是CSRF(跨站点请求伪造)根据字面意思，大概能猜到，CSRF攻击就是攻击者伪造了用户的请求，在用户不知道的情况下，以用户的名义向服务器发送恶意请求。常见的场景是，用户首先登陆一个正常（下面称为被攻击网站）的网">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是CSRF-跨站点请求伪造"><span class="toc-text">什么是CSRF(跨站点请求伪造)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSRF进阶"><span class="toc-text">CSRF进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器Cookie策略"><span class="toc-text">浏览器Cookie策略</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-web-security-csrf" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">web security csrf</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.06.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/web安全/">web安全</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>前端面试过程中遇到的另一个最多的问题就是web安全了，之前博客有分享过XSS攻击的内容，这次聊聊CSRF攻击。CSRF是一种常见的攻击，但是也是web安全中最容易被忽略的一种攻击方式。</p>
+<h1 id="什么是CSRF-跨站点请求伪造"><a href="#什么是CSRF-跨站点请求伪造" class="headerlink" title="什么是CSRF(跨站点请求伪造)"></a>什么是CSRF(跨站点请求伪造)</h1><p>根据字面意思，大概能猜到，CSRF攻击就是攻击者伪造了用户的请求，在用户不知道的情况下，以用户的名义向服务器发送恶意请求。常见的场景是，用户首先登陆一个正常（下面称为被攻击网站）的网站，攻击者诱使用户在不关闭被攻击网站的同时打开攻击者的页面，这时攻击者就可以以用户的名义给被攻击网站发送恶意请求了。可以看出CSRF是有条件的，首先用户要登陆被攻击网站，并生成Cookie，然后在不登出被攻击网站的同时，访问攻击网站。这两个条件缺一不可。</p>
+<h1 id="CSRF进阶"><a href="#CSRF进阶" class="headerlink" title="CSRF进阶"></a>CSRF进阶</h1><h2 id="浏览器Cookie策略"><a href="#浏览器Cookie策略" class="headerlink" title="浏览器Cookie策略"></a>浏览器Cookie策略</h2><p>CSRF之所以能成功，主要还是因为用户的浏览器成功发送了Cookie的缘故。浏览器所持有的Cookie分为两种：一种是“Session Cookie”，又叫“临时Cookie”；另一种是“Third-party Cookie”，也称为“本地Cookie”。<br>Third-party Cookie，服务器在Set-Cookie时指定了Expire时间，只有到了Expire时间后Cookie才会失效，而Session Cookie则没有指定Expire时间，浏览器关闭后就失效了。如果浏览器从一个域的页面中，要加载另一个域的资源，由于安全原因，某些浏览器会阻止Third-party Cookie的发送。由于新打开的页面和原来的页面在同一个浏览器进程中，所以Session Cookie将会被发送。</p>
+<p>IE浏览器处于安全考虑是禁止浏览器在<img>、<iframe>、<script>、<link>等标签中发送第三方Cookie的。当前的主流浏览器中，默认会拦截Third-party Cookie的有：IE6~8、Safari，不会拦截的有：Firefox、Opera、Chrome等。</p>
+<h2 id="只有GET请求么？"><a href="#只有GET请求么？" class="headerlink" title="只有GET请求么？"></a>只有GET请求么？</h2><p>在CSRF攻击流行之初，有一种错误的观点认为CSRF攻击只能由GET发起，这种错误观点的形成原因是大多数CSRF攻击发起时，使用的HTML标签都是<img>、<iframe>、<script>等带src属性的标签，这列标签只能够发起一次GET请求，而不能发起POST请求。然而，对于攻击者来说，有若干种方法可以构造出一个POST请求。最简单的方法就是在一个页面中构造好一个form表单，然后使用javascript自动提交这个表单。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://www.a.com/register"</span> <span class="attr">id</span>=<span class="string">"register"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">accept-charset</span>=<span class="string">"utf-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">""</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">""</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></div><div class="line">    <span class="keyword">var</span> f = <span class="built_in">document</span>.getElementById(<span class="string">"register"</span>);</div><div class="line">    f.inputs[<span class="number">0</span>].value = <span class="string">"test"</span>;</div><div class="line">    f.inputs[<span class="number">1</span>].value = <span class="string">"passwd"</span>;</div><div class="line">    f.submit();</div><div class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># CSRF防御</div><div class="line">## 验证码</div><div class="line">验证码是对抗CSRF攻击最简单有效地防御方法。CSRF攻击往往是在用户不知情的情况下构造了网络请求。而验证码则强制用户必须与应用进行交互，才能完成最终请求。</div><div class="line">但是验证码并不是万能的，我们不可能给页面的所有操作都加上验证码。</div><div class="line"></div><div class="line">## Referer Check</div><div class="line">Referer Check在互联网中最常见的应用就是“防止图片盗链”。同理，Referer Check也可以被用于检查请求是否来自合法的源。</div><div class="line"></div><div class="line">## Anti CSRF Token</div><div class="line">CSRF攻击存在的本质原因还是网页中重要操作的所有参数都是可以被攻击者猜测到的。攻击者只有预测出url所有参数与参数值，才能成功地构造一个伪造的请求。所以我们可以通过把参数加密，或者使用一些随机数，从而让攻击者无法猜测到参数值。</div><div class="line">我们可以给请求新增加一个token，这个token值是随机的。</div></pre></td></tr></table></figure>
+<p><a href="http://host/path/delete?username=abc&amp;item=123&amp;token=[random(seed">http://host/path/delete?username=abc&amp;item=123&amp;token=[random(seed</a>)]<br>```<br>由于token的存在，攻击者就无法再构造出一个完整的url来实施CSRF攻击了。</p>
+</script></iframe></p>
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="web security csrf" data-url="http://yuhan.com/2017/06/27/web-security-csrf/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"hyuhan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
