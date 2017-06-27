@@ -368,9 +368,9 @@ Sublime Text学习成本低，上手很快，界面简洁，它支持多点编�
   <script type="text/javascript">
   (function() {
     var gt = document.createElement('script');
-    gt.type = 'text/javascript';
     gt.src = "https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js";
-    document.getElementsByTagName('body')[0].appendChild(gt);
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(gt, s);
   })();
   </script>
 
