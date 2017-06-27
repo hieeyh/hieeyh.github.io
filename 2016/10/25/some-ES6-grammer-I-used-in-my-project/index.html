@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="vue,ES6,webpack," />
+    <meta name="keywords" content="ES6,vue,webpack," />
   
 
   <meta name="description" content="好久没有更新博客啦，最近入了阴阳师的坑，纯种非洲人，都没心情写博客了。这段时间在接触vue这个框架，用vue+webpack做一些小项目的时候经常会用到ES6的语法，用起来确实比较方便，今天就总结下在vue+webpack项目中经常会用到的一些ES6语法吧。首先来谈谈什么是ES6。
@@ -186,6 +186,11 @@
 
 
       
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.hyuhan.com/2016/10/25/some-ES6-grammer-I-used-in-my-project/#disqus_thread"></a>
+        </span>
+      
 
     </div>
   </header>
@@ -328,28 +333,33 @@
   
       <div class="fexo-comments comments-post">
     
-
-    
-  <section class="duoshuo-comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="" data-title="webpack+vue项目中常用ES6语法小结" data-url="http://yuhan.com/2016/10/25/some-ES6-grammer-I-used-in-my-project/index.html"></div>
-    <!-- 多说评论框 end -->
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
   </section>
 
-
-
-
-  <script type="text/javascript">
-  var duoshuoQuery = {short_name:"hyuhan"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
+  <script>
+    var disqus_shortname = 'hyuhan';
+    
+    var disqus_url = 'http://yuhan.com/2016/10/25/some-ES6-grammer-I-used-in-my-project/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
   </script>
+
+  <script id="dsq-count-scr" src="//hyuhan.disqus.com/count.js" async></script>
+
+
+
+    
+
+
 
 
   </div>

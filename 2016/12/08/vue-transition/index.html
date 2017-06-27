@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="vue,学习笔记,transition," />
+    <meta name="keywords" content="学习笔记,vue,transition," />
   
 
   <meta name="description" content="Vue2.0的过渡系统（transition）有了很大的改变，想把1.0的项目迁移到2.0，着实需要费一些功夫，今天我就要把vue2.0的过渡系统的用法搞清楚，因为之前确实踩了不少坑。这里只涉及单元素/组件的过渡实现，vue2.0的文档中还讲到了初始渲染的过渡、多个元素的过渡、多个组件的过渡和列表过渡，他们的过渡效果实现方式和单元素/组件的类似，我感觉实际项目中用的不太多吧，有兴趣的同学可以去了解">
@@ -183,6 +183,11 @@
 
 
       
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.hyuhan.com/2016/12/08/vue-transition/#disqus_thread"></a>
+        </span>
+      
 
     </div>
   </header>
@@ -341,28 +346,33 @@
   
       <div class="fexo-comments comments-post">
     
-
-    
-  <section class="duoshuo-comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="" data-title="Vue2.0 Transition常见用法全解惑" data-url="http://yuhan.com/2016/12/08/vue-transition/index.html"></div>
-    <!-- 多说评论框 end -->
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
   </section>
 
-
-
-
-  <script type="text/javascript">
-  var duoshuoQuery = {short_name:"hyuhan"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
+  <script>
+    var disqus_shortname = 'hyuhan';
+    
+    var disqus_url = 'http://yuhan.com/2016/12/08/vue-transition/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
   </script>
+
+  <script id="dsq-count-scr" src="//hyuhan.disqus.com/count.js" async></script>
+
+
+
+    
+
+
 
 
   </div>
