@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>怎么用github+hexo搭建博客--基础篇 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="博客搭建," />
+  
+
+  <meta name="description" content="网上已经有很多github+hexo搭建个人博客的教程，但在我搭建个人博客的过程中遇到了一些问题查了很多资料才解决，所以在这里细致地分享一下我搭建网站的整个过程。（本人用的Windows系统所以本教程暂时只针对Windows用户。）
+安装Git到git官网下载相应版本,安装即可。
+安装Node.js到Node.js官网下载相应版本，安装即可。
+安装hexo打开Git Bash，输入&amp;#124;&amp;n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么用github+hexo搭建博客--基础篇">
+<meta property="og:url" content="http://yuhan.com/2016/08/10/How-to-build-a-personalwebsite1/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="网上已经有很多github+hexo搭建个人博客的教程，但在我搭建个人博客的过程中遇到了一些问题查了很多资料才解决，所以在这里细致地分享一下我搭建网站的整个过程。（本人用的Windows系统所以本教程暂时只针对Windows用户。）
+安装Git到git官网下载相应版本,安装即可。
+安装Node.js到Node.js官网下载相应版本，安装即可。
+安装hexo打开Git Bash，输入&amp;#124;&amp;n">
+<meta property="og:updated_time" content="2016-08-11T06:30:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="怎么用github+hexo搭建博客--基础篇">
+<meta name="twitter:description" content="网上已经有很多github+hexo搭建个人博客的教程，但在我搭建个人博客的过程中遇到了一些问题查了很多资料才解决，所以在这里细致地分享一下我搭建网站的整个过程。（本人用的Windows系统所以本教程暂时只针对Windows用户。）
+安装Git到git官网下载相应版本,安装即可。
+安装Node.js到Node.js官网下载相应版本，安装即可。
+安装hexo打开Git Bash，输入&amp;#124;&amp;n">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Git"><span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Node-js"><span class="toc-text">安装Node.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo"><span class="toc-text">安装hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建hexo文件夹"><span class="toc-text">创建hexo文件夹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地运行"><span class="toc-text">本地运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册Github账号"><span class="toc-text">注册Github账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建repository"><span class="toc-text">新建repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署博客"><span class="toc-text">部署博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整站配置"><span class="toc-text">整站配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发表文章"><span class="toc-text">发表文章</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-How-to-build-a-personalwebsite1" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">怎么用github+hexo搭建博客--基础篇</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.10</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/博客搭建/">博客搭建</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>网上已经有很多github+hexo搭建个人博客的教程，但在我搭建个人博客的过程中遇到了一些问题查了很多资料才解决，所以在这里细致地分享一下我搭建网站的整个过程。（本人用的Windows系统所以本教程暂时只针对Windows用户。）</p>
+<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>到<a href="https://git-scm.com/" target="_blank" rel="external">git</a>官网下载相应版本,安装即可。</p>
+<h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p>到<a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a>官网下载相应版本，安装即可。</p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>打开Git Bash，输入<br>&#124;&nbsp;&nbsp;npm install -g hexo</p>
+<p> (<em>npm是Node自带的包管理工具</em>)</p>
+<h2 id="创建hexo文件夹"><a href="#创建hexo文件夹" class="headerlink" title="创建hexo文件夹"></a>创建hexo文件夹</h2><p>在想要创建hexo的地方新建hexo文件夹（如：<em>D:\hexo</em>）,在hexo文件夹中，右键选择Git Bash Here（若右键没出现Git Bash可以直接进入开始菜单找到git bash，再进入相应目录），执行以下命令：</p>
+<p>&#124;&nbsp;&nbsp;hexo init</p>
+<p>hexo会自动在你的hexo文件夹下创建搭建网站需要的所有文件，再执行以下命令安装所需的依赖包：</p>
+<p>&#124;&nbsp;&nbsp;npm install</p>
+<h2 id="本地运行"><a href="#本地运行" class="headerlink" title="本地运行"></a>本地运行</h2><p>目前为止已经搭建好本地的hexo博客了，在Git Bash中执行如下命令：</p>
+<p>&#124;&nbsp;&nbsp;hexo generate （或者hexo g）</p>
+<p>&#124;&nbsp;&nbsp;hexo server （或者hexo s）</p>
+<p>然后打开浏览器，在地址栏输入localhost:4000，就可以看到我们搭建好的本地博客了。到此只是搭建好了本地博客，还需要将博客部署到github上，显然，需要注册一个github账号。</p>
+<h2 id="注册Github账号"><a href="#注册Github账号" class="headerlink" title="注册Github账号"></a>注册Github账号</h2><p>进入<a href="https://github.com/" target="_blank" rel="external">github</a>官网注册就好了，记住不要忘了验证邮件。我的github的名字是hieeyh。</p>
+<h2 id="新建repository"><a href="#新建repository" class="headerlink" title="新建repository"></a>新建repository</h2><p>新建一个repository，名字是yourgithubname.github.io，比如我的是hieeyh.github.io。</p>
+<h2 id="部署博客"><a href="#部署博客" class="headerlink" title="部署博客"></a>部署博客</h2><p>进入你的hexo文件夹根目录下，用编辑器打开_config.yml，修改deploy项，如下（根据你的github进行相应更改）：</p>
+<p>&#124;&nbsp;&nbsp;deploy:</p>
+<p>&#124;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;&nbsp;git</p>
+<p>&#124;&nbsp;&nbsp;&nbsp;&nbsp;repo:&nbsp;&nbsp;<code>https://github.com/hieeyh/hieeyh.github.io.git</code></p>
+<p>&#124;&nbsp;&nbsp;&nbsp;&nbsp;branch:&nbsp;&nbsp;master</p>
+<p>然后执行以下命令：</p>
+<p>&#124;&nbsp;&nbsp;hexo generate （或者hexo g）</p>
+<p>&#124;&nbsp;&nbsp;hexo deploy （或者hexo d）</p>
+<p>此时就完成部署了，用浏览器访问hieeyh.github.io即可。</p>
+<p>每次修改完本地的文件后要执行以下命令，重新部署到github上：</p>
+<p>&#124;&nbsp;&nbsp;hexo clean </p>
+<p>&#124;&nbsp;&nbsp;hexo generate （或者hexo g）</p>
+<p>&#124;&nbsp;&nbsp;hexo deploy （或者hexo d）</p>
+<p><strong>注意：</strong>如果是第一次使用github，则需要设置ssh,可以参考<a href="http://mp.weixin.qq.com/s?__biz=MzA4NTQwNDcyMA==&amp;mid=2650661821&amp;idx=1&amp;sn=c6116ed82bff2d083bb152fbd8cbc38d&amp;scene=1&amp;srcid=0621l9okMDolnRp9zG9xHx9E#wechat_redirect" target="_blank" rel="external">教程</a>。</p>
+<h2 id="整站配置"><a href="#整站配置" class="headerlink" title="整站配置"></a>整站配置</h2><p>hexo根目录下的_config.yml（<em>D:\hexo_config.yml</em>）中是对整个站点的基本配置。除了之前配置的deploy项和默认的以外，我目前还配置了以下项：</p>
+<p>&#124;&nbsp;&nbsp;# Site</p>
+<p>&#124;&nbsp;&nbsp;title: Hieeyh’s blog</p>
+<p>&#124;&nbsp;&nbsp;subtitle:  一只前端小菜鸟的成长日记</p>
+<p>&#124;&nbsp;&nbsp;description: 前端博客</p>
+<p>&#124;&nbsp;&nbsp;author: hieeyh</p>
+<p>&#124;&nbsp;&nbsp;language: zh-CN</p>
+<p>分别是站点名，站点副标题，对站点的描述，作者名字，语言。</p>
+<p>当然主题也可以做相应的配置，这里先不细说。</p>
+<h2 id="发表文章"><a href="#发表文章" class="headerlink" title="发表文章"></a>发表文章</h2><p>首先在命令行中输入：</p>
+<p>&#124;&nbsp;&nbsp;hexo new “your article name”</p>
+<p>然后打开这个文件（在D:\hexo\source_posts下），就可以编辑你的博客了。</p>
+<p>首先要配置开头：</p>
+<p>&#124;&nbsp;&nbsp;—</p>
+<p>&#124;&nbsp;&nbsp;title: your article name</p>
+<p>&#124;&nbsp;&nbsp;date: 2016-08-10 19:51:02</p>
+<p>&#124;&nbsp;&nbsp;categories: blog</p>
+<p>&#124;&nbsp;&nbsp;tags: [博客，前端]</p>
+<p>&#124;&nbsp;&nbsp;—</p>
+<p><strong>其中</strong>，catogories之后引入文章分类会用到，tags之后引入标签会用到。在开头后面就可以接着写我们博客的内容了，博客内容是用markdown写的。可以去网上找些教程学一学，并不难。</p>
+<p>然后，将博客部署到github上，就能看见我们写的博客啦。</p>
+<p>这篇文章就先写到这吧，之后再分享关于主题配置修改，RSS，多说插件使用和域名相关的一些经验。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script type="text/javascript">
+  (function() {
+    var gt = document.createElement('script');
+    gt.type = 'text/javascript';
+    gt.src = "https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js";
+    document.getElementsByTagName('body')[0].appendChild(gt);
+  })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

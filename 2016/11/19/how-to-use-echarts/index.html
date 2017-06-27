@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>echarts画图实例讲解 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="echarts,可视化," />
+  
+
+  <meta name="description" content="前两天分享了一个项目(http://hyuhan.com/2016/11/17/A-data-display-platform/)，里面用到了echarts（一个纯Javascript的图表库）来画图，项目中用到了它的字符云图，地图，柱状图，饼图等，今天就给大家分享一些一些实现的细节。建议先去看看五分钟上手Echarts再来看这篇博客。
+地图Echarts百度地图扩展，可以在百度地图上进一步展现点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="echarts画图实例讲解">
+<meta property="og:url" content="http://yuhan.com/2016/11/19/how-to-use-echarts/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="前两天分享了一个项目(http://hyuhan.com/2016/11/17/A-data-display-platform/)，里面用到了echarts（一个纯Javascript的图表库）来画图，项目中用到了它的字符云图，地图，柱状图，饼图等，今天就给大家分享一些一些实现的细节。建议先去看看五分钟上手Echarts再来看这篇博客。
+地图Echarts百度地图扩展，可以在百度地图上进一步展现点">
+<meta property="og:updated_time" content="2016-12-05T13:13:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="echarts画图实例讲解">
+<meta name="twitter:description" content="前两天分享了一个项目(http://hyuhan.com/2016/11/17/A-data-display-platform/)，里面用到了echarts（一个纯Javascript的图表库）来画图，项目中用到了它的字符云图，地图，柱状图，饼图等，今天就给大家分享一些一些实现的细节。建议先去看看五分钟上手Echarts再来看这篇博客。
+地图Echarts百度地图扩展，可以在百度地图上进一步展现点">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#地图"><span class="toc-text">地图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入百度地图"><span class="toc-text">引入百度地图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置参数"><span class="toc-text">设置参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符云图"><span class="toc-text">字符云图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入字符云"><span class="toc-text">引入字符云</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#直接下载js文件并引入"><span class="toc-text">直接下载js文件并引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack引入"><span class="toc-text">webpack引入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置参数-1"><span class="toc-text">设置参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#画热力图"><span class="toc-text">画热力图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#参数设置"><span class="toc-text">参数设置</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-how-to-use-echarts" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">echarts画图实例讲解</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.11.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/echarts/">echarts</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>前两天分享了一个项目(<a href="http://hyuhan.com/2016/11/17/A-data-display-platform/" target="_blank" rel="external">http://hyuhan.com/2016/11/17/A-data-display-platform/</a>)，里面用到了echarts（一个纯Javascript的图表库）来画图，项目中用到了它的字符云图，地图，柱状图，饼图等，今天就给大家分享一些一些实现的细节。建议先去看看<a href="http://echarts.baidu.com/tutorial.html#5%20%E5%88%86%E9%92%9F%E4%B8%8A%E6%89%8B%20ECharts" target="_blank" rel="external">五分钟上手Echarts</a>再来看这篇博客。</p>
+<h1 id="地图"><a href="#地图" class="headerlink" title="地图"></a>地图</h1><p>Echarts百度地图扩展，可以在百度地图上进一步展现点图，线图，热力图等，我主要在百度地图上展现的是气泡图。</p>
+<h2 id="引入百度地图"><a href="#引入百度地图" class="headerlink" title="引入百度地图"></a>引入百度地图</h2><ul>
+<li>首先引入百度地图的jssdk，需要使用在百度地图开发者平台申请的ak</li>
+<li>然后引入Echarts</li>
+<li>最后引入百度地图扩展bmap（已经打包在echarts包中）</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://api.map.baidu.com/api?v=2.0&amp;ak=你的ak"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"echarts/dist/echarts.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"echarts/dist/extension/bmap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="设置参数"><a href="#设置参数" class="headerlink" title="设置参数"></a>设置参数</h2><p>百度地图引入之后，主要就是设置参数了，以我画的最喜爱建筑分布图为例:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">    <span class="comment">// 设置标题样式</span></div><div class="line">    title: &#123;</div><div class="line">        <span class="comment">// 标题文本</span></div><div class="line">        text: <span class="string">'学生最喜爱学校建筑分布'</span>,</div><div class="line">        <span class="comment">// 标题离容器左侧的距离，center表示水平居中</span></div><div class="line">        left: <span class="string">'center'</span>,</div><div class="line">        <span class="attr">top</span>: <span class="number">15</span>, </div><div class="line">        <span class="comment">// 标题文本的样式设置</span></div><div class="line">        textStyle: &#123;</div><div class="line">            <span class="attr">fontSize</span>: <span class="number">24</span>,</div><div class="line">            <span class="attr">fontFamily</span>: <span class="string">'Helvetica'</span>,</div><div class="line">            <span class="attr">fontWeight</span>: <span class="number">400</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// 提示框设置为由数据项图形触发</span></div><div class="line">    tooltip: &#123;</div><div class="line">        <span class="attr">trigger</span>: <span class="string">'item'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// 添加保存为图片和数据视图工具工具栏</span></div><div class="line">    toolbox: &#123;</div><div class="line">        <span class="attr">feature</span>: &#123;</div><div class="line">            <span class="attr">saveAsImage</span>: &#123;&#125;,</div><div class="line">            <span class="attr">dataView</span>: &#123;&#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">right</span>: <span class="number">15</span>,</div><div class="line">        <span class="attr">top</span>: <span class="number">10</span></div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// 加载bmap组件</span></div><div class="line">    bmap: &#123;</div><div class="line">        <span class="comment">// 百度地图中心经纬度（设置为你需要的地图中心即可）</span></div><div class="line">        center: [<span class="number">114.427877</span>, <span class="number">30.517249</span>],</div><div class="line">        <span class="comment">// 百度地图缩放比例（按需配置）</span></div><div class="line">        zoom: <span class="number">15</span>,</div><div class="line">        <span class="comment">// 是否开启拖拽缩放</span></div><div class="line">        roam: <span class="literal">true</span>,</div><div class="line">        <span class="comment">// 设置百度地图样式（可参考http://developer.baidu.com/map/jsdevelop-11.htm）</span></div><div class="line">        mapStyle: &#123;</div><div class="line">            <span class="attr">style</span>: <span class="string">'light'</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">series</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">name</span>: <span class="string">'最喜爱建筑'</span>,</div><div class="line">            <span class="comment">// 图标类型设置为气泡图</span></div><div class="line">            type: <span class="string">'scatter'</span>,</div><div class="line">            <span class="comment">// 设置坐标系为前面提到的bmap</span></div><div class="line">            coordinateSystem: <span class="string">'bmap'</span>,</div><div class="line">            <span class="comment">// 数据</span></div><div class="line">            data: [&#123;&#125;],</div><div class="line">            <span class="comment">// 气泡标记大小</span></div><div class="line">            symbolSize: ,</div><div class="line">            <span class="attr">label</span>: &#123;</div><div class="line">                <span class="attr">normal</span>: &#123;</div><div class="line">                    <span class="attr">formatter</span>: <span class="string">'&#123;b&#125;'</span>,</div><div class="line">                    <span class="attr">position</span>: <span class="string">'right'</span>,</div><div class="line">                    <span class="attr">show</span>: <span class="literal">true</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">emphasis</span>: &#123;</div><div class="line">                    <span class="attr">show</span>: <span class="literal">true</span></div><div class="line">                &#125;</div><div class="line">            &#125;,</div><div class="line">            <span class="attr">itemStyle</span>: &#123;</div><div class="line">                <span class="attr">normal</span>: &#123;</div><div class="line">                    <span class="attr">color</span>: <span class="string">'rgba(11, 110, 72, 1)'</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">    ]    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另外给大家推荐一个百度的<a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank" rel="external">拾取坐标系统</a>，挺好用的。</p>
+<h1 id="字符云图"><a href="#字符云图" class="headerlink" title="字符云图"></a>字符云图</h1><p>之前一直觉得字符云是个很酷炫的东西，所以这次也就强行把它用上了，嘿嘿。里面的数据是我根据群聊记录分析出来的高频词汇。Echarts的字符云是基于<a href="https://github.com/timdream/wordcloud2.js" target="_blank" rel="external">wordcloud2.js</a>的。  </p>
+<h2 id="引入字符云"><a href="#引入字符云" class="headerlink" title="引入字符云"></a>引入字符云</h2><h3 id="直接下载js文件并引入"><a href="#直接下载js文件并引入" class="headerlink" title="直接下载js文件并引入"></a>直接下载js文件并引入</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"echarts.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"echarts-wordcloud.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="webpack引入"><a href="#webpack引入" class="headerlink" title="webpack引入"></a>webpack引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install echarts-wordcloud</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import echarts from &apos;echarts&apos;</div><div class="line">import &apos;echarts-wordcloud&apos;</div></pre></td></tr></table></figure>
+<h2 id="设置参数-1"><a href="#设置参数-1" class="headerlink" title="设置参数"></a>设置参数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">text</span>: title,</div><div class="line">        <span class="attr">textStyle</span>: &#123;</div><div class="line">            <span class="attr">fontSize</span>: <span class="number">26</span>,</div><div class="line">            <span class="attr">fontFamily</span>: <span class="string">'Helvetica'</span>,</div><div class="line">            <span class="attr">fontWeight</span>: <span class="number">400</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">left</span>: <span class="string">'center'</span>,</div><div class="line">        <span class="attr">top</span>: <span class="number">20</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">toolbox</span>: &#123;</div><div class="line">        <span class="attr">feature</span>: &#123;</div><div class="line">            <span class="attr">saveAsImage</span>: &#123;&#125;,</div><div class="line">            <span class="attr">dataView</span>: &#123;&#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">right</span>: <span class="number">20</span>,</div><div class="line">        <span class="attr">top</span>: <span class="number">20</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">series</span>: [&#123;</div><div class="line">        <span class="comment">// 设置图表类型为'wordCloud'</span></div><div class="line">        type: <span class="string">'wordCloud'</span>,</div><div class="line">        <span class="comment">// 设置cloud的形状</span></div><div class="line">        shape: <span class="string">'cardioid'</span>,</div><div class="line">        <span class="comment">// shape: 'pentagon',</span></div><div class="line">        <span class="comment">// shape: 'circle',</span></div><div class="line">        left: <span class="string">'center'</span>,</div><div class="line">        <span class="attr">top</span>: <span class="number">30</span>,</div><div class="line">        <span class="attr">width</span>: <span class="string">'75%'</span>,</div><div class="line">        <span class="attr">height</span>: <span class="string">'80%'</span>,</div><div class="line">        <span class="comment">// 设置字符字体大小的范围</span></div><div class="line">        sizeRange: [<span class="number">12</span>, <span class="number">75</span>],</div><div class="line">        <span class="comment">// 设置字符旋转的角度范围</span></div><div class="line">        rotationRange: [<span class="number">-90</span>, <span class="number">90</span>],</div><div class="line">        <span class="attr">rotationStep</span>: <span class="number">45</span>,</div><div class="line">        <span class="comment">// 字符间距</span></div><div class="line">        gridSize: <span class="number">8</span>,</div><div class="line">        <span class="comment">// 字符字体样式</span></div><div class="line">        textStyle: &#123;</div><div class="line">            <span class="attr">normal</span>: &#123;</div><div class="line">                <span class="attr">fontFamily</span>: <span class="string">'Microsoft Yahei'</span>,</div><div class="line">                <span class="attr">fontWeight</span>: <span class="string">'bold'</span>,</div><div class="line">                <span class="comment">// 字符字体颜色用一个函数随机设置</span></div><div class="line">                color: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="string">'rgb('</span> + [</div><div class="line">                        <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * <span class="number">160</span>),</div><div class="line">                        <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * <span class="number">160</span>),</div><div class="line">                        <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * <span class="number">160</span>)</div><div class="line">                    ].join(<span class="string">','</span>) + <span class="string">')'</span></div><div class="line">                &#125;</div><div class="line">            &#125;,</div><div class="line">            <span class="attr">emphasis</span>: &#123;</div><div class="line">                <span class="attr">shadowBlur</span>: <span class="number">10</span>,</div><div class="line">                <span class="attr">shadowColor</span>: <span class="string">'#333'</span></div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">// data必选包含name和value选项,name即为显示的字符，value越大字符字体大小越大</span></div><div class="line">        data: [&#123;</div><div class="line">            <span class="attr">name</span>: <span class="string">''</span>,</div><div class="line">            <span class="attr">value</span>: ,   </div><div class="line">            <span class="attr">textStyle</span>: &#123;</div><div class="line">                <span class="attr">normal</span>: &#123;&#125;,</div><div class="line">                <span class="attr">emphasis</span>: &#123;&#125;</div><div class="line">            &#125;</div><div class="line">        &#125;,&#123;...&#125;,...]</div><div class="line">    &#125;]   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="画热力图"><a href="#画热力图" class="headerlink" title="画热力图"></a>画热力图</h1><p>根据班级群聊数据分析出来的同学之间亲密度，思前想后最后决定用热力图。热力图不需要额外的插件，直接讲参数设置。</p>
+<h2 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">text</span>: <span class="string">'通信1502班同学关系密切度分析图（仅通过群聊数据分析）'</span>,</div><div class="line">        <span class="comment">// 子标题</span></div><div class="line">        subtext: <span class="string">'数值越大两者越亲密'</span>,</div><div class="line">        <span class="attr">subtextStyle</span>: &#123;</div><div class="line">            <span class="attr">fontSize</span>: <span class="number">16</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">left</span>: <span class="string">'center'</span>,</div><div class="line">        <span class="attr">top</span>: <span class="number">4</span>,</div><div class="line">        <span class="attr">textStyle</span>: &#123;</div><div class="line">            <span class="attr">fontSize</span>: <span class="number">22</span>,</div><div class="line">            <span class="attr">fontFamily</span>: <span class="string">'Helvetica'</span>,</div><div class="line">            <span class="attr">fontWeight</span>: <span class="number">400</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">tooltip</span>: &#123;</div><div class="line">        <span class="attr">trigger</span>: <span class="string">'item'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">toolbox</span>: &#123;</div><div class="line">        <span class="attr">feature</span>: &#123;</div><div class="line">            <span class="attr">saveAsImage</span>: &#123;&#125;,</div><div class="line">            <span class="attr">dataView</span>: &#123;&#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">right</span>: <span class="number">15</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">grid</span>: &#123;</div><div class="line">        <span class="attr">height</span>: <span class="string">'78%'</span>,</div><div class="line">        <span class="attr">bottom</span>: <span class="string">'14%'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// x轴设置</span></div><div class="line">    xAxis: &#123;</div><div class="line">        <span class="comment">// 坐标轴为类目轴</span></div><div class="line">        type: <span class="string">'category'</span>,</div><div class="line">        <span class="comment">// 数组，x轴显示的刻度标签</span></div><div class="line">        data: [...],</div><div class="line">        <span class="comment">// 刻度标签相关设置</span></div><div class="line">        axisLabel: &#123;</div><div class="line">            <span class="comment">// 如果水平放不下，可以旋转</span></div><div class="line">            rotate: <span class="number">60</span>,</div><div class="line">            <span class="comment">// 刻度标签显示间隔</span></div><div class="line">            interval: <span class="number">0</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">splitArea</span>: &#123;</div><div class="line">            <span class="attr">show</span>: <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">yAxis</span>: &#123;</div><div class="line">        <span class="attr">type</span>: <span class="string">'category'</span>,</div><div class="line">        <span class="attr">data</span>: [...],</div><div class="line">        <span class="attr">splitArea</span>: &#123;</div><div class="line">            <span class="attr">show</span>: <span class="literal">true</span></div><div class="line">        &#125;  </div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// 视觉映射组件，也就是项目展示中热力图最小面现实的那个组件</span></div><div class="line">    visualMap: &#123;</div><div class="line">        <span class="comment">// 组件允许的最小值和最大值</span></div><div class="line">        min: <span class="number">0</span>,</div><div class="line">        <span class="attr">max</span>: <span class="number">100</span>,</div><div class="line">        <span class="attr">calculable</span>: <span class="literal">true</span>,</div><div class="line">        <span class="comment">// 组件高度</span></div><div class="line">        itemheight: <span class="number">300</span>,</div><div class="line">        <span class="comment">// 组件水平放置</span></div><div class="line">        orient: <span class="string">'horizontal'</span>,</div><div class="line">        <span class="attr">left</span>: <span class="string">'center'</span>,</div><div class="line">        <span class="attr">bottom</span>: <span class="string">'3%'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">series</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">name</span>: <span class="string">'亲密度'</span>,</div><div class="line">            <span class="comment">// 图标类型为heatmap</span></div><div class="line">            type: <span class="string">'heatmap'</span>,</div><div class="line">            <span class="comment">// 二维数组，每个数据项都是一个一维的数组，前两个值表示直角坐标系上的x,y，第三个至表示大小。</span></div><div class="line">            data: [[<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>],[]...],</div><div class="line">            <span class="attr">label</span>: &#123;</div><div class="line">                <span class="attr">normal</span>: &#123;</div><div class="line">                  <span class="attr">show</span>: <span class="literal">true</span></div><div class="line">                &#125;</div><div class="line">            &#125;,</div><div class="line">            <span class="attr">itemStyle</span>: &#123;</div><div class="line">                <span class="attr">emphasis</span>: &#123;</div><div class="line">                    <span class="attr">shadowBlur</span>: <span class="number">10</span>,</div><div class="line">                    <span class="attr">shadowColor</span>: <span class="string">'rgba(0, 0, 0, 0.5)'</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>饼图和条形图比较基础，可以参考<a href="http://echarts.baidu.com/examples.html" target="_blank" rel="external">官方实例</a>,建议仔细阅读官方<a href="http://echarts.baidu.com/option.html" target="_blank" rel="external">配置文档</a>，可以自己画出各种有趣的图形来。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script type="text/javascript">
+  (function() {
+    var gt = document.createElement('script');
+    gt.type = 'text/javascript';
+    gt.src = "https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js";
+    document.getElementsByTagName('body')[0].appendChild(gt);
+  })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

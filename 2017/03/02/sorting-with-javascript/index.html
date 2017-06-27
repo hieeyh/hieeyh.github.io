@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>JavaScript实现排序算法 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript,算法," />
+  
+
+  <meta name="description" content="排序算法主要用在元素的数组排序，常见的排序算法有冒泡排序、选择排序、插入排序、希尔排序、快速排序、归并排序等。这些排序算法都可以用JavaScript实现。下面的排序算法都假设是从小到大进行排序，从大到小可以相应进行转化。
+冒泡排序冒泡排序的基本思想是从头遍历要排序的数组，比较相邻两个数，如果前面位置的数大于后面位置的数，那么就将两者进行交换，否则不做任何操作。遍历完一次之后，最大的数就放到了数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript实现排序算法">
+<meta property="og:url" content="http://yuhan.com/2017/03/02/sorting-with-javascript/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="排序算法主要用在元素的数组排序，常见的排序算法有冒泡排序、选择排序、插入排序、希尔排序、快速排序、归并排序等。这些排序算法都可以用JavaScript实现。下面的排序算法都假设是从小到大进行排序，从大到小可以相应进行转化。
+冒泡排序冒泡排序的基本思想是从头遍历要排序的数组，比较相邻两个数，如果前面位置的数大于后面位置的数，那么就将两者进行交换，否则不做任何操作。遍历完一次之后，最大的数就放到了数组">
+<meta property="og:updated_time" content="2017-03-04T12:32:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript实现排序算法">
+<meta name="twitter:description" content="排序算法主要用在元素的数组排序，常见的排序算法有冒泡排序、选择排序、插入排序、希尔排序、快速排序、归并排序等。这些排序算法都可以用JavaScript实现。下面的排序算法都假设是从小到大进行排序，从大到小可以相应进行转化。
+冒泡排序冒泡排序的基本思想是从头遍历要排序的数组，比较相邻两个数，如果前面位置的数大于后面位置的数，那么就将两者进行交换，否则不做任何操作。遍历完一次之后，最大的数就放到了数组">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#冒泡排序"><span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择排序"><span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入排序"><span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#希尔排序"><span class="toc-text">希尔排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归并排序"><span class="toc-text">归并排序</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-sorting-with-javascript" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">JavaScript实现排序算法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.03.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>排序算法主要用在元素的数组排序，常见的排序算法有冒泡排序、选择排序、插入排序、希尔排序、快速排序、归并排序等。这些排序算法都可以用JavaScript实现。下面的排序算法都假设是从小到大进行排序，从大到小可以相应进行转化。</p>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>冒泡排序的基本思想是从头遍历要排序的数组，比较相邻两个数，如果前面位置的数大于后面位置的数，那么就将两者进行交换，否则不做任何操作。遍历完一次之后，最大的数就放到了数组最后的位置。然后再从头遍历数组，进行同样的操作，就可以将第二大的数放到倒数第二个位置，依此进行下去，直到所有数都排好位置为止。冒泡排序的代码实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">functon bubbleSort(arr) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length<span class="number">-1</span>; i++) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; arr.length<span class="number">-1</span>-i; j++) &#123;</div><div class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;</div><div class="line">                <span class="comment">// 交换位置</span></div><div class="line">                <span class="keyword">var</span> temp = arr[j];</div><div class="line">                arr[j] = arr[j+<span class="number">1</span>];</div><div class="line">                arr[j+<span class="number">1</span>] = temp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> arr;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>冒泡排序平均时间复杂度为O(n^2),而且是一种稳定的排序算法。</p>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>选择排序的基本思想是先找到数组中最小的元素，将它和数组的第一个元素交换位置，再找到数组中第二小的元素，将它和数组的第二个元素交换位置，依次进行下去，直到整个数组排好序为止。选择排序代码实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">functon selectSort(arr) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length<span class="number">-1</span>; i++) &#123;</div><div class="line">        <span class="keyword">var</span> min = arr[i];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = i+<span class="number">1</span>; j &lt; len; j++) &#123;</div><div class="line">            <span class="keyword">if</span> (arr[j] &lt; min) &#123;</div><div class="line">                <span class="keyword">var</span> temp = min;</div><div class="line">                min = arr[j];</div><div class="line">                arr[j] = temp;</div><div class="line">            &#125;</div><div class="line">            arr[i] = min;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>选择排序的时间复杂度为O(n^2),而且是一个不稳定的排序算法。</p>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>插入排序的基本思想是将一个记录（数）插入到已排好序的有序数列中的适当位置。插入排序的代码实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertSort</span>(<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</div><div class="line">        <span class="keyword">var</span> key = arr[i];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = i<span class="number">-1</span>; j &gt;= <span class="number">0</span>; j--) &#123;</div><div class="line">            <span class="keyword">if</span> (arr[j] &gt; key) &#123;</div><div class="line">                arr[j + <span class="number">1</span>] = arr[j];</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                arr[j + <span class="number">1</span>] = key;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>插入排序的时间复杂度为O(n^2),而且是一个稳定的排序算法。</p>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p>希尔排序又称“缩小增量排序”，是在直接插入排序算法上进行改进的，它的基本思想是先将整个待排序序列分割成若干子序列，分别进行直接插入排序，待整个序列中的记录基本有序时，再对全体记录进行一次直接插入排序。因为插入排序在对几乎已经排好序的数据操作时，效率高。<br>希尔排序的步骤是：首先取一个小于序列长度的整数d1作为增量，对序列从头开始把所有距离为d的元素放在同一个分组中，现在各组内进行直接插入排序；然后去第二个增量d2（小于d1），进行同样的操作，直到增量为1，即对已经基本有序的序列进行插入排序。希尔排序代码实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">shellSort</span>(<span class="params">arr, dk</span>) </span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> d = dk/<span class="number">2</span>; d &gt; <span class="number">0</span>; d /= <span class="number">2</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = d; j &lt; n; j++) &#123;</div><div class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[j-d]) &#123;</div><div class="line">                <span class="keyword">var</span> temp = arr[j];</div><div class="line">                <span class="keyword">var</span> k = j - d;</div><div class="line">                <span class="keyword">while</span> (k &gt;= <span class="number">0</span> &amp;&amp; arr[k] &gt; temp) &#123;</div><div class="line">                    arr[k + d] = arr[k];</div><div class="line">                    k -= d;</div><div class="line">                &#125;</div><div class="line">                arr[k + d] = temp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>希尔排序的时间复杂度为O(n^3/2),而且是一个不稳定的排序算法。</p>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>快速排序是一种分而治之的算法，它是冒泡排序的改进，基本思想是通过一趟排序将待排序列分割成独立的两部分，其中一部分的值都要比另一部分的值小，再分别对这两部分继续进行排序，直到整个序列有序。<br>快速排序的步骤是：首先从序列中选择一个基准元素，假设为第一个元素，将列表分成两部分，将所有小于基准值的元素放在基准值前面，所有大于基准值的元素放在基准值后面，再分别对这两部分重复上面的步骤即可。代码首先如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// key为基准值序号</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (arr.length &lt;= <span class="number">1</span>) &#123;</div><div class="line">        <span class="keyword">return</span> arr;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">var</span> low = [];</div><div class="line">        <span class="keyword">var</span> high = [];</div><div class="line">        <span class="keyword">var</span> pivotkey = arr[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (arr[i] &lt;= pivotkey) &#123;</div><div class="line">                low.push(arr[i]);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                high.push(arr[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> quickSort(low).concat(pivotkey, quickSort(high));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>快速排序的时间复杂度为O(nlogn),而且是一个不稳定的排序算法。</p>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>归并的含义是将两个或两个以上的有序表组合成一个新的有序表。假设初始序列长度为n，首先，每个子序列的长度为1，然后前后两两归并。得到若干个长度为2或者1的子序列，再两两归并，如此重复，直至得到一个长度为n的的有序序列为止。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script type="text/javascript">
+  (function() {
+    var gt = document.createElement('script');
+    gt.type = 'text/javascript';
+    gt.src = "https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js";
+    document.getElementsByTagName('body')[0].appendChild(gt);
+  })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

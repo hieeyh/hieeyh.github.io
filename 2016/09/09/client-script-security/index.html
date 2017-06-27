@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Web安全之XSS | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="安全," />
+  
+
+  <meta name="description" content="Web安全是网站开发中我们经常容易忽视的一个问题，但一旦出现问题将会带来很大的影响。这几天读了白帽子讲Web安全这本书的前半部分内容，目前还没有怎么接触过后端的东西，今天主要简单总结一下客户端脚本安全中的头号大敌——跨站脚本攻击。先说说浏览器的安全相关知识。
+浏览器安全浏览器安全被越来越多的人所重视。首先，浏览器是一个客户端，如果具备了安全功能，就可以像安全软件一样对用户上网起到很好的保护作用。另">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web安全之XSS">
+<meta property="og:url" content="http://yuhan.com/2016/09/09/client-script-security/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="Web安全是网站开发中我们经常容易忽视的一个问题，但一旦出现问题将会带来很大的影响。这几天读了白帽子讲Web安全这本书的前半部分内容，目前还没有怎么接触过后端的东西，今天主要简单总结一下客户端脚本安全中的头号大敌——跨站脚本攻击。先说说浏览器的安全相关知识。
+浏览器安全浏览器安全被越来越多的人所重视。首先，浏览器是一个客户端，如果具备了安全功能，就可以像安全软件一样对用户上网起到很好的保护作用。另">
+<meta property="og:image" content="http://yuhan.com/img/xss_test1.png">
+<meta property="og:image" content="http://yuhan.com/img/xss_test2.png">
+<meta property="og:image" content="http://yuhan.com/img/xss_test2.png">
+<meta property="og:image" content="http://yuhan.com/img/dom_xss1.png">
+<meta property="og:updated_time" content="2016-12-05T13:11:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web安全之XSS">
+<meta name="twitter:description" content="Web安全是网站开发中我们经常容易忽视的一个问题，但一旦出现问题将会带来很大的影响。这几天读了白帽子讲Web安全这本书的前半部分内容，目前还没有怎么接触过后端的东西，今天主要简单总结一下客户端脚本安全中的头号大敌——跨站脚本攻击。先说说浏览器的安全相关知识。
+浏览器安全浏览器安全被越来越多的人所重视。首先，浏览器是一个客户端，如果具备了安全功能，就可以像安全软件一样对用户上网起到很好的保护作用。另">
+<meta name="twitter:image" content="http://yuhan.com/img/xss_test1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器安全"><span class="toc-text">浏览器安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#同源策略"><span class="toc-text">同源策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器沙箱"><span class="toc-text">浏览器沙箱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意网址拦截"><span class="toc-text">恶意网址拦截</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#跨站脚本攻击"><span class="toc-text">跨站脚本攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#反射型XSS"><span class="toc-text">反射型XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存储型XSS"><span class="toc-text">存储型XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM-Based-XSS"><span class="toc-text">DOM Based XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS防御"><span class="toc-text">XSS防御</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HttpOnly"><span class="toc-text">HttpOnly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入检查"><span class="toc-text">输入检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输出检查"><span class="toc-text">输出检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防御DOM-Based-XSS"><span class="toc-text">防御DOM Based XSS</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-client-script-security" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Web安全之XSS</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.09</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/web安全/">web安全</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>Web安全是网站开发中我们经常容易忽视的一个问题，但一旦出现问题将会带来很大的影响。这几天读了<a href="https://book.douban.com/subject/10546925/" target="_blank" rel="external">白帽子讲Web安全</a>这本书的前半部分内容，目前还没有怎么接触过后端的东西，今天主要简单总结一下客户端脚本安全中的头号大敌——跨站脚本攻击。先说说浏览器的安全相关知识。</p>
+<h1 id="浏览器安全"><a href="#浏览器安全" class="headerlink" title="浏览器安全"></a>浏览器安全</h1><p>浏览器安全被越来越多的人所重视。首先，浏览器是一个客户端，如果具备了安全功能，就可以像安全软件一样对用户上网起到很好的保护作用。另外，浏览器安全也是各大浏览器厂商之间竞争的一张底牌。下面介绍一些浏览器具有的的安全功能。</p>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p>同源策略是浏览器最核心最基本的安全功能。该策略限制了来自不同源的“document”或脚本，对当前“document”读取或设置某些属性。影响源的因素有：host（域名或IP地址，如果是IP地址则看做一个根域名）、子域名、端口、协议。</p>
+<p><strong>注意：</strong>对于当前页面来说，页面内存放JavaScript文件的域并不重要，重要的是加载JavaScript页面所在的域。</p>
+<h2 id="浏览器沙箱"><a href="#浏览器沙箱" class="headerlink" title="浏览器沙箱"></a>浏览器沙箱</h2><p>在网页中插入一段恶意代码，利用浏览器漏洞执行任意代码的攻击方式，在黑客圈被称为“挂马”。浏览器厂商根据挂马的特点研究出了一些对抗挂马的技术。与此同时，浏览器还发展出了多进程架构，将浏览器的各个功能模块分开，各个浏览器实例分开，当一个进程崩溃时，也不会影响到其他的进程。</p>
+<p>Sandbox，即沙箱，已经成为泛指“资源隔离类模块”的代名词。其设计目的一般是为了让不可信任的代码运行在一定的环境中，限制不可信任代码访问隔离区之外的资源。如果一定要跨越Sandbox边界产生数据交换，则只能通过指定的数据通道。</p>
+<h2 id="恶意网址拦截"><a href="#恶意网址拦截" class="headerlink" title="恶意网址拦截"></a>恶意网址拦截</h2><p>恶意网址拦截的工作原理很简单，一般都是浏览器周期性地从服务器端获取一份最新的恶意网址拦黑名单，如果用户上网时访问的网址存在于此黑名单中，浏览器就会弹出一个警告页面。</p>
+<p>常见的恶意网址分为两类：一类是挂马网站，这类网站通常有恶意的脚本，如JavaScript或Flash，通过利用浏览器的漏洞执行shellcode，在用户电脑中植入木马；另一类是钓鱼网站，通过模仿知名网站的相似页面来欺骗用户。</p>
+<p>下面进入本文的正题，跨站脚本攻击（XSS).</p>
+<h1 id="跨站脚本攻击"><a href="#跨站脚本攻击" class="headerlink" title="跨站脚本攻击"></a>跨站脚本攻击</h1><p>跨站脚本攻击（XSS）是客户端脚本安全中的头号大敌。通常指黑客通过“HTML注入”篡改了网页，插入了恶意的脚本，从而在用户浏览网页时，控制用户浏览器的一种攻击。XSS主要有三种不同的类型，下面一一介绍。</p>
+<h2 id="反射型XSS"><a href="#反射型XSS" class="headerlink" title="反射型XSS"></a>反射型XSS</h2><p>第一种是反射型XSS，首先来举个例子，假设一个页面把用户输入的参数直接输出到页面上：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$input = $_GET[<span class="string">"param"</span>];</div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;div&gt;"</span>.$input.<span class="string">"&lt;/div&gt;"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>在正常的情况下，用户向param提交的数据会展示到页面中，比如提交：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/phptest/index.php?param=this is a test</div></pre></td></tr></table></figure>
+<p>会得到如下结果：<br><img src="/img/xss_test1.png" alt="xss1"></p>
+<p>但是如果提交一段HTML代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/phptest/index.php?param=&lt;script&gt;alert(/xss/)&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>会发现alert在当前页面执行了：<br><img src="/img/xss_test2.png" alt="xss2"></p>
+<p>再查看源代码会发现：<br><img src="/img/xss_test2.png" alt="xss3"></p>
+<p><em>以上测试在IE中进行，有些浏览器对这种简单的XSS攻击做了防御</em></p>
+<p>用户写入的script脚本已经被写入页面中。这就是XSS的第一种类型：反射型XSS。它只是简单地把用户输入的数据反射给浏览器。黑客往往需要诱使用户“点击”一个恶意链接，才能攻击成功。反射型XSS也叫做“非持久性XSS”。</p>
+<h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><p>第二种XSS类型是存储型XSS，它会把用户输入的数据“存储”在服务器端。这种XSS具有很强的稳定性。</p>
+<p>比较常见的场景是黑客写下一篇包含有恶意JavaScript代码的博客文章，文章发表后，所有访问该博客文章的用户，都会在他们的浏览器中执行这段恶意的JavaScript代码。黑客把恶意的脚本保存到服务器端，所以这种XSS攻击叫做“存储型XSS”。通常也叫做“持久型XSS”。</p>
+<h2 id="DOM-Based-XSS"><a href="#DOM-Based-XSS" class="headerlink" title="DOM Based XSS"></a>DOM Based XSS</h2><p>第三种类型是DOM Based XSS，从效果上来说也是反射型XSS。它是通过修改页面的DOM节点形成的XSS，称之为DOM Based XSS。还是举个例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">function test() &#123;</div><div class="line">    var str = document.getElementById("text").value;</div><div class="line">    document.getElementById("t").innerHTML = "&lt;a href = '"+str+"' &gt;testLink&lt;/a&gt;";</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;div id = "t"&gt;&lt;/div&gt;</div><div class="line">&lt;input type="text" id="text" value=""&gt;</div><div class="line">&lt;input type="button" id="s" value="write" onclick="test()"&gt;</div></pre></td></tr></table></figure>
+<p>点击“write”按钮后，会在当前页面插入一个超链接，其地址为文本框的内容：<br><img src="/img/dom_xss1.png" alt="domxss1"></p>
+<p>“write”按钮的onclick事件调用了test()函数，在test()函数中修改了页面的DOM节点，通过innerHTML把一段用户数据当作HTML写入到页面中，就造成了DOM Based XSS。</p>
+<p>然后，我们构造如下数据：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">' onclick = alert(/xss/) //</span></div></pre></td></tr></table></figure>
+<p>输入后，页面代码变成了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">''</span> <span class="attr">onclick</span>=<span class="string">alert(/xss/)</span> //' &gt;</span>testLink<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>首先第一个单引号闭合掉href的第一个单引号，然后插入一个onclick事件，最后再用注释符“//”注释掉第二个单引号。点击这个新生成的连接，脚本将被执行。<br>此外，还可以通过闭合a标签，并插入一个新的HTML标签，来利用XSS攻击。例如，进行如下输入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">'&gt;<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">#</span> <span class="attr">onerror</span>=<span class="string">alert(/xss2/)</span> /&gt;</span><span class="tag">&lt;<span class="name">'</span></span></div></pre></td></tr></table></figure>
+<p>会有什么效果可以自己下去实践一下！</p>
+<h2 id="XSS防御"><a href="#XSS防御" class="headerlink" title="XSS防御"></a>XSS防御</h2><p>XSS防御是很复杂的，前文也只是浅显地介绍了XSS，这里也只简单介绍几种易懂的XSS防御方式。</p>
+<h3 id="HttpOnly"><a href="#HttpOnly" class="headerlink" title="HttpOnly"></a>HttpOnly</h3><p>HttpOnly最早是由微软提出，并在IE6中实现的，现在已经逐渐成为一个标准。浏览器将禁止页面的JavaScript访问带有HttpOnly属性的Cookie。</p>
+<h3 id="输入检查"><a href="#输入检查" class="headerlink" title="输入检查"></a>输入检查</h3><p>常见的Web漏洞如XSS，SQL注入等，都要求攻击者构造一些特殊字符，这些特殊字符可能是正常用户不会用到的，所以输入检查就有存在的必要了。</p>
+<p>输入检查的逻辑必须放在服务端脚本代码中实现。如果只是在客户端使用JavaScript进行输入检查，是很容易被攻击者绕过的。目前Web开发的普遍做法，是同时在客户端JavaScript中和服务器端代码中实现相同的输入检查。客户端的JavaScript的输入检查可以阻挡大部分误操作的正常用户，从而节约服务器资源。</p>
+<p>在XSS防御上，输入检查一般是检查用户输入的数据中是否包含一些特殊字符，如&lt;、&gt;、’、”等。如果发现这些字符就将这些字符过滤或者编码。比较智能的“输入检查”，可能还会匹配XSS的特征。比如查找用户数据中是否包含了“script”、“javascript”等敏感字符。这种输入检查的方式可以称为“XSS Filter”。互联网上有许多开源的“XSS Filter”实现。</p>
+<h3 id="输出检查"><a href="#输出检查" class="headerlink" title="输出检查"></a>输出检查</h3><p>在变量输出到HTML页面时，可以使用编码或转义的方式来防御XSS攻击。</p>
+<p>编码分为很多种，针对HTML代码的编码方式是HtmlEncode。它并非专用名词，只是一种函数实现，作用是将字符转换成HTMLEntities。在PHP中，有 htmlentities() 和 htmlspecialchars()两个函数可以满足安全要求。</p>
+<h3 id="防御DOM-Based-XSS"><a href="#防御DOM-Based-XSS" class="headerlink" title="防御DOM Based XSS"></a>防御DOM Based XSS</h3><p>DOM Based XSS是一种比较特别的XSS漏洞，前文提到的几种防御方法都不太适用，需要特别对待。</p>
+<p>先回头看看前面的例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">function test() &#123;</div><div class="line">    var str = document.getElementById("text").value;</div><div class="line">    document.getElementById("t").innerHTML = "&lt;a href = '"+str+"' &gt;testLink&lt;/a&gt;";</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;div id = "t"&gt;&lt;/div&gt;</div><div class="line">&lt;input type="text" id="text" value=""&gt;</div><div class="line">&lt;input type="button" id="s" value="write" onclick="test()"&gt;</div></pre></td></tr></table></figure>
+<p>在button的onclick事件中，执行了test()函数，而该函数中最关键的一句是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">"t"</span>).innerHTML = <span class="string">"&lt;a href = '"</span>+str+<span class="string">"' &gt;testLink&lt;/a&gt;"</span>;</div></pre></td></tr></table></figure>
+<p>它将HTML代码写入了DOM节点，最后导致了XSS的发生。DOM Based XSS是从JavaScript中输出数据到HTML页面中。而前面提到的方法都是针对“从服务器应用直接输出到HTML页面”的XSS漏洞，因此不适用于DOM Based XSS。先举个例子看看正确的解决方法是什么。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">    <span class="keyword">var</span> x = <span class="string">"$var"</span>;</div><div class="line">    <span class="built_in">document</span>.write(<span class="string">"&lt;a href='"</span>+x+<span class="string">"' &gt;test&lt;/a&gt;"</span>);</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<p>变量“$var”输出在script标签内，可是最后又被 document.write输出到HTML页面中。假设为了保护“$var”直接在script标签内产生XSS，服务器端对其进行了javascriptEscape。可是，$var在document.write时，仍然能够产生XSS。原因在于，第一次执行javascriptEscape后，只保护了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var x = &quot;$var&quot;;</div></pre></td></tr></table></figure>
+<p>但是当 document.write输出数据到HTML页面时，浏览器重新渲染了页面。在script标签执行时，已经对变量x进行了解码，其后 document.write再运行时，其参数就变成了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&apos; &apos;onclick=alert(1);//&apos;&apos; &gt;test&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>因此产生了XSS。</p>
+<p>正确的防御方法应该是首先在“$var”输出到script时，应该执行一次javascriptEncode;其次，在 document.write输出到HTML页面时，要分具体情况：如果是输出到事件或者脚本，则要再做一次javascriptEncode；如果是输出到HTML内容或者属性，则要做一次HtmlEncode。也就是说从JavaScript输出到HTML页面，也相当于一次XSS输出的过程，需要分语境使用不同的编码函数。</p>
+<p>关于XSS的分享就这么多了。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script type="text/javascript">
+  (function() {
+    var gt = document.createElement('script');
+    gt.type = 'text/javascript';
+    gt.src = "https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js";
+    document.getElementsByTagName('body')[0].appendChild(gt);
+  })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
