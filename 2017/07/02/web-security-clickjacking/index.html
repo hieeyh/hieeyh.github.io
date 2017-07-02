@@ -7,33 +7,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>http请求方式总结 | Hieeyh&#39;s blog</title>
+  <title>web security clickjacking | Hieeyh&#39;s blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="总结,http,面试," />
+    <meta name="keywords" content="安全," />
   
 
-  <meta name="description" content="前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又遇到这个问题了呢。
-下面是谢希仁著计算机网络(第5版)中的定义
-GET请求读取由URL所标志的信息。
-POST给服务器添加信息">
+  <meta name="description" content="今天来聊聊前端应用安全问题中的最后一种，点击劫持(ClickJacking)。
+什么是点击劫持点击劫持是一种视觉上的欺骗手段，攻击者使用一个透明的、不可见的iframe元素，覆盖在一个网页上，然后诱使用户在该网页上进行操作，用户就可能在不知情的情况下点击透明的iframe，通过css改变iframe位置，可以让用户点击在iframe上的某些特定按钮上。
+点击劫持和CSRF一样，都是在用户不知情的情">
 <meta property="og:type" content="article">
-<meta property="og:title" content="http请求方式总结">
-<meta property="og:url" content="http://yuhan.com/2016/08/09/http-request-method/index.html">
+<meta property="og:title" content="web security clickjacking">
+<meta property="og:url" content="http://yuhan.com/2017/07/02/web-security-clickjacking/index.html">
 <meta property="og:site_name" content="Hieeyh's blog">
-<meta property="og:description" content="前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又遇到这个问题了呢。
-下面是谢希仁著计算机网络(第5版)中的定义
-GET请求读取由URL所标志的信息。
-POST给服务器添加信息">
-<meta property="og:updated_time" content="2016-08-09T08:42:48.000Z">
+<meta property="og:description" content="今天来聊聊前端应用安全问题中的最后一种，点击劫持(ClickJacking)。
+什么是点击劫持点击劫持是一种视觉上的欺骗手段，攻击者使用一个透明的、不可见的iframe元素，覆盖在一个网页上，然后诱使用户在该网页上进行操作，用户就可能在不知情的情况下点击透明的iframe，通过css改变iframe位置，可以让用户点击在iframe上的某些特定按钮上。
+点击劫持和CSRF一样，都是在用户不知情的情">
+<meta property="og:updated_time" content="2017-07-02T05:57:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="http请求方式总结">
-<meta name="twitter:description" content="前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又遇到这个问题了呢。
-下面是谢希仁著计算机网络(第5版)中的定义
-GET请求读取由URL所标志的信息。
-POST给服务器添加信息">
+<meta name="twitter:title" content="web security clickjacking">
+<meta name="twitter:description" content="今天来聊聊前端应用安全问题中的最后一种，点击劫持(ClickJacking)。
+什么是点击劫持点击劫持是一种视觉上的欺骗手段，攻击者使用一个透明的、不可见的iframe元素，覆盖在一个网页上，然后诱使用户在该网页上进行操作，用户就可能在不知情的情况下点击透明的iframe，通过css改变iframe位置，可以让用户点击在iframe上的某些特定按钮上。
+点击劫持和CSRF一样，都是在用户不知情的情">
 
   
 
@@ -160,20 +157,20 @@ POST给服务器添加信息">
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GET"><span class="toc-text">GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POST"><span class="toc-text">POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HEAD"><span class="toc-text">HEAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PUT"><span class="toc-text">PUT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DELETE"><span class="toc-text">DELETE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TRACE"><span class="toc-text">TRACE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CONNECT"><span class="toc-text">CONNECT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OPTIONS"><span class="toc-text">OPTIONS</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是点击劫持"><span class="toc-text">什么是点击劫持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flash点击劫持"><span class="toc-text">Flash点击劫持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图片覆盖攻击"><span class="toc-text">图片覆盖攻击</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拖拽劫持和数据窃取"><span class="toc-text">拖拽劫持和数据窃取</span></a></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-http-request-method" class="article article-type-post" itemprop="blogPost">
+   <article id="post-web-security-clickjacking" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">http请求方式总结</h1>
+    <h1 class="post-title">web security clickjacking</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2016.08.09</span>
+        <span>2017.07.02</span>
       </span>
 
       
@@ -186,7 +183,7 @@ POST给服务器添加信息">
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
+    <a class="article-category-link" href="/categories/web安全/">web安全</a>
   </span>
 
 
@@ -198,17 +195,15 @@ POST给服务器添加信息">
 
   <div class="article-content">
     
-      <p>前段时间同学帮我内推了腾讯的实习，那时我学前端还没多久，基本上是啥也不知道，但是面试官问我http有哪些请求报文的方式的时候，我竟然只答出了get和post，不管怎样我也是学过计算机网络的，居然只能想起这两个来，所以我决定要好好总结一下http的请求方式了，说不定下次面试又遇到这个问题了呢。</p>
-<p><em>下面是谢希仁著计算机网络(第5版)中的定义</em></p>
-<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>请求读取由URL所标志的信息。</p>
-<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p>给服务器添加信息（例如，注释）。</p>
-<h3 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h3><p>请求读取由URL所标志的信息的首部。</p>
-<h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h3><p>在指明的URL下存储一个文档。</p>
-<h3 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h3><p>删除指明的URL所标志的资源。</p>
-<h3 id="TRACE"><a href="#TRACE" class="headerlink" title="TRACE"></a>TRACE</h3><p>用来进行环回测试的请求报文。</p>
-<h3 id="CONNECT"><a href="#CONNECT" class="headerlink" title="CONNECT"></a>CONNECT</h3><p>用于代理服务器。</p>
-<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><p>请求查询服务器的性能，或者查询与资源相关的选项和需求。</p>
-<p>还有一些我们平时不怎么接触到的，比如PATCH，MOVE，COPY，LINK，UNLINK这些。</p>
+      <p>今天来聊聊前端应用安全问题中的最后一种，点击劫持(ClickJacking)。</p>
+<h1 id="什么是点击劫持"><a href="#什么是点击劫持" class="headerlink" title="什么是点击劫持"></a>什么是点击劫持</h1><p>点击劫持是一种视觉上的欺骗手段，攻击者使用一个透明的、不可见的iframe元素，覆盖在一个网页上，然后诱使用户在该网页上进行操作，用户就可能在不知情的情况下点击透明的iframe，通过css改变iframe位置，可以让用户点击在iframe上的某些特定按钮上。</p>
+<p>点击劫持和CSRF一样，都是在用户不知情的情况下诱使用户完成一些操作。但是在CSRF攻击过程中，如果有需要用户进行交互的页面，比如输入验证码等，则攻击可能无法顺利完成。与之相反的是，点击劫持没有这个顾虑，它利用的就是用户与页面产生的交互。</p>
+<h1 id="Flash点击劫持"><a href="#Flash点击劫持" class="headerlink" title="Flash点击劫持"></a>Flash点击劫持</h1><p>通过Flash进行点击劫持攻击可能会更严重，攻击者最终可以控制电脑的摄像头。</p>
+<p>首先，攻击者制作一个Flash游戏，并诱使用户玩这个游戏。游戏很简单，就是让用户去点击按钮，每次点击之后这个按钮的位置都会发送变化。在页面上覆盖了一层iframe。攻击通过诱使用户鼠标点击的位置，能够完成一系列的步骤，最终可以打开用户的摄像头。 </p>
+<h1 id="图片覆盖攻击"><a href="#图片覆盖攻击" class="headerlink" title="图片覆盖攻击"></a>图片覆盖攻击</h1><p>同样的思路，可以用图片覆盖某个网站的logo，并指向一个钓鱼网站。网站的logo的点击率是相对较高的，如果用户点击了这个被覆盖的logo，进入钓鱼网站，那么就很可能会被骗。主要还是通过css来改变图片的位置，使它刚好覆盖网站上的某些图片。</p>
+<h1 id="拖拽劫持和数据窃取"><a href="#拖拽劫持和数据窃取" class="headerlink" title="拖拽劫持和数据窃取"></a>拖拽劫持和数据窃取</h1><p>目前很多浏览器都开始支持Drag&amp;Drop的API，浏览器中的拖拽对象可以是一个链接，也可以是一段文字，还可以从一个窗口拖拽到另一个窗口，因此拖拽是不受同源策略限制的。</p>
+<p>“拖拽劫持”的思路是诱使用户从隐藏的不可见iframe中拖拽出攻击者希望得到的数据，然后放到另一个页面中，从而窃取数据。</p>
+<p>点击劫持相较于XSS和CSRF来说，实施攻击的成本更高，因为它需要诱使用户与页面产生交互行为。但是点击劫持很可能被攻击者利用在钓鱼、欺诈和广告作弊等方面，还是需要加倍小心。</p>
 
     
   </div>
