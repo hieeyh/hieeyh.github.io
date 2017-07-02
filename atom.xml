@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-07-02T07:28:30.000Z</updated>
+  <updated>2017-07-02T07:29:40.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>前端面试之同源及跨域</title>
+    <title>前端面试之同源与跨域</title>
     <link href="http://yuhan.com/2017/07/02/cross-domain/"/>
     <id>http://yuhan.com/2017/07/02/cross-domain/</id>
     <published>2017-07-02T06:02:07.000Z</published>
-    <updated>2017-07-02T07:28:30.000Z</updated>
+    <updated>2017-07-02T07:29:40.000Z</updated>
     
     <content type="html"><![CDATA[<p>浏览器的同源策略及跨域的方法在前端面试中也是出场率极高的问题。</p>
 <h1 id="什么是同源策略"><a href="#什么是同源策略" class="headerlink" title="什么是同源策略"></a>什么是同源策略</h1><p>同源策略是用来限制从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互，是一种用于隔离潜在的恶意文件的关键的安全机制。</p>
@@ -663,9 +663,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -716,9 +716,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
     
   </entry>
   
