@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端面试之同源及跨域 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="面试,跨域," />
+  
+
+  <meta name="description" content="浏览器的同源策略及跨域的方法在前端面试中也是出场率极高的问题。
+什么是同源策略同源策略是用来限制从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互，是一种用于隔离潜在的恶意文件的关键的安全机制。
+何谓同源如果协议、域名和端口对于两个页面来说是相同的，则这两个页面就是同源的。比如：http://www.hyuhan.com/index.html 这个网站，协议是http，域名是www.hyu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试之同源及跨域">
+<meta property="og:url" content="http://yuhan.com/2017/07/02/cross-domain/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="浏览器的同源策略及跨域的方法在前端面试中也是出场率极高的问题。
+什么是同源策略同源策略是用来限制从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互，是一种用于隔离潜在的恶意文件的关键的安全机制。
+何谓同源如果协议、域名和端口对于两个页面来说是相同的，则这两个页面就是同源的。比如：http://www.hyuhan.com/index.html 这个网站，协议是http，域名是www.hyu">
+<meta property="og:updated_time" content="2017-07-02T07:28:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试之同源及跨域">
+<meta name="twitter:description" content="浏览器的同源策略及跨域的方法在前端面试中也是出场率极高的问题。
+什么是同源策略同源策略是用来限制从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互，是一种用于隔离潜在的恶意文件的关键的安全机制。
+何谓同源如果协议、域名和端口对于两个页面来说是相同的，则这两个页面就是同源的。比如：http://www.hyuhan.com/index.html 这个网站，协议是http，域名是www.hyu">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是同源策略"><span class="toc-text">什么是同源策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#何谓同源"><span class="toc-text">何谓同源</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何进行跨域访问"><span class="toc-text">如何进行跨域访问</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么跨域进行AJAX请求"><span class="toc-text">怎么跨域进行AJAX请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSONP"><span class="toc-text">JSONP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket"><span class="toc-text">WebSocket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-text">CORS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#document-domain"><span class="toc-text">document.domain</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#postMessage-API"><span class="toc-text">postMessage API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#window-name"><span class="toc-text">window.name</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-cross-domain" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">前端面试之同源及跨域</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.07.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/总结/">总结</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>浏览器的同源策略及跨域的方法在前端面试中也是出场率极高的问题。</p>
+<h1 id="什么是同源策略"><a href="#什么是同源策略" class="headerlink" title="什么是同源策略"></a>什么是同源策略</h1><p>同源策略是用来限制从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互，是一种用于隔离潜在的恶意文件的关键的安全机制。</p>
+<h2 id="何谓同源"><a href="#何谓同源" class="headerlink" title="何谓同源"></a>何谓同源</h2><p>如果协议、域名和端口对于两个页面来说是相同的，则这两个页面就是同源的。比如：<a href="http://www.hyuhan.com/index.html" target="_blank" rel="external">http://www.hyuhan.com/index.html</a> 这个网站，协议是http，域名是www.hyuhan.com，端口是80(默认端口)，它的同源情况如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://www.hyuhan.com/other.html：同源</div><div class="line">http://hyuhan.com/other.html：不同源（域名不同）</div><div class="line">https://www.hyuhan.com/other.html：不同源（协议不同）</div><div class="line">http://www.hyuhan.com:81/other.html：不同源（端口不同）</div></pre></td></tr></table></figure></p>
+<p>同源策略是为了保护用户信息的安全，受到同源策略限制的主要有以下几种行为：</p>
+<ol>
+<li>Cookie、LocalStorage和IndexDB无法读取</li>
+<li>DOM无法操作</li>
+<li>AJAX请求不能发送</li>
+</ol>
+<h1 id="如何进行跨域访问"><a href="#如何进行跨域访问" class="headerlink" title="如何进行跨域访问"></a>如何进行跨域访问</h1><h2 id="怎么跨域进行AJAX请求"><a href="#怎么跨域进行AJAX请求" class="headerlink" title="怎么跨域进行AJAX请求"></a>怎么跨域进行AJAX请求</h2><p>主要由三种方法可以绕过同源策略的限制，来进行跨域的AJAX请求。</p>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><p>JSONP是客户端与服务端跨域通信的常用的方法。利用可以跨域的&lt;script&bt;元素，向服务器请求json数据，服务端收到请求后，将数据放在一个回调函数中传回来。实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</div><div class="line">    script.src = <span class="string">"http://example.com/callback=test"</span>;</div><div class="line">    <span class="built_in">document</span>.appendChild(script);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(res);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>src的callback参数是用来设置后端需要调用的回调函数的名字的，服务器返回的数据如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">test(&#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"小明"</span>,</div><div class="line">    <span class="string">"age"</span>: <span class="number">24</span></div><div class="line">    &#125;)</div></pre></td></tr></table></figure></p>
+<p>这样，前端就能跨域读取后端的数据了。但是jsopn只能发生get请求，不能发送post请求。</p>
+<h3 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h3><p>WebSocket是一种基于TCP的新的网络协议，它不实行同源策略，只要服务器支持，就可以进行跨域访问。而且WebSocket并不限于以Ajax方式通信，因为Ajax技术需要客户端发起请求，而WebSocket服务器和客户端可以彼此相互推送信息。</p>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>CORS是Access-Control-Allow-Origin（跨域资源共享）的缩写，它是一个W3C的标准。CORS需要浏览器和服务器同时支持，目前基本所有的浏览器都支持该功能。服务器端对于CORS的支持，主要就是通过设置Access-Control-Allow-Origin来进行的。如果浏览器检测到相应的设置，就可以允许Ajax进行跨域的访问。</p>
+<h2 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h2><p>Cookie是服务器写入浏览器的信息，安全起见，只有同源的网页才能共享。但是，如果两个网页的一级域名相同，但是耳机域名不同的话，可以通过设置document.domain来共享Cookie。</p>
+<p>比如，一个网页域名是<a href="http://w1.example.com/a.html" target="_blank" rel="external">http://w1.example.com/a.html</a> ，另一个网页域名是<a href="http://w2.example.com/b.html" target="_blank" rel="external">http://w2.example.com/b.html</a> ，只要给们设置相同的document.domain，这两个网页就可以共享Cookie。</p>
+<h2 id="postMessage-API"><a href="#postMessage-API" class="headerlink" title="postMessage API"></a>postMessage API</h2><p>postMessage()方法允许来自不同源的脚本采用异步方式进行有限的通信，可以实现跨文档、多窗口、跨域消息传递。用postMessage()函数传递消息，目标页面监听window的message事件接收消息。利用postMessage，我们可以跨域读取LocalStorage和IndexDB还有DOM数据。</p>
+<h2 id="window-name"><a href="#window-name" class="headerlink" title="window.name"></a>window.name</h2><p>浏览器窗口有window.name的属性，该属性规定无论是否同源，只要在一个窗口里，前一个网页设置了这个属性，后一个网页就可以读取它。即在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的。显然，这是可以实现跨域访问的。</p>
+
+    
+  </div>
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <span id="busuanzi_container_page_pv" style="line-height: 50px; font-size: 16px;">
+    本文总阅读量：<span id="busuanzi_value_page_pv"></span>次
+  </span>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

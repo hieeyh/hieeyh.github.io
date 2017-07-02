@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-07-02T06:00:10.000Z</updated>
+  <updated>2017-07-02T07:28:30.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端面试之同源及跨域</title>
+    <link href="http://yuhan.com/2017/07/02/cross-domain/"/>
+    <id>http://yuhan.com/2017/07/02/cross-domain/</id>
+    <published>2017-07-02T06:02:07.000Z</published>
+    <updated>2017-07-02T07:28:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>浏览器的同源策略及跨域的方法在前端面试中也是出场率极高的问题。</p>
+<h1 id="什么是同源策略"><a href="#什么是同源策略" class="headerlink" title="什么是同源策略"></a>什么是同源策略</h1><p>同源策略是用来限制从一个源加载的文档或者脚本如何与来自另一个源的资源进行交互，是一种用于隔离潜在的恶意文件的关键的安全机制。</p>
+<h2 id="何谓同源"><a href="#何谓同源" class="headerlink" title="何谓同源"></a>何谓同源</h2><p>如果协议、域名和端口对于两个页面来说是相同的，则这两个页面就是同源的。比如：<a href="http://www.hyuhan.com/index.html" target="_blank" rel="external">http://www.hyuhan.com/index.html</a> 这个网站，协议是http，域名是www.hyuhan.com，端口是80(默认端口)，它的同源情况如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://www.hyuhan.com/other.html：同源</div><div class="line">http://hyuhan.com/other.html：不同源（域名不同）</div><div class="line">https://www.hyuhan.com/other.html：不同源（协议不同）</div><div class="line">http://www.hyuhan.com:81/other.html：不同源（端口不同）</div></pre></td></tr></table></figure></p>
+<p>同源策略是为了保护用户信息的安全，受到同源策略限制的主要有以下几种行为：</p>
+<ol>
+<li>Cookie、LocalStorage和IndexDB无法读取</li>
+<li>DOM无法操作</li>
+<li>AJAX请求不能发送</li>
+</ol>
+<h1 id="如何进行跨域访问"><a href="#如何进行跨域访问" class="headerlink" title="如何进行跨域访问"></a>如何进行跨域访问</h1><h2 id="怎么跨域进行AJAX请求"><a href="#怎么跨域进行AJAX请求" class="headerlink" title="怎么跨域进行AJAX请求"></a>怎么跨域进行AJAX请求</h2><p>主要由三种方法可以绕过同源策略的限制，来进行跨域的AJAX请求。</p>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><p>JSONP是客户端与服务端跨域通信的常用的方法。利用可以跨域的&lt;script&bt;元素，向服务器请求json数据，服务端收到请求后，将数据放在一个回调函数中传回来。实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</div><div class="line">    script.src = <span class="string">"http://example.com/callback=test"</span>;</div><div class="line">    <span class="built_in">document</span>.appendChild(script);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(res);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>src的callback参数是用来设置后端需要调用的回调函数的名字的，服务器返回的数据如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">test(&#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"小明"</span>,</div><div class="line">    <span class="string">"age"</span>: <span class="number">24</span></div><div class="line">    &#125;)</div></pre></td></tr></table></figure></p>
+<p>这样，前端就能跨域读取后端的数据了。但是jsopn只能发生get请求，不能发送post请求。</p>
+<h3 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h3><p>WebSocket是一种基于TCP的新的网络协议，它不实行同源策略，只要服务器支持，就可以进行跨域访问。而且WebSocket并不限于以Ajax方式通信，因为Ajax技术需要客户端发起请求，而WebSocket服务器和客户端可以彼此相互推送信息。</p>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>CORS是Access-Control-Allow-Origin（跨域资源共享）的缩写，它是一个W3C的标准。CORS需要浏览器和服务器同时支持，目前基本所有的浏览器都支持该功能。服务器端对于CORS的支持，主要就是通过设置Access-Control-Allow-Origin来进行的。如果浏览器检测到相应的设置，就可以允许Ajax进行跨域的访问。</p>
+<h2 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h2><p>Cookie是服务器写入浏览器的信息，安全起见，只有同源的网页才能共享。但是，如果两个网页的一级域名相同，但是耳机域名不同的话，可以通过设置document.domain来共享Cookie。</p>
+<p>比如，一个网页域名是<a href="http://w1.example.com/a.html" target="_blank" rel="external">http://w1.example.com/a.html</a> ，另一个网页域名是<a href="http://w2.example.com/b.html" target="_blank" rel="external">http://w2.example.com/b.html</a> ，只要给们设置相同的document.domain，这两个网页就可以共享Cookie。</p>
+<h2 id="postMessage-API"><a href="#postMessage-API" class="headerlink" title="postMessage API"></a>postMessage API</h2><p>postMessage()方法允许来自不同源的脚本采用异步方式进行有限的通信，可以实现跨文档、多窗口、跨域消息传递。用postMessage()函数传递消息，目标页面监听window的message事件接收消息。利用postMessage，我们可以跨域读取LocalStorage和IndexDB还有DOM数据。</p>
+<h2 id="window-name"><a href="#window-name" class="headerlink" title="window.name"></a>window.name</h2><p>浏览器窗口有window.name的属性，该属性规定无论是否同源，只要在一个窗口里，前一个网页设置了这个属性，后一个网页就可以读取它。即在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的。显然，这是可以实现跨域访问的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;浏览器的同源策略及跨域的方法在前端面试中也是出场率极高的问题。&lt;/p&gt;
+&lt;h1 id=&quot;什么是同源策略&quot;&gt;&lt;a href=&quot;#什么是同源策略&quot; class=&quot;headerlink&quot; title=&quot;什么是同源策略&quot;&gt;&lt;/a&gt;什么是同源策略&lt;/h1&gt;&lt;p&gt;同源策略是用来限制从一
+    
+    </summary>
+    
+      <category term="总结" scheme="http://yuhan.com/categories/%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="面试" scheme="http://yuhan.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="跨域" scheme="http://yuhan.com/tags/%E8%B7%A8%E5%9F%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Web安全之点击劫持</title>
@@ -619,9 +663,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
     
   </entry>
   
@@ -672,9 +716,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -1220,53 +1264,6 @@
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="JavaScript" scheme="http://yuhan.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CSS水平垂直居中总结</title>
-    <link href="http://yuhan.com/2016/08/23/something-about-center/"/>
-    <id>http://yuhan.com/2016/08/23/something-about-center/</id>
-    <published>2016-08-23T07:31:31.000Z</published>
-    <updated>2017-03-04T03:21:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在做百度ife上2015春季的html,css练习，印象最深的就是各种情况下的水平垂直居中了，在这里总结一下，以后要用的时候如果忘了就可以直接在自己的博客里找啦。</p>
-<h1 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h1><p>首先，居中肯定是子元素在一个父元素中居中，设置水平居中的前提是父元素必须是块级元素，且宽度已经设定。</p>
-<h2 id="子元素为行内元素"><a href="#子元素为行内元素" class="headerlink" title="子元素为行内元素"></a>子元素为行内元素</h2><p>当子元素为行内元素时，子元素的宽度是由其内容撑开的，对父元素设定“text-align:center;”，就可实现子元素在父元素中水平居中。</p>
-<h2 id="子元素为宽度设定的块级元素"><a href="#子元素为宽度设定的块级元素" class="headerlink" title="子元素为宽度设定的块级元素"></a>子元素为宽度设定的块级元素</h2><p>这种情况最简单的方法就是给子元素设定“margin:0 auto;”，相同的原理，也可以通过父元素和子元素的宽度计算出父元素的padding-left/padding-right或者计算出子元素的margin-left/margin-right，然后设置即可。</p>
-<p><strong>注意：</strong>如果子元素相对父元素绝对定位（此时父元素需要设置定位方式为相对定位，即position:relative;），对子元素样式设置如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">	<span class="attribute">position</span>: absolute;</div><div class="line">	<span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">	<span class="attribute">margin-left</span>: -<span class="number">50px</span>;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">	<span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><em>margin-left大小设置为子元素长度的一般，符号为负。</em></p>
-<h2 id="子元素为宽度未设定的块级元素"><a href="#子元素为宽度未设定的块级元素" class="headerlink" title="子元素为宽度未设定的块级元素"></a>子元素为宽度未设定的块级元素</h2><p>这种情况下，子元素宽度没有设定，那么子元素的水平方向上就会充满整个父元素的宽度，那么子元素就是水平居中的，其实这种情况下谈水平居中也没有意义。</p>
-<h2 id="子元素为宽度设定的浮动元素"><a href="#子元素为宽度设定的浮动元素" class="headerlink" title="子元素为宽度设定的浮动元素"></a>子元素为宽度设定的浮动元素</h2><p>当子元素为宽度设定的浮动元素时，设置其“margin:0 auto;”就无法实现水平居中了。可以通过父元素和子元素的宽度计算出父元素的padding-left/padding-right或者计算出子元素的margin-left/margin-right，然后设置，使浮动子元素水平居中。</p>
-<h2 id="子元素为宽度未设定的浮动元素"><a href="#子元素为宽度未设定的浮动元素" class="headerlink" title="子元素为宽度未设定的浮动元素"></a>子元素为宽度未设定的浮动元素</h2><p>当浮动的子元素宽度未设定时，就无法通过计算padding和margin来使其水平居中了，这时可以用下面的方法。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">	<span class="attribute">float</span>:left;</div><div class="line"> 	<span class="attribute">position</span>:relative;</div><div class="line"> 	<span class="attribute">left</span>:<span class="number">50%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">	<span class="attribute">float</span>:left;</div><div class="line"> 	<span class="attribute">position</span>:relative;</div><div class="line"> 	<span class="attribute">right</span>:<span class="number">50%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h1><p>显然，设置垂直居中的前提是父元素的高度已经设定。</p>
-<h2 id="子元素为行内元素-1"><a href="#子元素为行内元素-1" class="headerlink" title="子元素为行内元素"></a>子元素为行内元素</h2><p>此时，子元素高度由其内容撑开。设置父元素的line-height等于父元素的height即可。</p>
-<h2 id="子元素为高度设定的块级元素"><a href="#子元素为高度设定的块级元素" class="headerlink" title="子元素为高度设定的块级元素"></a>子元素为高度设定的块级元素</h2><p>和水平定位一样，根据父元素子元素高度算出父元素的padding-top/padding-bottom或者子元素的margin-top/margin-bottom即可。</p>
-<p>同样，也可以利用子元素相对父元素绝对定位实现垂直居中（此时父元素需要设置定位方式为相对定位，即position:relative;）。对子元素样式设置如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">	<span class="attribute">position</span>: absolute;</div><div class="line">	<span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">	<span class="attribute">margin-top</span>: -<span class="number">50px</span>;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">	<span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><em>margin-left大小设置为子元素高度的一般，符号为负。</em></p>
-<h2 id="子元素为高度未设定的块级元素"><a href="#子元素为高度未设定的块级元素" class="headerlink" title="子元素为高度未设定的块级元素"></a>子元素为高度未设定的块级元素</h2><p>这种情况下，给父元素设定“display:table-cell;vertical-align:middle;”即可。</p>
-<p><em>其实，对于水平和垂直居中，如果父元素个、宽度或者高度没有设定，设置父元素的padding-left与padding-right相等，或者padding-top与padding-bottom相等就可以让子元素看起来是居中的，但这样谈论没什么意义。</em></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近在做百度ife上2015春季的html,css练习，印象最深的就是各种情况下的水平垂直居中了，在这里总结一下，以后要用的时候如果忘了就可以直接在自己的博客里找啦。&lt;/p&gt;
-&lt;h1 id=&quot;水平居中&quot;&gt;&lt;a href=&quot;#水平居中&quot; class=&quot;headerlink&quot; 
-    
-    </summary>
-    
-      <category term="CSS" scheme="http://yuhan.com/categories/CSS/"/>
-    
-    
-      <category term="总结" scheme="http://yuhan.com/tags/%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="css" scheme="http://yuhan.com/tags/css/"/>
-    
-      <category term="居中" scheme="http://yuhan.com/tags/%E5%B1%85%E4%B8%AD/"/>
     
   </entry>
   
