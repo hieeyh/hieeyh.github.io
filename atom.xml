@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-07-07T05:22:49.000Z</updated>
+  <updated>2017-07-07T05:30:05.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yuhan.com/2017/07/06/css3-of-interview/"/>
     <id>http://yuhan.com/2017/07/06/css3-of-interview/</id>
     <published>2017-07-06T08:32:46.000Z</published>
-    <updated>2017-07-07T05:22:49.000Z</updated>
+    <updated>2017-07-07T05:30:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>除了html5的新特性，CSS3的新特性也是面试中经常被问到的。</p>
 <h1 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h1><p>CSS3中新添加了很多选择器，解决了很多之前需要用javascript才能解决的布局问题。</p>
@@ -48,10 +48,10 @@
 <li>E::selection: 选择被用户选取的元素部分。</li>
 </ol>
 <h1 id="Transition-Transform和Animation"><a href="#Transition-Transform和Animation" class="headerlink" title="Transition,Transform和Animation"></a>Transition,Transform和Animation</h1><p>这三个特性是CSS3新增的和动画相关的特性。</p>
-<h2 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h2><p>Transition可以在当元素从一种样式变换为另一种样式时为元素添加效果，而不用使用Flash动画或 JavaScript。<br>Transition有如下属性：</p>
+<h2 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h2><p>Transition可以在当元素从一种样式变换为另一种样式时为元素添加效果，而不用使用Flash动画或JavaScript。<br>Transition有如下属性：</p>
 <ol>
 <li>transition-property: 规定应用过渡的CSS属性的名称。</li>
-<li>transition-duration: 规定应用过渡的CSS属性的名称。</li>
+<li>transition-duration: 规定完成过渡效果需要多长时间。</li>
 <li>transition-delay: 规定过渡效果何时开始，默认是0。</li>
 <li>transition-timing-function: 规定过渡效果的时间曲线，默认是”ease”，还有linear、ease-in、ease-out、ease-in-out和cubic-bezier等过渡类型。</li>
 <li>transition: 简写属性，用于在一个属性中设置四个过渡属性。</li>
@@ -972,9 +972,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
     
   </entry>
   
@@ -1025,9 +1025,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
