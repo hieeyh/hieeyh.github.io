@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-07-06T08:24:47.000Z</updated>
+  <updated>2017-07-07T05:22:49.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -16,13 +16,159 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>前端面试之CSS3新特性</title>
+    <link href="http://yuhan.com/2017/07/06/css3-of-interview/"/>
+    <id>http://yuhan.com/2017/07/06/css3-of-interview/</id>
+    <published>2017-07-06T08:32:46.000Z</published>
+    <updated>2017-07-07T05:22:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>除了html5的新特性，CSS3的新特性也是面试中经常被问到的。</p>
+<h1 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h1><p>CSS3中新添加了很多选择器，解决了很多之前需要用javascript才能解决的布局问题。</p>
+<ol>
+<li>element1~element2: 选择前面有element1元素的每个element2元素。</li>
+<li>[attribute^=value]: 选择某元素attribute属性是以value开头的。</li>
+<li>[attribute$=value]: 选择某元素attribute属性是以value结尾的。</li>
+<li>[attribute*=value]: 选择某元素attribute属性包含value字符串的。</li>
+<li>E:first-of-type: 选择属于其父元素的首个E元素的每个E元素。</li>
+<li>E:last-of-type: 选择属于其父元素的最后E元素的每个E元素。</li>
+<li>E:only-of-type: 选择属于其父元素唯一的E元素的每个E元素。</li>
+<li>E:only-child: 选择属于其父元素的唯一子元素的每个E元素。</li>
+<li>E:nth-child(n): 选择属于其父元素的第n个子元素的每个E元素。</li>
+<li>E:nth-last-child(n): 选择属于其父元素的倒数第n个子元素的每个E元素。</li>
+<li>E:nth-of-type(n): 选择属于其父元素第n个E元素的每个E元素。</li>
+<li>E:nth-last-of-type(n): 选择属于其父元素倒数第n个E元素的每个E元素。</li>
+<li>E:last-child: 选择属于其父元素最后一个子元素每个E元素。</li>
+<li>:root: 选择文档的根元素。</li>
+<li>E:empty: 选择没有子元素的每个E元素（包括文本节点)。</li>
+<li>E:target: 选择当前活动的E元素。</li>
+<li>E:enabled: 选择每个启用的E元素。</li>
+<li>E:disabled: 选择每个禁用的E元素。</li>
+<li>E:checked: 选择每个被选中的E元素。</li>
+<li>E:not(selector): 选择非selector元素的每个元素。</li>
+<li>E::selection: 选择被用户选取的元素部分。</li>
+</ol>
+<h1 id="Transition-Transform和Animation"><a href="#Transition-Transform和Animation" class="headerlink" title="Transition,Transform和Animation"></a>Transition,Transform和Animation</h1><p>这三个特性是CSS3新增的和动画相关的特性。</p>
+<h2 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h2><p>Transition可以在当元素从一种样式变换为另一种样式时为元素添加效果，而不用使用Flash动画或 JavaScript。<br>Transition有如下属性：</p>
+<ol>
+<li>transition-property: 规定应用过渡的CSS属性的名称。</li>
+<li>transition-duration: 规定应用过渡的CSS属性的名称。</li>
+<li>transition-delay: 规定过渡效果何时开始，默认是0。</li>
+<li>transition-timing-function: 规定过渡效果的时间曲线，默认是”ease”，还有linear、ease-in、ease-out、ease-in-out和cubic-bezier等过渡类型。</li>
+<li>transition: 简写属性，用于在一个属性中设置四个过渡属性。</li>
+</ol>
+<p>在一个例子中使用所有过渡属性如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">transition-property</span>: width;</div><div class="line">    <span class="attribute">transition-duration</span>: <span class="number">1s</span>;</div><div class="line">    <span class="attribute">transition-timing-function</span>: linear;</div><div class="line">    <span class="attribute">transition-delay</span>: <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Firefox 4 */</span></div><div class="line">    <span class="attribute">-moz-transition-property</span>:width;</div><div class="line">    <span class="attribute">-moz-transition-duration</span>:<span class="number">1s</span>;</div><div class="line">    <span class="attribute">-moz-transition-timing-function</span>:linear;</div><div class="line">    <span class="attribute">-moz-transition-delay</span>:<span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">-webkit-transition-property</span>:width;</div><div class="line">    <span class="attribute">-webkit-transition-duration</span>:<span class="number">1s</span>;</div><div class="line">    <span class="attribute">-webkit-transition-timing-function</span>:linear;</div><div class="line">    <span class="attribute">-webkit-transition-delay</span>:<span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Opera */</span></div><div class="line">    <span class="attribute">-o-transition-property</span>:width;</div><div class="line">    <span class="attribute">-o-transition-duration</span>:<span class="number">1s</span>;</div><div class="line">    <span class="attribute">-o-transition-timing-function</span>:linear;</div><div class="line">    <span class="attribute">-o-transition-delay</span>:<span class="number">2s</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用transition属性简写如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">transition</span>: width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Firefox 4 */</span></div><div class="line">    <span class="attribute">-moz-transition</span>:width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Safari and Chrome */</span></div><div class="line">    <span class="attribute">-webkit-transition</span>:width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Opera */</span></div><div class="line">    <span class="attribute">-o-transition</span>:width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h2><p>Transform用来向元素应用各种2D和3D转换，该属性允许我们对元素进行旋转、缩放、移动或倾斜等操作。使用方式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">transform</span>:<span class="built_in">rotate</span>(7deg);</div><div class="line">    <span class="attribute">-ms-transform</span>:<span class="built_in">rotate</span>(7deg);     <span class="comment">/* IE 9 */</span></div><div class="line">    <span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(7deg);    <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(7deg); <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">-o-transform</span>:<span class="built_in">rotate</span>(7deg);  <span class="comment">/* Opera */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="变换类型"><a href="#变换类型" class="headerlink" title="变换类型"></a>变换类型</h3><p>transform可以有各种变换类型，即属性值：</p>
+<ol>
+<li>none: 定义不进行转换。</li>
+<li>matrix(n,n,n,n,n,n): 定义2D转换，使用六个值的矩阵。</li>
+<li>matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n): 定义3D转换，使用16个值的4x4矩阵。</li>
+<li>translate(x,y): 定义2D位移转换。</li>
+<li>translate3d(x,y,z): 定义3D位移转换。</li>
+<li>translateX(x): 定义位移转换，只是用X轴的值。</li>
+<li>translateY(y): 定义位移转换，只是用Y轴的值。</li>
+<li>translateZ(z): 定义3D位移转换，只是用Z轴的值。 </li>
+<li>scale(x,y): 定义2D缩放转换。 </li>
+<li>scale3d(x,y,z): 定义3D缩放转换。 </li>
+<li>scaleX(x): 通过设置X轴的值来定义缩放转换。</li>
+<li>scaleY(y): 通过设置Y轴的值来定义缩放转换。</li>
+<li>scaleZ(z): 通过设置Z轴的值来定义3D缩放转换。</li>
+<li>rotate(angle): 定义2D旋转，在参数中规定角度。</li>
+<li>rotate3d(x,y,z,angle): 定义3D旋转。</li>
+<li>rotateX(angle): 定义沿着X轴的3D旋转。</li>
+<li>rotateY(angle): 定义沿着Y轴的3D旋转。</li>
+<li>rotateZ(angle): 定义沿着Z轴的3D旋转。</li>
+<li>skew(x-angle,y-angle): 定义沿着X和Y轴的2D倾斜转换。</li>
+<li>skewX(angle): 定义沿着X轴的2D倾斜转换。</li>
+<li>skewY(angle): 定义沿着Y轴的2D倾斜转换。</li>
+<li>perspective(n): 为3D转换元素定义透视视图。</li>
+</ol>
+<h3 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h3><p>Internet Explorer 10、Firefox、Opera 支持 transform 属性。<br>Internet Explorer 9 支持替代的 -ms-transform 属性（仅适用于 2D 转换）。<br>Safari 和 Chrome 支持替代的 -webkit-transform 属性（3D 和 2D 转换）。<br>Opera 只支持 2D 转换。      </p>
+<h2 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h2><p>Animation让CSS拥有了可以制作动画的功能。使用CSS3的Animation制作动画我们可以省去复杂的js代码。使用方法大概如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> anim1 &#123; </div><div class="line">   0% &#123; </div><div class="line">        <span class="attribute">opacity</span>: <span class="number">0</span>; </div><div class="line">        <span class="attribute">font-size</span>: <span class="number">12px</span>; </div><div class="line">   &#125; </div><div class="line">   100% &#123; </div><div class="line">        <span class="attribute">opacity</span>: <span class="number">1</span>; </div><div class="line">        <span class="attribute">font-size</span>: <span class="number">24px</span>; </div><div class="line">   &#125; </div><div class="line">&#125; </div><div class="line"><span class="selector-class">.anim1Div</span> &#123; </div><div class="line">   <span class="attribute">-webkit-animation-name</span>: anim1 ; </div><div class="line">   <span class="attribute">-webkit-animation-duration</span>: <span class="number">1.5s</span>; </div><div class="line">   <span class="attribute">-webkit-animation-iteration-count</span>: <span class="number">4</span>; </div><div class="line">   <span class="attribute">-webkit-animation-direction</span>: alternate; </div><div class="line">   <span class="attribute">-webkit-animation-timing-function</span>: ease-in-out; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>具体用法可以参考教程：<a href="http://www.w3cplus.com/content/css3-animation" target="_blank" rel="external">CSS3 Animation</a>。</p>
+<h1 id="边框"><a href="#边框" class="headerlink" title="边框"></a>边框</h1><p>CSS3新增了三个边框属性，分别是border-radius、box-shadow和border-image。border-radius可以创建圆角边框，box-shadow可以为元素添加阴影，border-image可以使用图片来绘制边框。IE9+支持border-radius和box-shadow属性。Firefox、Chrome以及Safari支持所有新的边框属性。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>CSS3新增了几个关于背景的属性，分别是background-clip、background-origin、background-size和background-break。</p>
+<h2 id="background-clip"><a href="#background-clip" class="headerlink" title="background-clip"></a>background-clip</h2><p>background-clip属性用于确定背景画区，有以下几种可能的属性：</p>
+<ul>
+<li>background-clip: border-box; 背景从border开始显示</li>
+<li>background-clip: padding-box; 背景从padding开始显示</li>
+<li>background-clip: content-box; 背景显content区域开始显示</li>
+<li>background-clip: no-clip; 默认属性，等同于border-box</li>
+</ul>
+<p>通常情况，背景都是覆盖整个元素的，利用这个属性可以设定背景颜色或图片的覆盖范围。</p>
+<h2 id="background-clip-1"><a href="#background-clip-1" class="headerlink" title="background-clip"></a>background-clip</h2><p>background-clip属性用于确定背景的位置，它通常与background-position联合使用，可以从 border、padding、content来计算background-position（就像background-clip）。</p>
+<ul>
+<li>background-origin: border-box; 从border开始计算background-position</li>
+<li>background-origin: padding-box; 从padding开始计算background-position</li>
+<li>background-origin: content-box; 从content开始计算background-position</li>
+</ul>
+<h2 id="background-size"><a href="#background-size" class="headerlink" title="background-size"></a>background-size</h2><p>background-size属性常用来调整背景图片的大小，主要用于设定图片本身。有以下可能的属性：</p>
+<ul>
+<li>background-size: contain; 缩小图片以适合元素（维持像素长宽比）</li>
+<li>background-size: cover; 扩展元素以填补元素（维持像素长宽比）</li>
+<li>background-size: 100px 100px; 缩小图片至指定的大小</li>
+<li>background-size: 50% 100%; 缩小图片至指定的大小，百分比是相对包 含元素的尺寸</li>
+</ul>
+<h2 id="background-break"><a href="#background-break" class="headerlink" title="background-break"></a>background-break</h2><p>CSS3中，元素可以被分成几个独立的盒子（如使内联元素span跨越多行），background-break 属性用来控制背景怎样在这些不同的盒子中显示。</p>
+<ul>
+<li>background-break: continuous; 默认值。忽略盒之间的距离（也就是像元素没有分成多个盒子，依然是一个整体一样）</li>
+<li>background-break: bounding-box; 把盒之间的距离计算在内；</li>
+<li>background-break: each-box; 为每个盒子单独重绘背景。</li>
+</ul>
+<h1 id="文字效果"><a href="#文字效果" class="headerlink" title="文字效果"></a>文字效果</h1><h2 id="word-wrap"><a href="#word-wrap" class="headerlink" title="word-wrap"></a>word-wrap</h2><p>CSS3中，word-wrap属性允许您允许文本强制文本进行换行，即这意味着会对单词进行拆分。所有主流浏览器都支持 word-wrap 属性。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">p</span> &#123;</div><div class="line">    <span class="attribute">word-wrap</span>:break-word;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="text-overflow"><a href="#text-overflow" class="headerlink" title="text-overflow"></a>text-overflow</h2><p>它与word-wrap是协同工作的，word-wrap设置或检索当当前行超过指定容器的边界时是否断开转行，而 text-overflow则设置或检索当当前行超过指定容器的边界时如何显示。对于“text-overflow”属性，有“clip”和“ellipsis”两种可供选择。</p>
+<h2 id="text-shadow"><a href="#text-shadow" class="headerlink" title="text-shadow"></a>text-shadow</h2><p>CSS3中，text-shadow可向文本应用阴影。能够规定水平阴影、垂直阴影、模糊距离，以及阴影的颜色。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">h1</span>&#123;</div><div class="line">    <span class="attribute">text-shadow</span>: <span class="number">5px</span> <span class="number">5px</span> <span class="number">5px</span> <span class="number">#FF0000</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="text-decoration"><a href="#text-decoration" class="headerlink" title="text-decoration"></a>text-decoration</h2><p>CSS3里面开始支持对文字的更深层次的渲染，具体有三个属性可供设置：</p>
+<ol>
+<li>text-fill-color: 设置文字内部填充颜色</li>
+<li>text-stroke-color: 设置文字边界填充颜色</li>
+<li>text-stroke-width: 设置文字边界宽度</li>
+</ol>
+<h1 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h1><p>CSS3新增了渐变效果，包括linear-gradient(线性渐变)和radial-gradient(径向渐变)。具体用法参考教程：<a href="http://www.w3cplus.com/content/css3-gradient" target="_blank" rel="external">CSS3 Gradient</a></p>
+<h1 id="font-face特性"><a href="#font-face特性" class="headerlink" title="@font-face特性"></a>@font-face特性</h1><p>在CSS3之前，web设计师必须使用已在用户计算机上安装好的字体。通过CSS3，web设计师可以使用他们喜欢的任意字体。当您您找到或购买到希望使用的字体时，可将该字体文件存放到web服务器上，它会在需要时被自动下载到用户的计算机上。字体是在 CSS3 @font-face 规则中定义的。Firefox、Chrome、Safari以及Opera支持 .ttf(True Type Fonts)和 .otf(OpenType Fonts)类型的字体。IE9+ 支持新的@font-face规则，但是仅支持 .eot类型的字体(Embedded OpenType)。</p>
+<p>在新的@font-face规则中，必须首先定义字体的名称（比如myFont），然后指向该字体文件。<br>如需为HTML元素使用字体，请通过font-family属性来引用字体的名称 (myFont)<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">font-face</span> &#123;</div><div class="line">    <span class="attribute">font-family</span>: myFirstFont;</div><div class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'Sansation_Light.ttf'</span>),</div><div class="line">         <span class="built_in">url</span>(<span class="string">'Sansation_Light.eot'</span>); <span class="comment">/* IE9+ */</span></div><div class="line">&#125;</div><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">font-family</span>:myFirstFont;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="多列布局"><a href="#多列布局" class="headerlink" title="多列布局"></a>多列布局</h1><p>通过CSS3，能够创建多个列来对文本进行布局，IE10和Opera支持多列属性。Firefox 需要前缀-moz-，Chrome和Safari需要前缀-webkit-。主要有如下三个属性：</p>
+<ol>
+<li>column-count: 规定元素应该被分隔的列数。</li>
+<li>column-gap: 规定列之间的间隔。</li>
+<li>column-rule: 设置列之间的宽度、样式和颜色规则</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">-moz-column-count</span>:<span class="number">3</span>;    <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-column-count</span>:<span class="number">3</span>; <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">column-count</span>:<span class="number">3</span>;</div><div class="line">    <span class="attribute">-moz-column-gap</span>:<span class="number">40px</span>;       <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-column-gap</span>:<span class="number">40px</span>;    <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">column-gap</span>:<span class="number">40px</span>;</div><div class="line">    <span class="attribute">-moz-column-rule</span>:<span class="number">3px</span> outset <span class="number">#ff0000</span>;    <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-column-rule</span>:<span class="number">3px</span> outset <span class="number">#ff0000</span>; <span class="comment">/* Safari and Chrome */</span></div><div class="line">    <span class="attribute">column-rule</span>:<span class="number">3px</span> outset <span class="number">#ff0000</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="用户界面"><a href="#用户界面" class="headerlink" title="用户界面"></a>用户界面</h1><p>CSS3中，新的用户界面特性包括重设元素尺寸、盒尺寸以及轮廓等。Firefox、Chrome以及Safari 支持resize属性。IE、Chrome、Safari以及Opera支持box-sizing属性。Firefox需要前缀-moz-。<br>所有主流浏览器都支持outline-offset属性，除了IE。</p>
+<h2 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h2><p>resize 属性规定是否可由用户调整元素尺寸。如果希望此属性生效，需要设置元素的 overflow 属性，值可以是 auto、hidden 或 scroll。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">resize</span>:both; <span class="comment">/* none|both|horizontal|vertical; */</span></div><div class="line">    <span class="attribute">overflow</span>:auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="box-sizing"><a href="#box-sizing" class="headerlink" title="box-sizing"></a>box-sizing</h2><p>box-sizing属性可设置的值有content-box、border-box和inherit。</p>
+<ol>
+<li>content-box: padding和border不被包含在定义的width和height之内。对象的实际宽度等于设置的width值和border、padding之和，即 (Element width = width + border + padding)，此属性表现为标准模式下的盒模型。</li>
+<li>border-box: padding和border被包含在定义的width和height之内。对象的实际宽度就等于设置的width值，即使定义有border和padding也不会改变对象的实际宽度，即 (Element width = width)，此属性表现为怪异模式下的盒模型。</li>
+</ol>
+<h2 id="outline-offset"><a href="#outline-offset" class="headerlink" title="outline-offset"></a>outline-offset</h2><p>outline-offset属性对轮廓进行偏移，并在超出边框边缘的位置绘制轮廓。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;除了html5的新特性，CSS3的新特性也是面试中经常被问到的。&lt;/p&gt;
+&lt;h1 id=&quot;选择器&quot;&gt;&lt;a href=&quot;#选择器&quot; class=&quot;headerlink&quot; title=&quot;选择器&quot;&gt;&lt;/a&gt;选择器&lt;/h1&gt;&lt;p&gt;CSS3中新添加了很多选择器，解决了很多之前需要用j
+    
+    </summary>
+    
+      <category term="面试" scheme="http://yuhan.com/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+      <category term="面试" scheme="http://yuhan.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="css" scheme="http://yuhan.com/tags/css/"/>
+    
+  </entry>
+  
+  <entry>
     <title>前端面试之htm5新特性</title>
     <link href="http://yuhan.com/2017/07/06/html5-of-interview/"/>
     <id>http://yuhan.com/2017/07/06/html5-of-interview/</id>
     <published>2017-07-06T02:13:14.000Z</published>
-    <updated>2017-07-06T08:24:47.000Z</updated>
+    <updated>2017-07-06T14:04:53.000Z</updated>
     
-    <content type="html"><![CDATA[<p>今天来谈谈前端面试中基本上每次一面都会被问到的一个问题，那就是html5的新特性了。这个是学习前端必须掌握的基础知识。</p>
+    <content type="html"><![CDATA[<p>今天来谈谈前端面试中基本上每次一面的时候都会被问到的一个问题，那就是html5的新特性。这个是学习前端必须掌握的基础知识。</p>
 <h1 id="新增的元素"><a href="#新增的元素" class="headerlink" title="新增的元素"></a>新增的元素</h1><p>html5新增了一些语义化更好的标签元素。</p>
 <h2 id="结构元素"><a href="#结构元素" class="headerlink" title="结构元素"></a>结构元素</h2><ol>
 <li>article元素，表示页面中的一块与上下文不相关的独立内容，比如博客中的一篇文章。</li>
@@ -58,19 +204,19 @@
 <li>dialog元素，表示对话框或窗口。</li>
 </ol>
 <h1 id="废除的元素"><a href="#废除的元素" class="headerlink" title="废除的元素"></a>废除的元素</h1><p>html5中废除了一些纯表现的元素，只有部分浏览器支持的元素还有一些会对可用性产生负面影响的元素。</p>
-<h2 id="纯表现元素"><a href="#纯表现元素" class="headerlink" title="纯表现元素"></a>纯表现元素</h2><p>纯表现的元素就是那些可以用CSS替代的元素。basefont、big、center、font、s、strike、tt、u这些元素，他们的功能都是纯粹为页面展示服务的，HTML5提倡把页面展示性功能放在CSS样式表中统一编辑，所以将这些元素废除，用CSS样式进行替代。</p>
+<h2 id="纯表现元素"><a href="#纯表现元素" class="headerlink" title="纯表现元素"></a>纯表现元素</h2><p>纯表现的元素就是那些可以用css替代的元素。basefont、big、center、font、s、strike、tt、u这些元素，他们的功能都是纯粹为页面展示服务的，html5提倡把页面展示性功能放在css样式表中统一处理，所以将这些元素废除，用css样式进行替代。</p>
 <h2 id="对可用性产生负面影响的元素"><a href="#对可用性产生负面影响的元素" class="headerlink" title="对可用性产生负面影响的元素"></a>对可用性产生负面影响的元素</h2><p>对于frameset元素、frame元素与noframes元素，由于frame框架对网页可用性存在负面影响，在html5中已不支持frame框架，只支持iframe框架，html5中同时将frameset、frame和noframes这三个元素废除。</p>
 <h2 id="只有部分浏览器支持的元素"><a href="#只有部分浏览器支持的元素" class="headerlink" title="只有部分浏览器支持的元素"></a>只有部分浏览器支持的元素</h2><p>对于applet、bgsound、blink、marquee等元素，由于只有部分浏览器支持，特别是bgsound元素以及marquee元素，只被IE支持，所以在html5中被废除。其中applet元素可由embed元素或object元素替代，bgsound元素可由audio元素替代，marquee可以由javascript编程的方式替代。</p>
-<h1 id="新增的API"><a href="#新增的API" class="headerlink" title="新增的API"></a>新增的API</h1><h2 id="Canvas-API"><a href="#Canvas-API" class="headerlink" title="Canvas API"></a>Canvas API</h2><p>上文提到的canvas元素可以为页面提供一块画布来展示图形。结合canvas API，就可以在这块画布上动态生成和展示各种图形、图表、图像以及动画了。Canvas本质上是位图画布，不可缩放，绘制出来的对象不属于页面DOM结构或者任何命名空间。不需要将每个图元当做对象存储，执行性能非常好，通过Canvas API绘制图形，就是更新canvas像素。</p>
-<p>利用Canvas API进行绘图，首先要获取canvas元素的上下文，然后用该上下文中封装的各种绘图功能禁止绘图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;canvas id=&quot;canvas&quot;&gt;替代内容&lt;/canvas&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">    var canvas = document.getElementById(&apos;canvas&apos;);</div><div class="line">    var context =canvas.getContext(&quot;2d&quot;); // 获取上下文</div><div class="line">    //设置纯色</div><div class="line">    context.fillStyle = &quot;red&quot;;</div><div class="line">    context.strokeStyle = &quot;blue&quot;;</div><div class="line">    //实践表明在不设施fillStyle下的默认fillStyle=black</div><div class="line">    context.fillRect(0, 0, 100, 100);</div><div class="line">    //实践表明在不设施strokeStyle下的默认strokeStyle=black</div><div class="line">    context.strokeRect(120, 0, 100, 100);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="新增的API"><a href="#新增的API" class="headerlink" title="新增的API"></a>新增的API</h1><h2 id="Canvas-API"><a href="#Canvas-API" class="headerlink" title="Canvas API"></a>Canvas API</h2><p>上文提到的canvas元素可以为页面提供一块画布来展示图形。结合Canvas API，就可以在这块画布上动态生成和展示各种图形、图表、图像以及动画了。Canvas本质上是位图画布，不可缩放，绘制出来的对象不属于页面DOM结构或者任何命名空间。不需要将每个图元当做对象存储，执行性能非常好。</p>
+<p>利用Canvas API进行绘图，首先要获取canvas元素的上下文，然后用该上下文中封装的各种绘图功能进行绘图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;canvas id=&quot;canvas&quot;&gt;替代内容&lt;/canvas&gt;</div><div class="line">&lt;script&gt;</div><div class="line">    var canvas = document.getElementById(&apos;canvas&apos;);</div><div class="line">    var context =canvas.getContext(&quot;2d&quot;); // 获取上下文</div><div class="line">    //设置纯色</div><div class="line">    context.fillStyle = &quot;red&quot;;</div><div class="line">    context.strokeStyle = &quot;blue&quot;;</div><div class="line">    // 实践表明在不设置fillStyle下的默认fillStyle为black</div><div class="line">    context.fillRect(0, 0, 100, 100);</div><div class="line">    // 实践表明在不设置strokeStyle下的默认strokeStyle为black</div><div class="line">    context.strokeRect(120, 0, 100, 100);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
 <h2 id="SVG"><a href="#SVG" class="headerlink" title="SVG"></a>SVG</h2><p>SVG是html5的另一项图形功能，它是一种标准的矢量图形，是一种文件格式，有自己的API。html5引入了内联SVG，使得SVG元素可以直接出现在html标记中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;svg height=100 width=100&gt;&lt;circle cx=50 cy=50 r=50 /&gt;&lt;/svg&gt;</div></pre></td></tr></table></figure></p>
-<h2 id="音频和视频"><a href="#音频和视频" class="headerlink" title="音频和视频"></a>音频和视频</h2><p>audio和video元素的出现让html5的媒体应用多了新选择，开发人员不必使用插件就能播放音频和视频。对于这两个元素，heml5规范提供了通用、完整、可脚本化控制的API。<br>html5规范出来之前，在页面中播放视频的典型方式是使用Flash、QuickTime或者Windows Media插件往html中嵌入音频视频，相对这种方式，使用html5的媒体标签有两大好处。</p>
+<h2 id="音频和视频"><a href="#音频和视频" class="headerlink" title="音频和视频"></a>音频和视频</h2><p>audio和video元素的出现让html5的媒体应用多了新选择，开发人员不必使用插件就能播放音频和视频。对于这两个元素，html5规范提供了通用、完整、可脚本化控制的API。<br>html5规范出来之前，在页面中播放视频的典型方式是使用Flash、QuickTime或者Windows Media插件往html中嵌入音频视频，相对这种方式，使用html5的媒体标签有两大好处。</p>
 <ol>
 <li>作为浏览器原生支持的功能，新的audio和video元素无需安装。</li>
 <li>媒体元素想Web页面提供了通用、集成和可脚本化控制的API。</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;video src=&quot;video.webm&quot; controls&gt;</div><div class="line">    &lt;object data=&quot;videoplayer.swf&quot; type=&quot;application/x-shockwave-flash&quot;&gt;</div><div class="line">        &lt;param name=&quot;movie&quot; value=&quot;video.swf&quot; /&gt;</div><div class="line">    &lt;/object&gt;</div><div class="line">    Your browser does not support HTML5 video.</div><div class="line">&lt;/video&gt;</div></pre></td></tr></table></figure>
-<h3 id="浏览器支持性检测"><a href="#浏览器支持性检测" class="headerlink" title="浏览器支持性检测"></a>浏览器支持性检测</h3><p>浏览器检测是否支持audio元素或者video元素最简单的方式是用脚本动态创建它，然后检测特定函数时候存在。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> hasVideo = !!(<span class="built_in">document</span>.createElement(<span class="string">'video'</span>).canPlayType);</div></pre></td></tr></table></figure></p>
+<h3 id="浏览器支持性检测"><a href="#浏览器支持性检测" class="headerlink" title="浏览器支持性检测"></a>浏览器支持性检测</h3><p>浏览器检测是否支持audio元素或者video元素最简单的方式是用脚本动态创建它，然后检测特定函数是否存在。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> hasVideo = !!(<span class="built_in">document</span>.createElement(<span class="string">'video'</span>).canPlayType);</div></pre></td></tr></table></figure></p>
 <h2 id="Geolocation-API"><a href="#Geolocation-API" class="headerlink" title="Geolocation API"></a>Geolocation API</h2><p>html5的Geolocation API（地理定位API），可以请求用户共享他们的位置。使用方法非常简单，如果用户同意，浏览器就会返回位置信息，该位置信息是通过支持html5地理定位功能的底层设备（如笔记本电脑或手机）提供给浏览器的。位置信息由纬度、经度坐标和一些其他元数据组成。</p>
 <h3 id="位置信息从何而来"><a href="#位置信息从何而来" class="headerlink" title="位置信息从何而来"></a>位置信息从何而来</h3><p>Geolocation API不指定设备使用哪种底层技术来定位应用程序的用户。相反，它只是用于检索位置信息的API，而且通过该API检索到的数据只具有某种程度的准确性，并不能保证设备返回的位置是精确的。设备可以使用下列数据源：</p>
 <ol>
@@ -83,9 +229,9 @@
 </li>
 <li>用户自定义数据</li>
 </ol>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 一次更新</span></div><div class="line">navigator.geolocation.getCurrentPosition(updateLocation, handleLocationEror);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateLocation</span>(<span class="params">position</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> latitude = position.coords.latitude;     <span class="comment">// 纬度</span></div><div class="line">    <span class="keyword">var</span> longitude = position.coords.longitude;   <span class="comment">// 经度</span></div><div class="line">    <span class="keyword">var</span> accuracy = position.coords.accuracy;     <span class="comment">// 准确度</span></div><div class="line">    <span class="keyword">var</span> timestamp = position.coords.timestamp;   <span class="comment">// 时间戳</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 错误处理函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleLocationEror</span>(<span class="params">error</span>) </span>&#123;</div><div class="line">    ....</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 重复更新</span></div><div class="line">navigator.geolocation.watchPosition(updateLocation, handleLocationEror);</div><div class="line"></div><div class="line"><span class="comment">// 不再接受位置更新</span></div><div class="line">navigator.geolocation.clearWatch(watchId);</div></pre></td></tr></table></figure>
-<h2 id="Communication-API"><a href="#Communication-API" class="headerlink" title="Communication API"></a>Communication API</h2><h3 id="跨文档消息传递"><a href="#跨文档消息传递" class="headerlink" title="跨文档消息传递"></a>跨文档消息传递</h3><p>出于安全方面的考虑，运行在同一浏览器中的框架、标签页、窗口间的通信一直都受到了严格的限制。然而，现实中存在一些合理的让不同站点的内容能在浏览器内进行交互的需求。这种情形下，如果浏览器内部能提供直接的通信机制，就能更好地组织这些应用。<br>html5中引入了一种新功能，跨文档消息通信，可以确保iframe、标签页、窗口间安全地进行跨源通信。postMessage API为发送消息的标准方式。发送消息非常简单：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.postMessage(<span class="string">'Hello, world'</span>, <span class="string">'http://www.example.com/'</span>);</div></pre></td></tr></table></figure></p>
-<p>接收消息时，仅需在页面中增加一个事件处理函数。当某个消息到达时，通过检查消息的来源来决定是否对这条消息进行处理。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"message"</span>, messageHandler, <span class="literal">true</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">messageHandler</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(e.origin) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">"friend.example.com"</span>:</div><div class="line">        <span class="comment">// 处理消息</span></div><div class="line">        processMessage(e.data);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">default</span>: </div><div class="line">        <span class="comment">// 消息来源无法识别</span></div><div class="line">        <span class="comment">// 消息被忽略</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 一次更新</span></div><div class="line">navigator.geolocation.getCurrentPosition(updateLocation, handleLocationEror);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateLocation</span>(<span class="params">position</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> latitude = position.coords.latitude;     <span class="comment">// 纬度</span></div><div class="line">    <span class="keyword">var</span> longitude = position.coords.longitude;   <span class="comment">// 经度</span></div><div class="line">    <span class="keyword">var</span> accuracy = position.coords.accuracy;     <span class="comment">// 准确度</span></div><div class="line">    <span class="keyword">var</span> timestamp = position.coords.timestamp;   <span class="comment">// 时间戳</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 错误处理函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleLocationEror</span>(<span class="params">error</span>) </span>&#123;</div><div class="line">    ....</div><div class="line">&#125;</div><div class="line"><span class="comment">// 重复更新</span></div><div class="line">navigator.geolocation.watchPosition(updateLocation, handleLocationEror);</div><div class="line"><span class="comment">// 不再接受位置更新</span></div><div class="line">navigator.geolocation.clearWatch(watchId);</div></pre></td></tr></table></figure>
+<h2 id="Communication-API"><a href="#Communication-API" class="headerlink" title="Communication API"></a>Communication API</h2><h3 id="跨文档消息传递"><a href="#跨文档消息传递" class="headerlink" title="跨文档消息传递"></a>跨文档消息传递</h3><p>出于安全方面的考虑，运行在同一浏览器中的框架、标签页、窗口间的通信一直都受到了严格的限制。然而，现实中存在一些合理的让不同站点的内容能在浏览器内进行交互的需求。这种情形下，如果浏览器内部能提供直接的通信机制，就能更好地组织这些应用。<br>html5中引入了一种新功能，跨文档消息通信，可以确保iframe、标签页、窗口间安全地进行跨源通信。postMessage API为发送消息的标准方式，发送消息非常简单：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.postMessage(<span class="string">'Hello, world'</span>, <span class="string">'http://www.example.com/'</span>);</div></pre></td></tr></table></figure></p>
+<p>接收消息时，仅需在页面中增加一个事件处理函数。当某个消息到达时，通过检查消息的来源来决定是否对这条消息进行处理。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"message"</span>, messageHandler, <span class="literal">true</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">messageHandler</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(e.origin) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">"friend.example.com"</span>:</div><div class="line">        <span class="comment">// 处理消息</span></div><div class="line">        processMessage(e.data);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">default</span>: </div><div class="line">        <span class="comment">// 消息来源无法识别</span></div><div class="line">        <span class="comment">// 消息被忽略</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>消息事件是一个拥有data(数据)和origin(源)属性的DOM事件。data属性是发送方传递的实际消息，而origin属性是发送来源。</p>
 <h3 id="XMLHttpRequest-Level2"><a href="#XMLHttpRequest-Level2" class="headerlink" title="XMLHttpRequest Level2"></a>XMLHttpRequest Level2</h3><p>XMLHttpRequest API使得Ajax技术成为可能，作为XMLHttpRequest的改进版，XMLHttpRequest Level2在功能上有了很大的改进。主要两个方面：</p>
 <ol>
@@ -94,24 +240,24 @@
 </ol>
 <h4 id="跨源XMLHttpRequest"><a href="#跨源XMLHttpRequest" class="headerlink" title="跨源XMLHttpRequest"></a>跨源XMLHttpRequest</h4><p>过去，XMLHttpRequest仅限于同源通信，XMLHttpRequest Level2通过CORS实现了跨源XMLHttpRequest。跨源HTTP请求包含一个Origin头部，它为服务器提供HTTP请求的源信息。</p>
 <h2 id="WebSockets-API"><a href="#WebSockets-API" class="headerlink" title="WebSockets API"></a>WebSockets API</h2><p>WebSockets是html5中最强大的通信功能，它定义了一个全双工通信信道，仅通过Web上的一个Socket即可进行通信。</p>
-<h3 id="解读WebSockets"><a href="#解读WebSockets" class="headerlink" title="解读WebSockets"></a>解读WebSockets</h3><h4 id="WebSockets握手"><a href="#WebSockets握手" class="headerlink" title="WebSockets握手"></a>WebSockets握手</h4><p>为了建立WebSockets通信，客户端和服务器在初始握手时，将HTTP协议升级到WebSocket协议。一旦连接建立成功，就可以在全双工模式下在客户端和服务器之间来回传递WebSocket消息。</p>
-<h4 id="WebSockets接口"><a href="#WebSockets接口" class="headerlink" title="WebSockets接口"></a>WebSockets接口</h4><p>除了对WebSockets协议定义外，该规范还同时定义了用于JavaScript应用程序的WebSocket接口。WebSockets接口的使用很简单。要连接远程主机，只需要新建一个WebSocket实例，提供希望连接的对端URL。</p>
+<h3 id="WebSockets握手"><a href="#WebSockets握手" class="headerlink" title="WebSockets握手"></a>WebSockets握手</h3><p>为了建立WebSockets通信，客户端和服务器在初始握手时，将HTTP协议升级到WebSocket协议。一旦连接建立成功，就可以在全双工模式下在客户端和服务器之间来回传递WebSocket消息。</p>
+<h3 id="WebSockets接口"><a href="#WebSockets接口" class="headerlink" title="WebSockets接口"></a>WebSockets接口</h3><p>除了对WebSockets协议定义外，该规范还同时定义了用于JavaScript应用程序的WebSocket接口。WebSockets接口的使用很简单。要连接远程主机，只需要新建一个WebSocket实例，提供希望连接的对端URL。</p>
 <h2 id="Forms-API"><a href="#Forms-API" class="headerlink" title="Forms API"></a>Forms API</h2><h3 id="新表单元素"><a href="#新表单元素" class="headerlink" title="新表单元素"></a>新表单元素</h3><ol>
-<li>tel元素，表示电话号码</li>
-<li>email元素，表示电子邮件地址文本框</li>
-<li>url元素，表示网页的url</li>
-<li>search元素，用于搜索引擎，比如在站点顶部显示的搜索框</li>
-<li>range元素，特定值范围内的数值选择器，典型的显示方式是滑动条</li>
-<li>number元素，只包含数值的字段</li>
+<li>tel元素，表示电话号码。</li>
+<li>email元素，表示电子邮件地址文本框。</li>
+<li>url元素，表示网页的url。</li>
+<li>search元素，用于搜索引擎，比如在站点顶部显示的搜索框。</li>
+<li>range元素，特定值范围内的数值选择器，典型的显示方式是滑动条。</li>
+<li>number元素，只包含数值的字段。</li>
 </ol>
 <h3 id="未来的表单元素"><a href="#未来的表单元素" class="headerlink" title="未来的表单元素"></a>未来的表单元素</h3><ol>
-<li>color元素，颜色选择器，基于调色盘或者取色板进行选择</li>
-<li>datetime元素，显示完整的日期和时间，包括时区</li>
-<li>datetime-local，显示日期和时间</li>
-<li>time元素，不含时区的时间选择器和指示器</li>
-<li>date元素，日期选择器</li>
-<li>week元素，某年中的周选择器</li>
-<li>month元素，某年中的月选择器</li>
+<li>color元素，颜色选择器，基于调色盘或者取色板进行选择。</li>
+<li>datetime元素，显示完整的日期和时间，包括时区。</li>
+<li>datetime-local，显示日期和时间。</li>
+<li>time元素，不含时区的时间选择器和指示器。</li>
+<li>date元素，日期选择器。</li>
+<li>week元素，某年中的周选择器。</li>
+<li>month元素，某年中的月选择器。</li>
 </ol>
 <h3 id="新的表单特性和函数"><a href="#新的表单特性和函数" class="headerlink" title="新的表单特性和函数"></a>新的表单特性和函数</h3><h4 id="placeholder"><a href="#placeholder" class="headerlink" title="placeholder"></a>placeholder</h4><p>当用户还没输入值的时候，输入型控件可以通过placeholder特性向用户显示描述性说明或者提示信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input name=&quot;name&quot; placeholder=&quot;First and last name&quot;&gt;</div></pre></td></tr></table></figure></p>
 <h4 id="autocomplete"><a href="#autocomplete" class="headerlink" title="autocomplete"></a>autocomplete</h4><p>浏览器通过autocomplete特性能够知晓是否应该保存输入值以备将来使用。</p>
@@ -164,8 +310,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;今天来谈谈前端面试中基本上每次一面都会被问到的一个问题，那就是html5的新特性了。这个是学习前端必须掌握的基础知识。&lt;/p&gt;
-&lt;h1 id=&quot;新增的元素&quot;&gt;&lt;a href=&quot;#新增的元素&quot; class=&quot;headerlink&quot; title=&quot;新增的元素&quot;&gt;&lt;/a&gt;新增的元
+      &lt;p&gt;今天来谈谈前端面试中基本上每次一面的时候都会被问到的一个问题，那就是html5的新特性。这个是学习前端必须掌握的基础知识。&lt;/p&gt;
+&lt;h1 id=&quot;新增的元素&quot;&gt;&lt;a href=&quot;#新增的元素&quot; class=&quot;headerlink&quot; title=&quot;新增的元素&quot;&gt;&lt;/a&gt;新增
     
     </summary>
     
@@ -702,11 +848,11 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="vue-router" scheme="http://yuhan.com/tags/vue-router/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -771,9 +917,9 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="transition" scheme="http://yuhan.com/tags/transition/"/>
     
@@ -949,7 +1095,7 @@
 <li>index.html是页面入口文件</li>
 </ul>
 <h2 id="基本页面实现"><a href="#基本页面实现" class="headerlink" title="基本页面实现"></a>基本页面实现</h2><p>项目创建好之后，就开始实现自己想要的页面了，修改src文件夹下的App.vue文件，如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="keyword">import</span> myHead <span class="keyword">from</span> <span class="string">'./components/header'</span></div><div class="line"><span class="keyword">import</span> myNav <span class="keyword">from</span> <span class="string">'./components/nav'</span></div><div class="line"><span class="keyword">import</span> myFoot <span class="keyword">from</span> <span class="string">'./components/foot'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">name</span>: <span class="string">'app'</span>,</div><div class="line">  <span class="attr">components</span>: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"#app"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 导航栏 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-head</span>&gt;</span><span class="tag">&lt;/<span class="name">my-head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-nav</span>&gt;</span><span class="tag">&lt;/<span class="name">my-nav</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">my-foot</span>&gt;</span><span class="tag">&lt;/<span class="name">my-foot</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">import myHead from './components/header'</div><div class="line">import myNav from './components/nav'</div><div class="line">import myFoot from './components/foot'</div><div class="line"></div><div class="line">export default &#123;</div><div class="line">  name: 'app',</div><div class="line">  components: &#123;</div><div class="line">    myHead,</div><div class="line">    myNav,</div><div class="line">    myFoot</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>myHead组件是页面头部，myNav组件是页面左侧导航栏，myFoot是页面底部，router-view组件是vue-router中渲染路径匹配到的视图组件。每个组件的具体实现可以去github项目地址去看源码。</p>
 <h2 id="创建配置路由"><a href="#创建配置路由" class="headerlink" title="创建配置路由"></a>创建配置路由</h2><p>显然，我要做的是一个单页面应用，要用到vue-router，先安装vue-router，输入如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save vue-router</div></pre></td></tr></table></figure></p>
 <p>然后，在src文件夹下面的main.js文件中添加路由相关的代码，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></div><div class="line"></div><div class="line">Vue.use(VueRouter) </div><div class="line"><span class="comment">// 定义路由组件</span></div><div class="line"><span class="keyword">const</span> Worldcloud = <span class="built_in">require</span>(<span class="string">'./components/cloud.vue'</span>)</div><div class="line"><span class="keyword">const</span> Building = <span class="built_in">require</span>(<span class="string">'./components/building.vue'</span>)</div><div class="line"><span class="keyword">const</span> Canteen = <span class="built_in">require</span>(<span class="string">'./components/canteen.vue'</span>)</div><div class="line"><span class="keyword">const</span> Selfstudy = <span class="built_in">require</span>(<span class="string">'./components/selfstudy.vue'</span>)</div><div class="line"><span class="keyword">const</span> Difficult = <span class="built_in">require</span>(<span class="string">'./components/difficult.vue'</span>)</div><div class="line"><span class="keyword">const</span> Interest = <span class="built_in">require</span>(<span class="string">'./components/interest.vue'</span>)</div><div class="line"><span class="keyword">const</span> Bedroom = <span class="built_in">require</span>(<span class="string">'./components/bedroom.vue'</span>)</div><div class="line"><span class="keyword">const</span> Graduate = <span class="built_in">require</span>(<span class="string">'./components/graduate.vue'</span>)</div><div class="line"><span class="keyword">const</span> Getup = <span class="built_in">require</span>(<span class="string">'./components/getup.vue'</span>)</div><div class="line"><span class="keyword">const</span> Gotobed = <span class="built_in">require</span>(<span class="string">'./components/gotobed.vue'</span>)</div><div class="line"><span class="keyword">const</span> Eat = <span class="built_in">require</span>(<span class="string">'./components/eat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Amuse = <span class="built_in">require</span>(<span class="string">'./components/amuse.vue'</span>)</div><div class="line"><span class="keyword">const</span> Single = <span class="built_in">require</span>(<span class="string">'./components/single.vue'</span>)</div><div class="line"><span class="keyword">const</span> Chat = <span class="built_in">require</span>(<span class="string">'./components/chat.vue'</span>)</div><div class="line"><span class="keyword">const</span> Onlyme = <span class="built_in">require</span>(<span class="string">'./components/onlyme.vue'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 定义路由，配置路由映射</span></div><div class="line"><span class="keyword">const</span> routes = [</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">redirect</span>: <span class="string">'/wordcloud'</span> &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/wordcloud'</span>, <span class="attr">component</span>: Worldcloud &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/building'</span>, <span class="attr">component</span>: Building &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/canteen'</span>, <span class="attr">component</span>: Canteen &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/selfstudy'</span>, <span class="attr">component</span>: Selfstudy &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/difficult'</span>, <span class="attr">component</span>: Difficult &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/interest'</span>, <span class="attr">component</span>: Interest &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/bedroom'</span>, <span class="attr">component</span>: Bedroom &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/graduate'</span>, <span class="attr">component</span>: Graduate &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/getup'</span>, <span class="attr">component</span>: Getup &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/gotobed'</span>, <span class="attr">component</span>: Gotobed &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/eat'</span>, <span class="attr">component</span>: Eat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/amuse'</span>, <span class="attr">component</span>: Amuse &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/single'</span>, <span class="attr">component</span>: Single &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/chat'</span>, <span class="attr">component</span>: Chat &#125;,</div><div class="line">  &#123; <span class="attr">path</span>: <span class="string">'/onlyme'</span>, <span class="attr">component</span>: Onlyme &#125;</div><div class="line">]</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  <span class="attr">template</span>: <span class="string">'&lt;App/&gt;'</span>,</div><div class="line">  <span class="attr">components</span>: &#123; App &#125;,</div><div class="line">  router</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
@@ -1036,9 +1182,9 @@
       <category term="JavaScript" scheme="http://yuhan.com/categories/JavaScript/"/>
     
     
-      <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
-    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
+    
+      <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
       <category term="webpack" scheme="http://yuhan.com/tags/webpack/"/>
     
@@ -1321,59 +1467,6 @@
       <category term="前端工具" scheme="http://yuhan.com/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/"/>
     
       <category term="CSS预处理" scheme="http://yuhan.com/tags/CSS%E9%A2%84%E5%A4%84%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JavaScript原型学习笔记</title>
-    <link href="http://yuhan.com/2016/08/28/JavaScript-prototype/"/>
-    <id>http://yuhan.com/2016/08/28/JavaScript-prototype/</id>
-    <published>2016-08-28T06:02:42.000Z</published>
-    <updated>2016-08-29T00:13:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>要想理解JavaScript中的原型，首先要从对象说起。</p>
-<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>JavaScript中一切都是对象，相信这句话大家都不陌生，但是其实在JavaScript中这句话并不准确。JavaScript中的typeof函数可以返回变量的类型。总共有两大类型，<strong>值类型</strong>（包括undefined、number、string、boolean）和<strong>引用类型</strong>（包括function、object）。只有引用类型的变量才能算是对象。函数、数组、对象、null、new Number(10)都是对象，他们都是引用类型。</p>
-<p>JavaScript中对象是若干属性的集合，只有属性没有方法，方法也是一种属性。下面是一个常见的对象的例子：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">	<span class="attr">a</span>: <span class="number">10</span>,</div><div class="line">	<span class="attr">b</span>: &#123;</div><div class="line">	<span class="attr">name</span>: <span class="string">'hieeyh'</span>,</div><div class="line">	<span class="attr">year</span>: <span class="number">1993</span></div><div class="line">	&#125;</div><div class="line">	c: <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.a + x);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>属性a是一个数值，属性b是一个对象，属性c是一个函数。</p>
-<h1 id="函数和对象的关系"><a href="#函数和对象的关系" class="headerlink" title="函数和对象的关系"></a>函数和对象的关系</h1><p>上面讲到函数也是一种对象，但是函数和对象之间的关系比较复杂，因为对象不仅可以通过上述方式创建还可以通过函数创建，如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = <span class="string">'hieeyh'</span>;</div><div class="line">	<span class="keyword">this</span>.year = <span class="number">1993</span>;</div><div class="line">	<span class="keyword">this</span>.sex = <span class="string">'女'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</div></pre></td></tr></table></figure>
-<p>其实对象那一节所讲的对象创建方式的本质是：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//var obj = &#123; a: 10, b: 20&#125;;</span></div><div class="line"><span class="comment">//var arr = [5, 6];</span></div><div class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line">obj.a = <span class="number">10</span>;</div><div class="line">obj.b = <span class="number">20</span>;</div><div class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line">arr[<span class="number">0</span>] = <span class="number">5</span>;</div><div class="line">arr[<span class="number">1</span>] = <span class="number">6</span>;</div></pre></td></tr></table></figure>
-<p><em>其中Object和Array都是函数。</em></p>
-<p>到此我们得到一个很玄乎的概念，对象是由函数创建的，而函数却又是一种对象。想要搞清他们之间的关系就要进入我们的正题原型的概念了。</p>
-<h1 id="prototype原型"><a href="#prototype原型" class="headerlink" title="prototype原型"></a>prototype原型</h1><p>函数是一种对象，对象是若干属性的集合，所以函数一定有属性。每一个函数都有一个prototype属性，该属性的值又是一个对象。默认的只有一个叫做constructor的属性，指向这个函数本身。</p>
-<p><img src="/img/prototype.png" alt="prototype"></p>
-<p>如上图，myFunction是一个函数，右侧方框是它的原型。原型可以自定义增多很多属性，例如Object函数的原型中有hasOwnProperty、isPrototypeOf等属性。所以，我们可以在自定义的函数的prototype中增加自己的属性。如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>) <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">Person.prototype.name = <span class="string">'hieeyh'</span>;</div><div class="line">Person.prototype.getYear = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="number">1993</span>;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</div></pre></td></tr></table></figure>
-<p>上述代码中，Person是一个函数，person是从Person函数中new出来的，person对象就可以调用Person.prototype中的属性。因为每个对象都有一个隐藏的属性“__proto__”，这个属性引用了创建这个对象的函数的prototype。即：person.__proto__ === Person.prototype。这里的”__proto__“称为隐式原型。</p>
-<p>__proto__是一个隐藏的属性，开发者用不到这个属性值。既然每个对象都有一个__proto__属性，那么Object.prototype也是一个对象，它的prototype是什么呢？Object.prototype是一个特例，它的__proto__指向null。</p>
-<p>函数也是一种对象，函数当然也有__proto__。函数的__proto__指向Function.prototype，因为函数对象都是由Function创建的。</p>
-<p>当然Function也是一个函数，函数是一种对象，也有__proto__属性。既然是函数，那么它一定是被Function创建。所以Function是被自身创建的。所以它的__proto__指向了自身的Prototype。（有点晕，哈哈）</p>
-<p>最后，Function.prototype指向对象，它的__proto__也指向Object.prototype。因为Function.prototype指向的对象也是一个普通的被Object创建的对象，所以也遵循基本的规则。</p>
-<h1 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h1><p>typeof函数可以很清楚判断一个值类型变量的类型，但是对于引用类型的变量它只能判断出是object还是function，不能判断他具体是通过那个函数new出来的。这只就需要用到instanceof了。</p>
-<p>instanceof运算符的第一个变量是一个对象，称为VAR；第二个变量一般是一个函数，称为FN。<br>instanceof的判断队则是：沿着VAR的__proto__这条线来找，同时沿着FN的prototype这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。通过下面的例子进行进一步理解。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</div><div class="line"><span class="built_in">console</span>.log(person <span class="keyword">instanceof</span> Person);  <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(person <span class="keyword">instanceof</span> <span class="built_in">Object</span>);  <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span>);  <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>);  <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span>);  <span class="comment">//true</span></div></pre></td></tr></table></figure>
-<p>有过面向对象变成经验的同学应该可以想到，instanceof表示的就是一种继承关系，在js中也可以说是一种原型链的结构。</p>
-<h1 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();</div><div class="line">foo.a = <span class="number">10</span>;</div><div class="line">Foo.prototype.a = <span class="number">100</span>;</div><div class="line">Foo.prototype.b = <span class="number">200</span>;</div><div class="line"><span class="built_in">console</span>.log(foo.a);  <span class="comment">//10</span></div><div class="line"><span class="built_in">console</span>.log(foo.b);  <span class="comment">//200</span></div></pre></td></tr></table></figure>
-<p>以上代码中，foo是Foo函数new出来的对象，foo.a是foo对象的基本属性，foo.b是从Foo.prototype得来，因为foo.__proto__指向的是Foo.prototype。</p>
-<p>访问一个对象的属性时，先在其基本属性中查找，如果没有，再沿着__proto__这条链向上找，这就是原型链。访问foo.b时，f1的基本属性中没有b，于是沿着__proto__找到了Foo.prototype.b。</p>
-<p><strong>另外</strong>，所有的对象的原型链都会找到Object.prototype，因此所有的对象都会有Object.prototype的方法。这就是所谓的<strong>继承</strong>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;要想理解JavaScript中的原型，首先要从对象说起。&lt;/p&gt;
-&lt;h1 id=&quot;对象&quot;&gt;&lt;a href=&quot;#对象&quot; class=&quot;headerlink&quot; title=&quot;对象&quot;&gt;&lt;/a&gt;对象&lt;/h1&gt;&lt;p&gt;JavaScript中一切都是对象，相信这句话大家都不陌生，但是其实
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://yuhan.com/categories/JavaScript/"/>
-    
-    
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="JavaScript" scheme="http://yuhan.com/tags/JavaScript/"/>
     
   </entry>
   

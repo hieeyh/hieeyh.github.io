@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端面试之CSS3新特性 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="面试,css," />
+  
+
+  <meta name="description" content="除了html5的新特性，CSS3的新特性也是面试中经常被问到的。
+选择器CSS3中新添加了很多选择器，解决了很多之前需要用javascript才能解决的布局问题。
+
+element1~element2: 选择前面有element1元素的每个element2元素。
+[attribute^=value]: 选择某元素attribute属性是以value开头的。
+[attribute$=value]:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试之CSS3新特性">
+<meta property="og:url" content="http://yuhan.com/2017/07/06/css3-of-interview/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="除了html5的新特性，CSS3的新特性也是面试中经常被问到的。
+选择器CSS3中新添加了很多选择器，解决了很多之前需要用javascript才能解决的布局问题。
+
+element1~element2: 选择前面有element1元素的每个element2元素。
+[attribute^=value]: 选择某元素attribute属性是以value开头的。
+[attribute$=value]:">
+<meta property="og:updated_time" content="2017-07-07T05:22:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试之CSS3新特性">
+<meta name="twitter:description" content="除了html5的新特性，CSS3的新特性也是面试中经常被问到的。
+选择器CSS3中新添加了很多选择器，解决了很多之前需要用javascript才能解决的布局问题。
+
+element1~element2: 选择前面有element1元素的每个element2元素。
+[attribute^=value]: 选择某元素attribute属性是以value开头的。
+[attribute$=value]:">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#选择器"><span class="toc-text">选择器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Transition-Transform和Animation"><span class="toc-text">Transition,Transform和Animation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transition"><span class="toc-text">Transition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transform"><span class="toc-text">Transform</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#变换类型"><span class="toc-text">变换类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器支持"><span class="toc-text">浏览器支持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Animation"><span class="toc-text">Animation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#边框"><span class="toc-text">边框</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#background-clip"><span class="toc-text">background-clip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#background-clip-1"><span class="toc-text">background-clip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#background-size"><span class="toc-text">background-size</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#background-break"><span class="toc-text">background-break</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文字效果"><span class="toc-text">文字效果</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#word-wrap"><span class="toc-text">word-wrap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#text-overflow"><span class="toc-text">text-overflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#text-shadow"><span class="toc-text">text-shadow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#text-decoration"><span class="toc-text">text-decoration</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#渐变"><span class="toc-text">渐变</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#font-face特性"><span class="toc-text">@font-face特性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多列布局"><span class="toc-text">多列布局</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用户界面"><span class="toc-text">用户界面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#resize"><span class="toc-text">resize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#box-sizing"><span class="toc-text">box-sizing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#outline-offset"><span class="toc-text">outline-offset</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-css3-of-interview" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">前端面试之CSS3新特性</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.07.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/面试/">面试</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>除了html5的新特性，CSS3的新特性也是面试中经常被问到的。</p>
+<h1 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h1><p>CSS3中新添加了很多选择器，解决了很多之前需要用javascript才能解决的布局问题。</p>
+<ol>
+<li>element1~element2: 选择前面有element1元素的每个element2元素。</li>
+<li>[attribute^=value]: 选择某元素attribute属性是以value开头的。</li>
+<li>[attribute$=value]: 选择某元素attribute属性是以value结尾的。</li>
+<li>[attribute*=value]: 选择某元素attribute属性包含value字符串的。</li>
+<li>E:first-of-type: 选择属于其父元素的首个E元素的每个E元素。</li>
+<li>E:last-of-type: 选择属于其父元素的最后E元素的每个E元素。</li>
+<li>E:only-of-type: 选择属于其父元素唯一的E元素的每个E元素。</li>
+<li>E:only-child: 选择属于其父元素的唯一子元素的每个E元素。</li>
+<li>E:nth-child(n): 选择属于其父元素的第n个子元素的每个E元素。</li>
+<li>E:nth-last-child(n): 选择属于其父元素的倒数第n个子元素的每个E元素。</li>
+<li>E:nth-of-type(n): 选择属于其父元素第n个E元素的每个E元素。</li>
+<li>E:nth-last-of-type(n): 选择属于其父元素倒数第n个E元素的每个E元素。</li>
+<li>E:last-child: 选择属于其父元素最后一个子元素每个E元素。</li>
+<li>:root: 选择文档的根元素。</li>
+<li>E:empty: 选择没有子元素的每个E元素（包括文本节点)。</li>
+<li>E:target: 选择当前活动的E元素。</li>
+<li>E:enabled: 选择每个启用的E元素。</li>
+<li>E:disabled: 选择每个禁用的E元素。</li>
+<li>E:checked: 选择每个被选中的E元素。</li>
+<li>E:not(selector): 选择非selector元素的每个元素。</li>
+<li>E::selection: 选择被用户选取的元素部分。</li>
+</ol>
+<h1 id="Transition-Transform和Animation"><a href="#Transition-Transform和Animation" class="headerlink" title="Transition,Transform和Animation"></a>Transition,Transform和Animation</h1><p>这三个特性是CSS3新增的和动画相关的特性。</p>
+<h2 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h2><p>Transition可以在当元素从一种样式变换为另一种样式时为元素添加效果，而不用使用Flash动画或 JavaScript。<br>Transition有如下属性：</p>
+<ol>
+<li>transition-property: 规定应用过渡的CSS属性的名称。</li>
+<li>transition-duration: 规定应用过渡的CSS属性的名称。</li>
+<li>transition-delay: 规定过渡效果何时开始，默认是0。</li>
+<li>transition-timing-function: 规定过渡效果的时间曲线，默认是”ease”，还有linear、ease-in、ease-out、ease-in-out和cubic-bezier等过渡类型。</li>
+<li>transition: 简写属性，用于在一个属性中设置四个过渡属性。</li>
+</ol>
+<p>在一个例子中使用所有过渡属性如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">transition-property</span>: width;</div><div class="line">    <span class="attribute">transition-duration</span>: <span class="number">1s</span>;</div><div class="line">    <span class="attribute">transition-timing-function</span>: linear;</div><div class="line">    <span class="attribute">transition-delay</span>: <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Firefox 4 */</span></div><div class="line">    <span class="attribute">-moz-transition-property</span>:width;</div><div class="line">    <span class="attribute">-moz-transition-duration</span>:<span class="number">1s</span>;</div><div class="line">    <span class="attribute">-moz-transition-timing-function</span>:linear;</div><div class="line">    <span class="attribute">-moz-transition-delay</span>:<span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">-webkit-transition-property</span>:width;</div><div class="line">    <span class="attribute">-webkit-transition-duration</span>:<span class="number">1s</span>;</div><div class="line">    <span class="attribute">-webkit-transition-timing-function</span>:linear;</div><div class="line">    <span class="attribute">-webkit-transition-delay</span>:<span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Opera */</span></div><div class="line">    <span class="attribute">-o-transition-property</span>:width;</div><div class="line">    <span class="attribute">-o-transition-duration</span>:<span class="number">1s</span>;</div><div class="line">    <span class="attribute">-o-transition-timing-function</span>:linear;</div><div class="line">    <span class="attribute">-o-transition-delay</span>:<span class="number">2s</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用transition属性简写如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">transition</span>: width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Firefox 4 */</span></div><div class="line">    <span class="attribute">-moz-transition</span>:width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Safari and Chrome */</span></div><div class="line">    <span class="attribute">-webkit-transition</span>:width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">    <span class="comment">/* Opera */</span></div><div class="line">    <span class="attribute">-o-transition</span>:width <span class="number">1s</span> linear <span class="number">2s</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h2><p>Transform用来向元素应用各种2D和3D转换，该属性允许我们对元素进行旋转、缩放、移动或倾斜等操作。使用方式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">transform</span>:<span class="built_in">rotate</span>(7deg);</div><div class="line">    <span class="attribute">-ms-transform</span>:<span class="built_in">rotate</span>(7deg);     <span class="comment">/* IE 9 */</span></div><div class="line">    <span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(7deg);    <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(7deg); <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">-o-transform</span>:<span class="built_in">rotate</span>(7deg);  <span class="comment">/* Opera */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="变换类型"><a href="#变换类型" class="headerlink" title="变换类型"></a>变换类型</h3><p>transform可以有各种变换类型，即属性值：</p>
+<ol>
+<li>none: 定义不进行转换。</li>
+<li>matrix(n,n,n,n,n,n): 定义2D转换，使用六个值的矩阵。</li>
+<li>matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n): 定义3D转换，使用16个值的4x4矩阵。</li>
+<li>translate(x,y): 定义2D位移转换。</li>
+<li>translate3d(x,y,z): 定义3D位移转换。</li>
+<li>translateX(x): 定义位移转换，只是用X轴的值。</li>
+<li>translateY(y): 定义位移转换，只是用Y轴的值。</li>
+<li>translateZ(z): 定义3D位移转换，只是用Z轴的值。 </li>
+<li>scale(x,y): 定义2D缩放转换。 </li>
+<li>scale3d(x,y,z): 定义3D缩放转换。 </li>
+<li>scaleX(x): 通过设置X轴的值来定义缩放转换。</li>
+<li>scaleY(y): 通过设置Y轴的值来定义缩放转换。</li>
+<li>scaleZ(z): 通过设置Z轴的值来定义3D缩放转换。</li>
+<li>rotate(angle): 定义2D旋转，在参数中规定角度。</li>
+<li>rotate3d(x,y,z,angle): 定义3D旋转。</li>
+<li>rotateX(angle): 定义沿着X轴的3D旋转。</li>
+<li>rotateY(angle): 定义沿着Y轴的3D旋转。</li>
+<li>rotateZ(angle): 定义沿着Z轴的3D旋转。</li>
+<li>skew(x-angle,y-angle): 定义沿着X和Y轴的2D倾斜转换。</li>
+<li>skewX(angle): 定义沿着X轴的2D倾斜转换。</li>
+<li>skewY(angle): 定义沿着Y轴的2D倾斜转换。</li>
+<li>perspective(n): 为3D转换元素定义透视视图。</li>
+</ol>
+<h3 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h3><p>Internet Explorer 10、Firefox、Opera 支持 transform 属性。<br>Internet Explorer 9 支持替代的 -ms-transform 属性（仅适用于 2D 转换）。<br>Safari 和 Chrome 支持替代的 -webkit-transform 属性（3D 和 2D 转换）。<br>Opera 只支持 2D 转换。      </p>
+<h2 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h2><p>Animation让CSS拥有了可以制作动画的功能。使用CSS3的Animation制作动画我们可以省去复杂的js代码。使用方法大概如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> anim1 &#123; </div><div class="line">   0% &#123; </div><div class="line">        <span class="attribute">opacity</span>: <span class="number">0</span>; </div><div class="line">        <span class="attribute">font-size</span>: <span class="number">12px</span>; </div><div class="line">   &#125; </div><div class="line">   100% &#123; </div><div class="line">        <span class="attribute">opacity</span>: <span class="number">1</span>; </div><div class="line">        <span class="attribute">font-size</span>: <span class="number">24px</span>; </div><div class="line">   &#125; </div><div class="line">&#125; </div><div class="line"><span class="selector-class">.anim1Div</span> &#123; </div><div class="line">   <span class="attribute">-webkit-animation-name</span>: anim1 ; </div><div class="line">   <span class="attribute">-webkit-animation-duration</span>: <span class="number">1.5s</span>; </div><div class="line">   <span class="attribute">-webkit-animation-iteration-count</span>: <span class="number">4</span>; </div><div class="line">   <span class="attribute">-webkit-animation-direction</span>: alternate; </div><div class="line">   <span class="attribute">-webkit-animation-timing-function</span>: ease-in-out; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>具体用法可以参考教程：<a href="http://www.w3cplus.com/content/css3-animation" target="_blank" rel="external">CSS3 Animation</a>。</p>
+<h1 id="边框"><a href="#边框" class="headerlink" title="边框"></a>边框</h1><p>CSS3新增了三个边框属性，分别是border-radius、box-shadow和border-image。border-radius可以创建圆角边框，box-shadow可以为元素添加阴影，border-image可以使用图片来绘制边框。IE9+支持border-radius和box-shadow属性。Firefox、Chrome以及Safari支持所有新的边框属性。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>CSS3新增了几个关于背景的属性，分别是background-clip、background-origin、background-size和background-break。</p>
+<h2 id="background-clip"><a href="#background-clip" class="headerlink" title="background-clip"></a>background-clip</h2><p>background-clip属性用于确定背景画区，有以下几种可能的属性：</p>
+<ul>
+<li>background-clip: border-box; 背景从border开始显示</li>
+<li>background-clip: padding-box; 背景从padding开始显示</li>
+<li>background-clip: content-box; 背景显content区域开始显示</li>
+<li>background-clip: no-clip; 默认属性，等同于border-box</li>
+</ul>
+<p>通常情况，背景都是覆盖整个元素的，利用这个属性可以设定背景颜色或图片的覆盖范围。</p>
+<h2 id="background-clip-1"><a href="#background-clip-1" class="headerlink" title="background-clip"></a>background-clip</h2><p>background-clip属性用于确定背景的位置，它通常与background-position联合使用，可以从 border、padding、content来计算background-position（就像background-clip）。</p>
+<ul>
+<li>background-origin: border-box; 从border开始计算background-position</li>
+<li>background-origin: padding-box; 从padding开始计算background-position</li>
+<li>background-origin: content-box; 从content开始计算background-position</li>
+</ul>
+<h2 id="background-size"><a href="#background-size" class="headerlink" title="background-size"></a>background-size</h2><p>background-size属性常用来调整背景图片的大小，主要用于设定图片本身。有以下可能的属性：</p>
+<ul>
+<li>background-size: contain; 缩小图片以适合元素（维持像素长宽比）</li>
+<li>background-size: cover; 扩展元素以填补元素（维持像素长宽比）</li>
+<li>background-size: 100px 100px; 缩小图片至指定的大小</li>
+<li>background-size: 50% 100%; 缩小图片至指定的大小，百分比是相对包 含元素的尺寸</li>
+</ul>
+<h2 id="background-break"><a href="#background-break" class="headerlink" title="background-break"></a>background-break</h2><p>CSS3中，元素可以被分成几个独立的盒子（如使内联元素span跨越多行），background-break 属性用来控制背景怎样在这些不同的盒子中显示。</p>
+<ul>
+<li>background-break: continuous; 默认值。忽略盒之间的距离（也就是像元素没有分成多个盒子，依然是一个整体一样）</li>
+<li>background-break: bounding-box; 把盒之间的距离计算在内；</li>
+<li>background-break: each-box; 为每个盒子单独重绘背景。</li>
+</ul>
+<h1 id="文字效果"><a href="#文字效果" class="headerlink" title="文字效果"></a>文字效果</h1><h2 id="word-wrap"><a href="#word-wrap" class="headerlink" title="word-wrap"></a>word-wrap</h2><p>CSS3中，word-wrap属性允许您允许文本强制文本进行换行，即这意味着会对单词进行拆分。所有主流浏览器都支持 word-wrap 属性。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">p</span> &#123;</div><div class="line">    <span class="attribute">word-wrap</span>:break-word;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="text-overflow"><a href="#text-overflow" class="headerlink" title="text-overflow"></a>text-overflow</h2><p>它与word-wrap是协同工作的，word-wrap设置或检索当当前行超过指定容器的边界时是否断开转行，而 text-overflow则设置或检索当当前行超过指定容器的边界时如何显示。对于“text-overflow”属性，有“clip”和“ellipsis”两种可供选择。</p>
+<h2 id="text-shadow"><a href="#text-shadow" class="headerlink" title="text-shadow"></a>text-shadow</h2><p>CSS3中，text-shadow可向文本应用阴影。能够规定水平阴影、垂直阴影、模糊距离，以及阴影的颜色。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">h1</span>&#123;</div><div class="line">    <span class="attribute">text-shadow</span>: <span class="number">5px</span> <span class="number">5px</span> <span class="number">5px</span> <span class="number">#FF0000</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="text-decoration"><a href="#text-decoration" class="headerlink" title="text-decoration"></a>text-decoration</h2><p>CSS3里面开始支持对文字的更深层次的渲染，具体有三个属性可供设置：</p>
+<ol>
+<li>text-fill-color: 设置文字内部填充颜色</li>
+<li>text-stroke-color: 设置文字边界填充颜色</li>
+<li>text-stroke-width: 设置文字边界宽度</li>
+</ol>
+<h1 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h1><p>CSS3新增了渐变效果，包括linear-gradient(线性渐变)和radial-gradient(径向渐变)。具体用法参考教程：<a href="http://www.w3cplus.com/content/css3-gradient" target="_blank" rel="external">CSS3 Gradient</a></p>
+<h1 id="font-face特性"><a href="#font-face特性" class="headerlink" title="@font-face特性"></a>@font-face特性</h1><p>在CSS3之前，web设计师必须使用已在用户计算机上安装好的字体。通过CSS3，web设计师可以使用他们喜欢的任意字体。当您您找到或购买到希望使用的字体时，可将该字体文件存放到web服务器上，它会在需要时被自动下载到用户的计算机上。字体是在 CSS3 @font-face 规则中定义的。Firefox、Chrome、Safari以及Opera支持 .ttf(True Type Fonts)和 .otf(OpenType Fonts)类型的字体。IE9+ 支持新的@font-face规则，但是仅支持 .eot类型的字体(Embedded OpenType)。</p>
+<p>在新的@font-face规则中，必须首先定义字体的名称（比如myFont），然后指向该字体文件。<br>如需为HTML元素使用字体，请通过font-family属性来引用字体的名称 (myFont)<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">font-face</span> &#123;</div><div class="line">    <span class="attribute">font-family</span>: myFirstFont;</div><div class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'Sansation_Light.ttf'</span>),</div><div class="line">         <span class="built_in">url</span>(<span class="string">'Sansation_Light.eot'</span>); <span class="comment">/* IE9+ */</span></div><div class="line">&#125;</div><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">font-family</span>:myFirstFont;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="多列布局"><a href="#多列布局" class="headerlink" title="多列布局"></a>多列布局</h1><p>通过CSS3，能够创建多个列来对文本进行布局，IE10和Opera支持多列属性。Firefox 需要前缀-moz-，Chrome和Safari需要前缀-webkit-。主要有如下三个属性：</p>
+<ol>
+<li>column-count: 规定元素应该被分隔的列数。</li>
+<li>column-gap: 规定列之间的间隔。</li>
+<li>column-rule: 设置列之间的宽度、样式和颜色规则</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">-moz-column-count</span>:<span class="number">3</span>;    <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-column-count</span>:<span class="number">3</span>; <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">column-count</span>:<span class="number">3</span>;</div><div class="line">    <span class="attribute">-moz-column-gap</span>:<span class="number">40px</span>;       <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-column-gap</span>:<span class="number">40px</span>;    <span class="comment">/* Safari 和 Chrome */</span></div><div class="line">    <span class="attribute">column-gap</span>:<span class="number">40px</span>;</div><div class="line">    <span class="attribute">-moz-column-rule</span>:<span class="number">3px</span> outset <span class="number">#ff0000</span>;    <span class="comment">/* Firefox */</span></div><div class="line">    <span class="attribute">-webkit-column-rule</span>:<span class="number">3px</span> outset <span class="number">#ff0000</span>; <span class="comment">/* Safari and Chrome */</span></div><div class="line">    <span class="attribute">column-rule</span>:<span class="number">3px</span> outset <span class="number">#ff0000</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="用户界面"><a href="#用户界面" class="headerlink" title="用户界面"></a>用户界面</h1><p>CSS3中，新的用户界面特性包括重设元素尺寸、盒尺寸以及轮廓等。Firefox、Chrome以及Safari 支持resize属性。IE、Chrome、Safari以及Opera支持box-sizing属性。Firefox需要前缀-moz-。<br>所有主流浏览器都支持outline-offset属性，除了IE。</p>
+<h2 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h2><p>resize 属性规定是否可由用户调整元素尺寸。如果希望此属性生效，需要设置元素的 overflow 属性，值可以是 auto、hidden 或 scroll。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line">    <span class="attribute">resize</span>:both; <span class="comment">/* none|both|horizontal|vertical; */</span></div><div class="line">    <span class="attribute">overflow</span>:auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="box-sizing"><a href="#box-sizing" class="headerlink" title="box-sizing"></a>box-sizing</h2><p>box-sizing属性可设置的值有content-box、border-box和inherit。</p>
+<ol>
+<li>content-box: padding和border不被包含在定义的width和height之内。对象的实际宽度等于设置的width值和border、padding之和，即 (Element width = width + border + padding)，此属性表现为标准模式下的盒模型。</li>
+<li>border-box: padding和border被包含在定义的width和height之内。对象的实际宽度就等于设置的width值，即使定义有border和padding也不会改变对象的实际宽度，即 (Element width = width)，此属性表现为怪异模式下的盒模型。</li>
+</ol>
+<h2 id="outline-offset"><a href="#outline-offset" class="headerlink" title="outline-offset"></a>outline-offset</h2><p>outline-offset属性对轮廓进行偏移，并在超出边框边缘的位置绘制轮廓。</p>
+
+    
+  </div>
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <span id="busuanzi_container_page_pv" style="line-height: 50px; font-size: 16px;">
+    本文总阅读量：<span id="busuanzi_value_page_pv"></span>次
+  </span>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
