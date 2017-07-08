@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-07-07T05:30:05.000Z</updated>
+  <updated>2017-07-08T02:08:29.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yuhan.com/2017/07/06/css3-of-interview/"/>
     <id>http://yuhan.com/2017/07/06/css3-of-interview/</id>
     <published>2017-07-06T08:32:46.000Z</published>
-    <updated>2017-07-07T05:30:05.000Z</updated>
+    <updated>2017-07-08T02:08:29.000Z</updated>
     
     <content type="html"><![CDATA[<p>除了html5的新特性，CSS3的新特性也是面试中经常被问到的。</p>
 <h1 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h1><p>CSS3中新添加了很多选择器，解决了很多之前需要用javascript才能解决的布局问题。</p>
@@ -97,7 +97,7 @@
 <li>background-clip: no-clip; 默认属性，等同于border-box</li>
 </ul>
 <p>通常情况，背景都是覆盖整个元素的，利用这个属性可以设定背景颜色或图片的覆盖范围。</p>
-<h2 id="background-clip-1"><a href="#background-clip-1" class="headerlink" title="background-clip"></a>background-clip</h2><p>background-clip属性用于确定背景的位置，它通常与background-position联合使用，可以从 border、padding、content来计算background-position（就像background-clip）。</p>
+<h2 id="background-origin"><a href="#background-origin" class="headerlink" title="background-origin"></a>background-origin</h2><p>background-clip属性用于确定背景的位置，它通常与background-position联合使用，可以从 border、padding、content来计算background-position（就像background-clip）。</p>
 <ul>
 <li>background-origin: border-box; 从border开始计算background-position</li>
 <li>background-origin: padding-box; 从padding开始计算background-position</li>
@@ -972,9 +972,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -1025,9 +1025,9 @@
     
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
-      <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
     
   </entry>
   
