@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>flex布局小结 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="css,flex," />
+  
+
+  <meta name="description" content="前端面试中css部分经常会被问到flex布局，我之前对于flex布局只是大概知道怎么用，但是对于里面的一些属性还不太熟悉，这里总结一下以加深记忆。
+什么是flex布局flex布局的官方说法是CSS3弹性盒子(Flexible Box 或 Flexbox)，很适合在页面布局必须适应不同屏幕尺寸和不同显示设备时进行使用。而且flex布局的元素可以在各个方向上进行布局，不使用浮动等，对以往的块模型进行了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flex布局小结">
+<meta property="og:url" content="http://yuhan.com/2017/08/14/css-flex/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="前端面试中css部分经常会被问到flex布局，我之前对于flex布局只是大概知道怎么用，但是对于里面的一些属性还不太熟悉，这里总结一下以加深记忆。
+什么是flex布局flex布局的官方说法是CSS3弹性盒子(Flexible Box 或 Flexbox)，很适合在页面布局必须适应不同屏幕尺寸和不同显示设备时进行使用。而且flex布局的元素可以在各个方向上进行布局，不使用浮动等，对以往的块模型进行了">
+<meta property="og:updated_time" content="2017-08-14T13:15:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flex布局小结">
+<meta name="twitter:description" content="前端面试中css部分经常会被问到flex布局，我之前对于flex布局只是大概知道怎么用，但是对于里面的一些属性还不太熟悉，这里总结一下以加深记忆。
+什么是flex布局flex布局的官方说法是CSS3弹性盒子(Flexible Box 或 Flexbox)，很适合在页面布局必须适应不同屏幕尺寸和不同显示设备时进行使用。而且flex布局的元素可以在各个方向上进行布局，不使用浮动等，对以往的块模型进行了">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是flex布局"><span class="toc-text">什么是flex布局</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性容器"><span class="toc-text">弹性容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性成员"><span class="toc-text">弹性成员</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#轴"><span class="toc-text">轴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方向"><span class="toc-text">方向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行"><span class="toc-text">行</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#容器的属性"><span class="toc-text">容器的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#flex-direction"><span class="toc-text">flex-direction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex-wrap"><span class="toc-text">flex-wrap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex-flow"><span class="toc-text">flex-flow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#justify-content"><span class="toc-text">justify-content</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#align-items"><span class="toc-text">align-items</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#align-content"><span class="toc-text">align-content</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目属性"><span class="toc-text">项目属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#order"><span class="toc-text">order</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex-grow"><span class="toc-text">flex-grow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex-shrink"><span class="toc-text">flex-shrink</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex-basis"><span class="toc-text">flex-basis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex"><span class="toc-text">flex</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#align-self"><span class="toc-text">align-self</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#不影响flex布局的属性"><span class="toc-text">不影响flex布局的属性</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-css-flex" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">flex布局小结</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.08.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>前端面试中css部分经常会被问到flex布局，我之前对于flex布局只是大概知道怎么用，但是对于里面的一些属性还不太熟悉，这里总结一下以加深记忆。</p>
+<h1 id="什么是flex布局"><a href="#什么是flex布局" class="headerlink" title="什么是flex布局"></a>什么是flex布局</h1><p>flex布局的官方说法是CSS3弹性盒子(Flexible Box 或 Flexbox)，很适合在页面布局必须适应不同屏幕尺寸和不同显示设备时进行使用。而且flex布局的元素可以在各个方向上进行布局，不使用浮动等，对以往的块模型进行了改进。</p>
+<h2 id="弹性容器"><a href="#弹性容器" class="headerlink" title="弹性容器"></a>弹性容器</h2><p>采用flex布局的元素称为弹性容器，通过设置元素的display属性值为flex或inline-flex来定义弹性容器，它的子元素就自动成为容器成员。值 flex 使弹性容器成为块级元素。值 inline-flex 使弹性容器成为单个不可分的行内级元素。</p>
+<h2 id="弹性成员"><a href="#弹性成员" class="headerlink" title="弹性成员"></a>弹性成员</h2><p>弹性容器的每个子元素都称为弹性成员。</p>
+<h2 id="轴"><a href="#轴" class="headerlink" title="轴"></a>轴</h2><p>每一个弹性布局容器都包含两个轴，弹性成员沿其排列的轴称为主轴，和主轴垂直的轴称为侧轴。</p>
+<h2 id="方向"><a href="#方向" class="headerlink" title="方向"></a>方向</h2><p>方向是弹性成员依次排列的方向，比如从左到右，或者从上到下。</p>
+<h2 id="行"><a href="#行" class="headerlink" title="行"></a>行</h2><p>弹性项目可以排列在单个行或者多个行中。</p>
+<h1 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h1><p>以下几个属性可以用在容器上，来设置相应的布局规则。</p>
+<h2 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h2><p>该属性用来确定主轴，即弹性成员排列的方向是水平从左往右还是从右往左，还是垂直从上往下还是从下往上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">  flex-direction: row | row-reverse | column | column-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h2><p>flex-warp属性设置弹性项目是排布在单行还是多个行中，该属性可以控制侧轴的方向。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">  flex-wrap: nowrap | wrap | wrap-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>nowrap是默认的，表示弹性成员不换行</li>
+<li>wrap表示换行，侧轴是默认方向</li>
+<li>wrap-reverse表示换行，侧轴是默认方向的反方向</li>
+</ol>
+<h2 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h2><p>flex-flow是flex-direction和flex-wrap属性的简写，决定弹性项目如何排布。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">  flex-flow: (flex-direction) (flex-wrap)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h2><p>该属性定义了项目在主轴上的对齐方式，常用的属性如下：</p>
+<ol>
+<li>flex-start，主轴起点对齐</li>
+<li>flex-end，主轴终点对齐</li>
+<li>center，主轴居中对齐</li>
+<li>space-between，两端对齐，项目之间间隔相同。</li>
+<li>space-around，在主轴上均匀分配弹性元素，相邻元素间距离相同。每行第一个元素到行首的距离和每行最后一个元素到行尾的距离将会是相邻元素之间距离的一半。</li>
+</ol>
+<h2 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h2><p>该属性定义项目在侧轴上如何对齐，常用的属性如下：</p>
+<ol>
+<li>flex-start：侧轴的起点对齐。</li>
+<li>flex-end：侧轴终点对齐。</li>
+<li>center：侧轴的居中对齐。</li>
+<li>baseline: 项目第一行文字的基线对齐。</li>
+</ol>
+<h2 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h2><p>该属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用，主要取值如下：</p>
+<ol>
+<li>flex-start：与侧轴的起点对齐。</li>
+<li>flex-end：与侧轴的终点对齐。</li>
+<li>center：与侧轴的中点对齐。</li>
+<li>space-between：与侧轴两端对齐，轴线之间的间隔平均分布。</li>
+<li>space-around：在侧轴上均匀分配弹性元素。相邻行元素间距离相同，第一行元素到边框的距离和最后一行元素到行尾的距离是相邻行元素之间距离的一半。</li>
+</ol>
+<h1 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h1><p>项目元素也可以设置相应属性。</p>
+<h2 id="order"><a href="#order" class="headerlink" title="order"></a>order</h2><p>该属性将元素与序号关联起来，以此决定哪些元素先出现，即数值越小排列越靠前，默认为0。</p>
+<h2 id="flex-grow"><a href="#flex-grow" class="headerlink" title="flex-grow"></a>flex-grow</h2><p>该属性定义项目的拉伸因子，即放大比例。默认为0，负值无效。</p>
+<h2 id="flex-shrink"><a href="#flex-shrink" class="headerlink" title="flex-shrink"></a>flex-shrink</h2><p>该属性定义项目的收缩规则，flex元素仅在默认宽度之和大于容器的时候才会发生收缩，其收缩的大小是依据flex-shrink的值。负值无效。</p>
+<h2 id="flex-basis"><a href="#flex-basis" class="headerlink" title="flex-basis"></a>flex-basis</h2><p>该属性定义项目元素在主轴方向上的初始大小。如果不使用box-sizing来改变盒模型的话，那么这个属性就决定了flex元素的内容盒（content-box）的宽或者高的大小。</p>
+<h2 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h2><p>flex属性是flex-grow, flex-shrink和flex-basis的简写，默认值为0 1 auto。</p>
+<h2 id="align-self"><a href="#align-self" class="headerlink" title="align-self"></a>align-self</h2><p>该属性定义单个项目的对齐方式，并覆盖align-items的值。 如果任何flex元素的侧轴方向margin值设置为auto，则会忽略align-self。该属性的取值可参考align-items属性。</p>
+<h1 id="不影响flex布局的属性"><a href="#不影响flex布局的属性" class="headerlink" title="不影响flex布局的属性"></a>不影响flex布局的属性</h1><p>由于弹性盒子使用了不同的布局算法，某些属性用在弹性容器上没有效果：</p>
+<ol>
+<li>多栏布局的column-* 属性对弹性项目无效。</li>
+<li>float与clear对弹性项目无效。使用float将使元素的display属性计为block。</li>
+<li>vertical-align对弹性项目的对齐无效。</li>
+</ol>
+
+    
+  </div>
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <span id="busuanzi_container_page_pv" style="line-height: 50px; font-size: 16px;">
+    本文总阅读量：<span id="busuanzi_value_page_pv"></span>次
+  </span>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
