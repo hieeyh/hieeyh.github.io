@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>webpack学习笔记 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="总结,webpack," />
+  
+
+  <meta name="description" content="现在用vue开发项目我基本都会用到webpack，webpack是一款很好用的模块加载兼打包工具，vue的自动化构建工具vue-cli可以直接生成基于webpack的vue项目。
+什么是webpackwebpack是一个模块加载兼打包工具，他能把各种资源，包括js文件，样式文件，图片，还有vue项目开发中常用的vue文件作为模块来处理和使用。他可以解析不能直接运行的扩展语言，并将其打包为合适的格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack学习笔记">
+<meta property="og:url" content="http://yuhan.com/2017/10/11/how-to-use-webpack/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="现在用vue开发项目我基本都会用到webpack，webpack是一款很好用的模块加载兼打包工具，vue的自动化构建工具vue-cli可以直接生成基于webpack的vue项目。
+什么是webpackwebpack是一个模块加载兼打包工具，他能把各种资源，包括js文件，样式文件，图片，还有vue项目开发中常用的vue文件作为模块来处理和使用。他可以解析不能直接运行的扩展语言，并将其打包为合适的格式">
+<meta property="og:updated_time" content="2017-10-16T08:04:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack学习笔记">
+<meta name="twitter:description" content="现在用vue开发项目我基本都会用到webpack，webpack是一款很好用的模块加载兼打包工具，vue的自动化构建工具vue-cli可以直接生成基于webpack的vue项目。
+什么是webpackwebpack是一个模块加载兼打包工具，他能把各种资源，包括js文件，样式文件，图片，还有vue项目开发中常用的vue文件作为模块来处理和使用。他可以解析不能直接运行的扩展语言，并将其打包为合适的格式">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是webpack"><span class="toc-text">什么是webpack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack的工作方式"><span class="toc-text">webpack的工作方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack的配置文件"><span class="toc-text">webpack的配置文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#entry入口"><span class="toc-text">entry入口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单入口（单页面应用）"><span class="toc-text">单入口（单页面应用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多入口（多页面应用）"><span class="toc-text">多入口（多页面应用）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#output输出"><span class="toc-text">output输出</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#写法"><span class="toc-text">写法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#loaders加载器"><span class="toc-text">loaders加载器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#loaders配置"><span class="toc-text">loaders配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用的loader"><span class="toc-text">常用的loader</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#plugins插件"><span class="toc-text">plugins插件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HtmlWebpackPlugin"><span class="toc-text">HtmlWebpackPlugin</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-how-to-use-webpack" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">webpack学习笔记</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.10.11</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/webpack/">webpack</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>现在用vue开发项目我基本都会用到webpack，webpack是一款很好用的模块加载兼打包工具，vue的自动化构建工具vue-cli可以直接生成基于webpack的vue项目。</p>
+<h1 id="什么是webpack"><a href="#什么是webpack" class="headerlink" title="什么是webpack"></a>什么是webpack</h1><p>webpack是一个模块加载兼打包工具，他能把各种资源，包括js文件，样式文件，图片，还有vue项目开发中常用的vue文件作为模块来处理和使用。他可以解析不能直接运行的扩展语言，并将其打包为合适的格式以供使用。同时还具有一些热加载热更新等功能。</p>
+<h2 id="webpack的工作方式"><a href="#webpack的工作方式" class="headerlink" title="webpack的工作方式"></a>webpack的工作方式</h2><p>webpack的工作方式和grunt和gulp不同，webpack通过一个给定的主文件，找到你项目中的所有依赖文件，然后使用loaders处理他们，最后打包为一个浏览器可以识别的js文件。</p>
+<h2 id="webpack的配置文件"><a href="#webpack的配置文件" class="headerlink" title="webpack的配置文件"></a>webpack的配置文件</h2><p>webpack的使用可以通过命令行进行操作，但是大型项目通过配置文件来处理会更方便。基本上每个项目都会有一个webpack.config.js的配置文件，通过这个配置文件告诉webpack需要做什么。一个基本的webpack配置文件如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">// 插件，通过npm安装</span></div><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="comment">// 页面入口文件配置，即上文提到的主文件</span></div><div class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</div><div class="line">  <span class="comment">// 打包后文件的输出地方</span></div><div class="line">  output: &#123;</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">    <span class="attr">filename</span>: <span class="string">'my-first-webpack.bundle.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">//其它解决方案配置</span></div><div class="line">  resolve: &#123;</div><div class="line">      <span class="comment">//查找module的话从这里开始查找</span></div><div class="line">      root: <span class="string">'E:/github/flux-example/src'</span>, <span class="comment">//绝对路径</span></div><div class="line">      extensions: [<span class="string">''</span>, <span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.scss'</span>], <span class="comment">// 这些后缀的文件引入时可以省略后缀</span></div><div class="line">      <span class="comment">// 别名的设置，避免引入文件时写太长的地址</span></div><div class="line">      alias: &#123;</div><div class="line">          <span class="attr">AppStore</span> : <span class="string">'js/stores/AppStores.js'</span>,</div><div class="line">          <span class="attr">ActionType</span> : <span class="string">'js/actions/ActionType.js'</span>,</div><div class="line">          <span class="attr">AppAction</span> : <span class="string">'js/actions/AppAction.js'</span></div><div class="line">      &#125;</div><div class="line">  &#125;，</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">    <span class="comment">// 配置不同类型文件的加载器</span></div><div class="line">    rules: [</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'babel-loader'</span>,</div><div class="line">        <span class="attr">include</span>: [resolve(<span class="string">'src'</span>), resolve(<span class="string">'test'</span>)]</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// webpack额外提供的一些好用的插件配置</span></div><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(),</div><div class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</div><div class="line">  ]</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<h1 id="entry入口"><a href="#entry入口" class="headerlink" title="entry入口"></a>entry入口</h1><h2 id="单入口（单页面应用）"><a href="#单入口（单页面应用）" class="headerlink" title="单入口（单页面应用）"></a>单入口（单页面应用）</h2><p>单页面应用一般是单入口文件，可以直接用字符串或者数组来书写。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: &#123;</div><div class="line">    <span class="attr">main</span>: <span class="string">'file.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<p>简写为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'file.js'</span></div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<p>当然，也可以将两个不相干的文件打包成一个文件，此时就可以用数组的写法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: [<span class="string">'file.js'</span>, <span class="string">'index.js'</span>]</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<h2 id="多入口（多页面应用）"><a href="#多入口（多页面应用）" class="headerlink" title="多入口（多页面应用）"></a>多入口（多页面应用）</h2><p>虽然平时用vue开发文件一般都是开发单页面，但是webpack也可以配置多页面，这时entry的写法就应该是对象的形式。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: &#123;</div><div class="line">    <span class="attr">app</span>: <span class="string">'./src/app.js'</span>,</div><div class="line">    <span class="attr">index</span>: <span class="string">'./src/index.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<p>此时，output的写法也需要进行相应的变动。</p>
+<h1 id="output输出"><a href="#output输出" class="headerlink" title="output输出"></a>output输出</h1><p>output需要使用绝对路径，可以利用path进行处理。</p>
+<h2 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h2><p>知道每个输出文件的名字，因为output.path选项规定了文件的位置，所以filename仅用于命名每个文件。单文件入口的写法如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'file.js'</span>,</div><div class="line">  <span class="attr">output</span>: &#123;</div><div class="line">    <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,  </div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'./dist/js'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<p>多文件入口的写法如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>); <span class="comment">//webpack升级到2.0以后，路径需要引用这个模块</span></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: &#123;</div><div class="line">  	<span class="attr">a</span>: <span class="string">'a.js'</span>,</div><div class="line">  	<span class="attr">b</span>: <span class="string">'b.js'</span></div><div class="line">  &#125;</div><div class="line">  output: &#123;</div><div class="line">    <span class="attr">filename</span>: <span class="string">'[name]-[hash].js'</span>,  </div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'./dist/js'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<p>‘[name]-[hash].js’这种写法以保证每个文件名都不重复。</p>
+<h1 id="loaders加载器"><a href="#loaders加载器" class="headerlink" title="loaders加载器"></a>loaders加载器</h1><p>loaders是webpack中最核心的功能了，通过使用不同的loader，webpack才有能力调用外部的脚本或工具，实现对不同格式的文件的处理，比如将scss转换为css，或者把下一代的JS文件（ES6，ES7)转换为现代浏览器兼容的JS文件等。</p>
+<h2 id="loaders配置"><a href="#loaders配置" class="headerlink" title="loaders配置"></a>loaders配置</h2><p>loaders的配置包括以下几个：</p>
+<ol>
+<li>test：一个用以匹配loaders所处理文件的拓展名的正则表达式（必须）</li>
+<li>loader：loader的名称（必须）</li>
+<li>include/exclude:手动添加必须处理的文件/文件夹或屏蔽不需要处理的文件/文件夹（可选）；</li>
+<li>query：为loaders提供额外的设置选项（可选）</li>
+</ol>
+<h2 id="常用的loader"><a href="#常用的loader" class="headerlink" title="常用的loader"></a>常用的loader</h2><p>平时开发项目常用的loader主要由babel、css-loader、style-loader、less-loader、sass-loader、postcss-loader等，这些loader需要先通过npm安装才能正确使用。</p>
+<h1 id="plugins插件"><a href="#plugins插件" class="headerlink" title="plugins插件"></a>plugins插件</h1><p>插件是webpack的支柱功能。在你使用webpack配置时，webpack自身也构建于同样的插件系统上，插件目的在于解决loader无法实现的其他功能。</p>
+<h2 id="HtmlWebpackPlugin"><a href="#HtmlWebpackPlugin" class="headerlink" title="HtmlWebpackPlugin"></a>HtmlWebpackPlugin</h2><p>这是最常用的插件之一，他的作用是依据一个简单的index.html模板，生成一个自动引用你打包后的JS文件的新index.html，这个插件自动完成了我们之前手动做的一些事情。</p>
+<p>webpack还有很多其他好用的插件，有兴趣的同学可以去官网研究研究。</p>
+
+    
+  </div>
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <span id="busuanzi_container_page_pv" style="line-height: 50px; font-size: 16px;">
+    本文总阅读量：<span id="busuanzi_value_page_pv"></span>次
+  </span>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
