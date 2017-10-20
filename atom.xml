@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-10-16T08:04:38.000Z</updated>
+  <updated>2017-10-20T02:26:38.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -16,16 +16,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>到底什么是vue</title>
+    <link href="http://yuhan.com/2017/10/18/what-is-vue/"/>
+    <id>http://yuhan.com/2017/10/18/what-is-vue/</id>
+    <published>2017-10-18T08:11:27.000Z</published>
+    <updated>2017-10-20T02:26:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Vue真的是最近很火的一个框架，那么Vue到底是什么呢？官方的解释是，Vue是一套构建用户界面的渐进式框架，Vue的核心只关注视图层，和angular这种重量级的框架不同。Vue的目标是通过尽可能简单的api实现响应式的数据绑定和组合的视图组件。对于初学者来说，可能看了官方的解释也还是不太清楚Vue究竟是什么，那么就说说Vue主要用来干什么，这可以让大家从另一方面更好地理解Vue。Vue在搭建表单繁多且网页内容需要根据用户的操作进行修改的的网页版应用时，有很大用处。</p>
+<h1 id="为什么不用JQuery"><a href="#为什么不用JQuery" class="headerlink" title="为什么不用JQuery"></a>为什么不用JQuery</h1><p>我们知道JQuery主要是简化了我们直接用js操作DOM的过程，JQuery可以进行链式调用，当链很长的时候，代码阅读性就很差，而且JQuery选择器查找页面元素以及DOM操作也是有性能损失的。但是用Vue进行开发的话你就不会有这样的烦恼。这是因为Vue可以进行响应式的数据绑定，Vue是以数据进行驱动的。同时Vue还可以进行组件化的开发，让你的代码得到足够的复用，减少很多重复的工作。Vue2.0还引入了许你DOM，进一步优化性能。</p>
+<h1 id="响应式的数据绑定"><a href="#响应式的数据绑定" class="headerlink" title="响应式的数据绑定"></a>响应式的数据绑定</h1><p>Vue一个最明显的特性就是它的响应式的系统，数据模型就是一个简单的js对象，当你修改他们时，视图就会进行响应的更新，而不需要你自己手动的操作。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- html代码如下 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"reverseMessage"</span>&gt;</span>逆转消息<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// js代码如下</span></div><div class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  <span class="attr">data</span>: &#123;</div><div class="line">    <span class="attr">message</span>: <span class="string">'Hello Vue.js!'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">methods</span>: &#123;</div><div class="line">    <span class="attr">reverseMessage</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.message = <span class="keyword">this</span>.message.split(<span class="string">''</span>).reverse().join(<span class="string">''</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>上例中，点击逆转消息的按钮，会调用reverseMessage方法，在该方法中对message进行了一些操作，改变了message的值，此时视图也就会响应的改变，而不需要操作DOM来改变视图。<br>可以看出Vue中的一切都是数据进行驱动的，数据改变，视图就会进行相应的改变。而这在JQuery中是无法实现的。同时Vue中也可以进行双向的数据绑定，即视图的改变也会反映到数据上来，这主要表现在表单操作上。</p>
+<h1 id="组件化应用开发"><a href="#组件化应用开发" class="headerlink" title="组件化应用开发"></a>组件化应用开发</h1><p>组件系统是Vue的另一个重要的概念，我们可以用小型，独立和客服用的组件构建大型应用。Vue通常用来开发单页面应用，如果页面的交互和结构十分复杂，那么一个页面上就会有很多的模块要写，如果直接在一个页面上进行开发，那么代码量和工作量都非常庞大。进而Vue引入了组件，将一个单页面应用的各个模块拆分到一个个单独的组件中，这样各个组件就能各行其职，最后所有的组件组合起来就是我们一个完整的单页面应用。组件化另一个有优点是，组件可以进行复用，这样就能减少重复的代码，进一步优化性能。</p>
+<h1 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h1><p>虚拟DOM实际上是Vue2.0才引入的，是参考了React的思想。这些高大上的思想其实都是为了优化性能，虚拟DOM是什么呢？其实就是用js对象来模拟DOM树，当状态变化后，通常需要重新渲染DOM，我们知道DOM操作是十分损耗性能的，用一个js对象来模拟DOM，然后用diff算法来进行计算，可以算出具体是哪个元素或者组件需要重新渲染，然后再进行DOM操作。这样可以避免一些不必要的DOM操作，进一步提高性能。</p>
+<p>在接触Vue，React，Angular这些听起来高大上的框架之前，可能会觉得无从下手，但是搞清楚了它们的思想和原理后，在进行开发就会简单很多。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Vue真的是最近很火的一个框架，那么Vue到底是什么呢？官方的解释是，Vue是一套构建用户界面的渐进式框架，Vue的核心只关注视图层，和angular这种重量级的框架不同。Vue的目标是通过尽可能简单的api实现响应式的数据绑定和组合的视图组件。对于初学者来说，可能看了官方
+    
+    </summary>
+    
+      <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
+    
+    
+      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
+    
+  </entry>
+  
+  <entry>
     <title>webpack学习笔记</title>
     <link href="http://yuhan.com/2017/10/11/how-to-use-webpack/"/>
     <id>http://yuhan.com/2017/10/11/how-to-use-webpack/</id>
     <published>2017-10-11T05:49:55.000Z</published>
-    <updated>2017-10-16T08:04:38.000Z</updated>
+    <updated>2017-10-16T08:39:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>现在用vue开发项目我基本都会用到webpack，webpack是一款很好用的模块加载兼打包工具，vue的自动化构建工具vue-cli可以直接生成基于webpack的vue项目。</p>
 <h1 id="什么是webpack"><a href="#什么是webpack" class="headerlink" title="什么是webpack"></a>什么是webpack</h1><p>webpack是一个模块加载兼打包工具，他能把各种资源，包括js文件，样式文件，图片，还有vue项目开发中常用的vue文件作为模块来处理和使用。他可以解析不能直接运行的扩展语言，并将其打包为合适的格式以供使用。同时还具有一些热加载热更新等功能。</p>
 <h2 id="webpack的工作方式"><a href="#webpack的工作方式" class="headerlink" title="webpack的工作方式"></a>webpack的工作方式</h2><p>webpack的工作方式和grunt和gulp不同，webpack通过一个给定的主文件，找到你项目中的所有依赖文件，然后使用loaders处理他们，最后打包为一个浏览器可以识别的js文件。</p>
-<h2 id="webpack的配置文件"><a href="#webpack的配置文件" class="headerlink" title="webpack的配置文件"></a>webpack的配置文件</h2><p>webpack的使用可以通过命令行进行操作，但是大型项目通过配置文件来处理会更方便。基本上每个项目都会有一个webpack.config.js的配置文件，通过这个配置文件告诉webpack需要做什么。一个基本的webpack配置文件如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">// 插件，通过npm安装</span></div><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="comment">// 页面入口文件配置，即上文提到的主文件</span></div><div class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</div><div class="line">  <span class="comment">// 打包后文件的输出地方</span></div><div class="line">  output: &#123;</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">    <span class="attr">filename</span>: <span class="string">'my-first-webpack.bundle.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">//其它解决方案配置</span></div><div class="line">  resolve: &#123;</div><div class="line">      <span class="comment">//查找module的话从这里开始查找</span></div><div class="line">      root: <span class="string">'E:/github/flux-example/src'</span>, <span class="comment">//绝对路径</span></div><div class="line">      extensions: [<span class="string">''</span>, <span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.scss'</span>], <span class="comment">// 这些后缀的文件引入时可以省略后缀</span></div><div class="line">      <span class="comment">// 别名的设置，避免引入文件时写太长的地址</span></div><div class="line">      alias: &#123;</div><div class="line">          <span class="attr">AppStore</span> : <span class="string">'js/stores/AppStores.js'</span>,</div><div class="line">          <span class="attr">ActionType</span> : <span class="string">'js/actions/ActionType.js'</span>,</div><div class="line">          <span class="attr">AppAction</span> : <span class="string">'js/actions/AppAction.js'</span></div><div class="line">      &#125;</div><div class="line">  &#125;，</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">    <span class="comment">// 配置不同类型文件的加载器</span></div><div class="line">    rules: [</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'babel-loader'</span>,</div><div class="line">        <span class="attr">include</span>: [resolve(<span class="string">'src'</span>), resolve(<span class="string">'test'</span>)]</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// webpack额外提供的一些好用的插件配置</span></div><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(),</div><div class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</div><div class="line">  ]</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
+<h2 id="webpack的配置文件"><a href="#webpack的配置文件" class="headerlink" title="webpack的配置文件"></a>webpack的配置文件</h2><p>webpack的使用可以通过命令行进行操作，但是大型项目通过配置文件来处理会更方便。基本上每个项目都会有一个webpack.config.js的配置文件，通过这个配置文件告诉webpack需要做什么。一个基本的webpack配置文件如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">// 插件，通过npm安装</span></div><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="comment">// 页面入口文件配置，即上文提到的主文件</span></div><div class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</div><div class="line">  <span class="comment">// 打包后文件的输出地方</span></div><div class="line">  output: &#123;</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">    <span class="attr">filename</span>: <span class="string">'my-first-webpack.bundle.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">//其它解决方案配置</span></div><div class="line">  resolve: &#123;</div><div class="line">      <span class="comment">//查找module的话从这里开始查找</span></div><div class="line">      root: <span class="string">'E:/github/flux-example/src'</span>, <span class="comment">//绝对路径</span></div><div class="line">      extensions: [<span class="string">''</span>, <span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.scss'</span>], <span class="comment">// 这些后缀的文件引入时可以省略后缀</span></div><div class="line">      <span class="comment">// 别名的设置，避免引入文件时写太长的地址</span></div><div class="line">      alias: &#123;</div><div class="line">          <span class="attr">AppStore</span> : <span class="string">'js/stores/AppStores.js'</span>,</div><div class="line">          <span class="attr">ActionType</span> : <span class="string">'js/actions/ActionType.js'</span>,</div><div class="line">          <span class="attr">AppAction</span> : <span class="string">'js/actions/AppAction.js'</span></div><div class="line">      &#125;</div><div class="line">  &#125;，</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">    <span class="comment">// 配置不同类型文件的加载器</span></div><div class="line">    rules: [</div><div class="line">      &#123;</div><div class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">        <span class="attr">loader</span>: <span class="string">'babel-loader'</span>,</div><div class="line">        <span class="attr">include</span>: [resolve(<span class="string">'src'</span>), resolve(<span class="string">'test'</span>)]</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// webpack额外提供的一些好用的插件配置</span></div><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(),</div><div class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</div><div class="line">  ]</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
 <h1 id="entry入口"><a href="#entry入口" class="headerlink" title="entry入口"></a>entry入口</h1><h2 id="单入口（单页面应用）"><a href="#单入口（单页面应用）" class="headerlink" title="单入口（单页面应用）"></a>单入口（单页面应用）</h2><p>单页面应用一般是单入口文件，可以直接用字符串或者数组来书写。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: &#123;</div><div class="line">    <span class="attr">main</span>: <span class="string">'file.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
 <p>简写为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'file.js'</span></div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
 <p>当然，也可以将两个不相干的文件打包成一个文件，此时就可以用数组的写法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="attr">entry</span>: [<span class="string">'file.js'</span>, <span class="string">'index.js'</span>]</div><div class="line">&#125;;</div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure></p>
@@ -40,7 +70,7 @@
 <ol>
 <li>test：一个用以匹配loaders所处理文件的拓展名的正则表达式（必须）</li>
 <li>loader：loader的名称（必须）</li>
-<li>include/exclude:手动添加必须处理的文件/文件夹或屏蔽不需要处理的文件/文件夹（可选）；</li>
+<li>include/exclude：手动添加必须处理的文件/文件夹或屏蔽不需要处理的文件/文件夹（可选）；</li>
 <li>query：为loaders提供额外的设置选项（可选）</li>
 </ol>
 <h2 id="常用的loader"><a href="#常用的loader" class="headerlink" title="常用的loader"></a>常用的loader</h2><p>平时开发项目常用的loader主要由babel、css-loader、style-loader、less-loader、sass-loader、postcss-loader等，这些loader需要先通过npm安装才能正确使用。</p>
@@ -282,9 +312,9 @@
       <category term="面试" scheme="http://yuhan.com/categories/%E9%9D%A2%E8%AF%95/"/>
     
     
-      <category term="css" scheme="http://yuhan.com/tags/css/"/>
-    
       <category term="面试" scheme="http://yuhan.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="css" scheme="http://yuhan.com/tags/css/"/>
     
   </entry>
   
@@ -1314,71 +1344,6 @@
       <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
     
       <category term="webpack" scheme="http://yuhan.com/tags/webpack/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端模块化小结</title>
-    <link href="http://yuhan.com/2016/09/13/about-module/"/>
-    <id>http://yuhan.com/2016/09/13/about-module/</id>
-    <published>2016-09-13T06:10:03.000Z</published>
-    <updated>2016-11-17T06:49:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>随着我们的项目越来越复杂，参与项目的人员越来越多，将项目划分模块就变得十分重要，开发者只需要实现自己负责的功能，其他部分可以加载别人已经写好的模块。但是JavaScript不是一种模块化的编程语言，所以JavaScript开发人员做了很多努力，在现有的运行环境中实现了模块化的功能。</p>
-<p>前端的模块化开发主要解决两个问题：命名冲突和文件依赖。在前端领域探究模块化开发的过程中，产生了不同的js模块规范，目前通用的JavaScript模块规范主要是：<strong>CommonJS</strong>和<strong>AMD</strong>，先从CommonJS说起。</p>
-<h1 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h1><p>CommonJS是服务器端的模块的规范，NodeJS将其发扬光大，标志着JavaScript模块化编程正式登上舞台。</p>
-<ol>
-<li>定义模块：CommonJS规范规定一个单独的文件就是一个模块，每一个模块都是一个单独的作用域，在该模块内部的变量无法被其它模块读取，除非定义为global对象的属性。</li>
-<li>模块输出：想要输出模块中的变量使用module.exports对象，该对象是模块外部与内部通信的桥梁。</li>
-<li>加载模块：使用require方法加载模块，该方法读取一个文件并执行，最后返回文件内部的module.exports对象。</li>
-</ol>
-<p>下面举个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义模块 module.js</span></div><div class="line"><span class="keyword">var</span> age = <span class="number">23</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">printAge</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(age);</div><div class="line">&#125;</div><div class="line"><span class="comment">//模块输出</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">printAge</span>: printAge</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//加载模块</span></div><div class="line"><span class="keyword">var</span> myModule = <span class="built_in">require</span>(<span class="string">'./module.js'</span>);</div><div class="line">myModule.printAge();</div></pre></td></tr></table></figure>
-<p>加载模块时，一般可以省略js扩展名，可以使用相对路径也可以使用绝对路径。</p>
-<p>然而CommonJS模块加载是同步的，这在服务器端很容易实现，但是在浏览器端实现起来会出现很多问题。</p>
-<h1 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h1><p>AMD(Asynchronous Module Definition)翻译成中文是异步模块定义，它是一个在浏览器端模块化开发的规范。由于不是JavaScript原生支持的，使用AMD规范进行页面开发需要用对应的库，RequireJS就是其中最出名的一个，实际上，AMD是RequireJS在推广过程中对模块定义的规范化的产出。</p>
-<p>RequireJS主要解决了两个问题：</p>
-<ol>
-<li>实现js文件的异步加载，避免网页失去响应。</li>
-<li>管理模块之间的依赖性，便于代码的编写和维护。</li>
-</ol>
-<h2 id="define函数"><a href="#define函数" class="headerlink" title="define函数"></a>define函数</h2><p>RequireJS定义了一个define函数，它是一个全局变量，用来定义模块，描述如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">define(id?, dependencies?, factory);</div></pre></td></tr></table></figure></p>
-<ol>
-<li>id：可选参数，定义中模块的名字，若没有提供该参数，模块的名字应该默认为模块加载器请求的指定脚本的名字。</li>
-<li>dependencies：一个当前模块依赖的，已被模块定义的模块标识的数组字面量。该参数可选，若忽略该参数，它默认为[“require”, “exports”, “module”]。</li>
-<li>factory：模块初始化要执行的函数或对象。若为函数，它应该只被执行一次。若为对象，该对象应该为模块的输出值。</li>
-</ol>
-<h2 id="require函数"><a href="#require函数" class="headerlink" title="require函数"></a>require函数</h2><p>RequireJS还定义了一个require函数用来加载模块，描述如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([dependencies], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;);</div></pre></td></tr></table></figure></p>
-<p>require函数接受两个参数，第一个参数是一个数组，表示所依赖的模块。第二个参数是一个回调函数，当前面指定的模块都加载成功后，它将被调用。加载的模块要以参数形式传入该函数，在回调函数内部才可以使用这些模块。</p>
-<p>require函数在加载依赖模块的时候是异步加载的，这样浏览器就不会失去响应，它指定的回调函数，也只有在前面的模块都加载成功后，才会运行，这样就解决了依赖性的问题。</p>
-<h1 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h1><p>CMD(Common Module Definition)翻译成中文就是通用模块定义。该规范明确了模块的基本书写格式和基本交互规则。该规范是在国内发展出来的。和AMD一样，使用CMD规范也需要相应的库函数，SeaJS就是其中一个。实际上，CMD是SeaJS在推广过程中对模块定义的规范化的产出。SeaJS要解决的问题和RequireJS一样，只不过在模块定义方式和模块加载的时机上有些区别。</p>
-<h2 id="define函数-1"><a href="#define函数-1" class="headerlink" title="define函数"></a>define函数</h2><p>CMD规范的define函数和AMD规范的描述相同，也是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">define(id?, dependencies?, factory);</div></pre></td></tr></table></figure></p>
-<p>但是CMD推崇一个文件一个模块，所以经常用文件名作为模块id。同时，CMD推崇就近依赖，所以一般不在define函数的参数中写依赖，而是在factory函数中就近写。</p>
-<p>factory函数有三个参数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">factory(<span class="built_in">require</span>, exports, <span class="built_in">module</span>)</div></pre></td></tr></table></figure></p>
-<h3 id="require"><a href="#require" class="headerlink" title="require"></a>require</h3><p>require是一个方法，它接受模块标识作为唯一的参数，用来导入其他的模块，获取其它模块提供的接口。</p>
-<h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><p>exports是一个对象，用来向外部提供接口。</p>
-<h3 id="module"><a href="#module" class="headerlink" title="module"></a>module</h3><p>module是一个对象，存储了去模块相关联的一些属性和方法。</p>
-<h1 id="AMD与CMD的区别"><a href="#AMD与CMD的区别" class="headerlink" title="AMD与CMD的区别"></a>AMD与CMD的区别</h1><p>首先我们知道，AMD是RequireJS 在推广过程中对模块定义的规范化产出。CMD是SeaJS在推广过程中对模块定义的规范化产出。他们的区别主要有以下四点。</p>
-<p>1、对于依赖的模块，AMD是提前执行（<strong>注意是执行不是加载</strong>），CMD是延迟执行。RequireJS从2.0开始，也改成可以延迟执行（根据写法不同，处理方式不同）。AMD和CMD都是异步加载的，只是AMD在加载模块完成后就会执行该模块，所有模块都加载执行完后会进入require的回调函数，执行主逻辑，这样就会导致依赖模块的执行顺序和书写顺序不一定一致，哪个先下载下来，哪个先执行，但是主逻辑一定在所有依赖加载完成后才会执行。而CMD在加载完某个依赖模块后并不执行，只是下载下来，在所有依赖模块加载完成后再进入主逻辑，遇到require语句的时候才执行对应的模块，这样模块的执行顺序和书写顺序是完全一致的。</p>
-<p>2、AMD推崇依赖前置，在定义模块的时候就要声明其依赖的模块。CMD推崇就近依赖，只有在用到某个模块的时候再去require。对比如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// AMD</span></div><div class="line">define([<span class="string">'./a'</span>, <span class="string">'./b'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123; <span class="comment">// 依赖必须一开始就写好</span></div><div class="line">    a.doSomething()</div><div class="line">    b.doSomething()</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;) </div><div class="line"><span class="comment">// CMD</span></div><div class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>)</div><div class="line">    a.doSomething()</div><div class="line">    <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>) <span class="comment">// 依赖可以就近书写，需要用到的时候才require</span></div><div class="line">    b.doSomething()</div><div class="line">    <span class="comment">// ... </span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>3、AMD的API根据使用范围有区别，但使用同一个API接口。CMD的API严格区分，推崇职责单一。</p>
-<p>4、AMD是异步并行加载，在AMD的规范下，同时异步加载是不会产生错误的。而CMD的机制不同，这种加载方式会产生错误，但是如果能规范化模块的内容形式，也可以异步并行加载。</p>
-<h1 id="RequireJS与SeaJS的区别"><a href="#RequireJS与SeaJS的区别" class="headerlink" title="RequireJS与SeaJS的区别"></a>RequireJS与SeaJS的区别</h1><p>两者遵循的规范不同，RequireJS遵循AMD规范，SeaJS遵循CMD规范。两者的区别可以参考<a href="https://github.com/seajs/seajs/issues/277" target="_blank" rel="external">SeaJS与RequireJS的异同</a>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;随着我们的项目越来越复杂，参与项目的人员越来越多，将项目划分模块就变得十分重要，开发者只需要实现自己负责的功能，其他部分可以加载别人已经写好的模块。但是JavaScript不是一种模块化的编程语言，所以JavaScript开发人员做了很多努力，在现有的运行环境中实现了模块化
-    
-    </summary>
-    
-      <category term="模块化" scheme="http://yuhan.com/categories/%E6%A8%A1%E5%9D%97%E5%8C%96/"/>
-    
-    
-      <category term="总结" scheme="http://yuhan.com/tags/%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="模块" scheme="http://yuhan.com/tags/%E6%A8%A1%E5%9D%97/"/>
     
   </entry>
   
