@@ -16,21 +16,21 @@
   
 
   <meta name="description" content="HTTP协议是计算机网络的基本协议，对于前端工程师，HTTP协议是必须了解的一部分内容。前端面试中也会经常被问到这部分的内容，这里就总结一下。
-HTTP协议的作用HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间通信格式。客户端通过URL向HTTP服务端即WEB服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。
-HTTP协议特点HTTP协">
+HTTP协议的作用HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间的通信格式。客户端通过URL向HTTP服务端即Web服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。
+HTTP协议特点HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP协议学习笔记">
 <meta property="og:url" content="http://yuhan.com/2017/10/26/about-http/index.html">
 <meta property="og:site_name" content="Hieeyh's blog">
 <meta property="og:description" content="HTTP协议是计算机网络的基本协议，对于前端工程师，HTTP协议是必须了解的一部分内容。前端面试中也会经常被问到这部分的内容，这里就总结一下。
-HTTP协议的作用HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间通信格式。客户端通过URL向HTTP服务端即WEB服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。
-HTTP协议特点HTTP协">
-<meta property="og:updated_time" content="2017-10-27T02:35:24.000Z">
+HTTP协议的作用HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间的通信格式。客户端通过URL向HTTP服务端即Web服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。
+HTTP协议特点HTTP">
+<meta property="og:updated_time" content="2017-10-27T02:39:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP协议学习笔记">
 <meta name="twitter:description" content="HTTP协议是计算机网络的基本协议，对于前端工程师，HTTP协议是必须了解的一部分内容。前端面试中也会经常被问到这部分的内容，这里就总结一下。
-HTTP协议的作用HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间通信格式。客户端通过URL向HTTP服务端即WEB服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。
-HTTP协议特点HTTP协">
+HTTP协议的作用HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间的通信格式。客户端通过URL向HTTP服务端即Web服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。
+HTTP协议特点HTTP">
 
   
 
@@ -186,18 +186,18 @@ HTTP协议特点HTTP协">
   <div class="article-content">
     
       <p>HTTP协议是计算机网络的基本协议，对于前端工程师，HTTP协议是必须了解的一部分内容。前端面试中也会经常被问到这部分的内容，这里就总结一下。</p>
-<h1 id="HTTP协议的作用"><a href="#HTTP协议的作用" class="headerlink" title="HTTP协议的作用"></a>HTTP协议的作用</h1><p>HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间通信格式。客户端通过URL向HTTP服务端即WEB服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。</p>
+<h1 id="HTTP协议的作用"><a href="#HTTP协议的作用" class="headerlink" title="HTTP协议的作用"></a>HTTP协议的作用</h1><p>HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间的通信格式。客户端通过URL向HTTP服务端即Web服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。</p>
 <h1 id="HTTP协议特点"><a href="#HTTP协议特点" class="headerlink" title="HTTP协议特点"></a>HTTP协议特点</h1><p>HTTP协议主要特点总结如下：</p>
 <ol>
-<li>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
+<li>简单快速：客户端向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户端与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
 <li>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</li>
 <li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
 <li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
 </ol>
-<h1 id="HTTP请求报文"><a href="#HTTP请求报文" class="headerlink" title="HTTP请求报文"></a>HTTP请求报文</h1><p>客户端发送请求到服务端，HTTP请求报文由请求行、请求头和请求体组成。</p>
+<h1 id="HTTP请求报文"><a href="#HTTP请求报文" class="headerlink" title="HTTP请求报文"></a>HTTP请求报文</h1><p>客户端以请求报文的形式发送请求到服务端，HTTP请求报文由请求行、请求头和请求体组成。</p>
 <h2 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h2><p>请求行由请求方法字段、URL字段和HTTP协议版本字段三部分组成，用空格分隔。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /index.html HTTP/1.0</div></pre></td></tr></table></figure></p>
 <p>HTTP协议的请求方法有GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT等。我的另一篇<a href="http://hyuhan.com/2016/08/09/http-request-method/" target="_blank" rel="external">博客</a>中有总结过。</p>
-<h2 id="请求头部"><a href="#请求头部" class="headerlink" title="请求头部"></a>请求头部</h2><p>请求头部由键值对组成，每行一对，请求头部通知告诉服务器关于客户端本次请求的信息。常用的请求报头有：</p>
+<h2 id="请求头部"><a href="#请求头部" class="headerlink" title="请求头部"></a>请求头部</h2><p>请求头部由键值对组成，每行一对，请求头部通知告诉服务器关于客户端本次请求的信息。常用的请求头有：</p>
 <ol>
 <li>Accept：用于指定客户端接受哪些类型的返回。例如：Accept：text/html，表明客户端希望接受html文本。</li>
 <li>Accept-Charset：用于指定客户端接受的字符集，默认是任何字符集都可以接受。</li>
@@ -207,7 +207,7 @@ HTTP协议特点HTTP协">
 <li>User-Agent：产生请求的客户端类型。</li>
 </ol>
 <h2 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h2><p>请求体中是客户端要传送给服务端的数据。</p>
-<h1 id="HTTP响应报文"><a href="#HTTP响应报文" class="headerlink" title="HTTP响应报文"></a>HTTP响应报文</h1><p>服务端接收并处理客户端的数据后悔返回一个HTTP的响应消息，HTTP响应报文由状态行、响应头和响应正文组成。</p>
+<h1 id="HTTP响应报文"><a href="#HTTP响应报文" class="headerlink" title="HTTP响应报文"></a>HTTP响应报文</h1><p>服务端接收并处理客户端的数据后会返回一个HTTP的响应消息，HTTP响应报文由状态行、响应头和响应正文组成。</p>
 <h2 id="状态行"><a href="#状态行" class="headerlink" title="状态行"></a>状态行</h2><p>状态行由HTTP协议版本号、状态码和状态消息组成。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div></pre></td></tr></table></figure></p>
 <h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><p>HTTP状态码是一个三位数，总共分为5种类型。常见的状态码可以参考<a href="http://www.cnblogs.com/lxinxuan/archive/2009/10/22/1588053.html" target="_blank" rel="external">HTTP状态码大全</a></p>
 <ol>
