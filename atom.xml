@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-10-20T02:31:57.000Z</updated>
+  <updated>2017-10-27T02:35:24.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HTTP协议学习笔记</title>
+    <link href="http://yuhan.com/2017/10/26/about-http/"/>
+    <id>http://yuhan.com/2017/10/26/about-http/</id>
+    <published>2017-10-26T12:33:23.000Z</published>
+    <updated>2017-10-27T02:35:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>HTTP协议是计算机网络的基本协议，对于前端工程师，HTTP协议是必须了解的一部分内容。前端面试中也会经常被问到这部分的内容，这里就总结一下。</p>
+<h1 id="HTTP协议的作用"><a href="#HTTP协议的作用" class="headerlink" title="HTTP协议的作用"></a>HTTP协议的作用</h1><p>HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间通信格式。客户端通过URL向HTTP服务端即WEB服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。</p>
+<h1 id="HTTP协议特点"><a href="#HTTP协议特点" class="headerlink" title="HTTP协议特点"></a>HTTP协议特点</h1><p>HTTP协议主要特点总结如下：</p>
+<ol>
+<li>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
+<li>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</li>
+<li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
+</ol>
+<h1 id="HTTP请求报文"><a href="#HTTP请求报文" class="headerlink" title="HTTP请求报文"></a>HTTP请求报文</h1><p>客户端发送请求到服务端，HTTP请求报文由请求行、请求头和请求体组成。</p>
+<h2 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h2><p>请求行由请求方法字段、URL字段和HTTP协议版本字段三部分组成，用空格分隔。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /index.html HTTP/1.0</div></pre></td></tr></table></figure></p>
+<p>HTTP协议的请求方法有GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT等。我的另一篇<a href="http://hyuhan.com/2016/08/09/http-request-method/" target="_blank" rel="external">博客</a>中有总结过。</p>
+<h2 id="请求头部"><a href="#请求头部" class="headerlink" title="请求头部"></a>请求头部</h2><p>请求头部由键值对组成，每行一对，请求头部通知告诉服务器关于客户端本次请求的信息。常用的请求报头有：</p>
+<ol>
+<li>Accept：用于指定客户端接受哪些类型的返回。例如：Accept：text/html，表明客户端希望接受html文本。</li>
+<li>Accept-Charset：用于指定客户端接受的字符集，默认是任何字符集都可以接受。</li>
+<li>Accept-Encoding：用于指定可接受的内容编码，默认是任何编码都能接受。</li>
+<li>Accept-Language：用于指定可接受的自然语言，默认是任何语言都能接受。</li>
+<li>Host：用于指定被请求资源的主机和端口号，通常从URL中提取出来。</li>
+<li>User-Agent：产生请求的客户端类型。</li>
+</ol>
+<h2 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h2><p>请求体中是客户端要传送给服务端的数据。</p>
+<h1 id="HTTP响应报文"><a href="#HTTP响应报文" class="headerlink" title="HTTP响应报文"></a>HTTP响应报文</h1><p>服务端接收并处理客户端的数据后悔返回一个HTTP的响应消息，HTTP响应报文由状态行、响应头和响应正文组成。</p>
+<h2 id="状态行"><a href="#状态行" class="headerlink" title="状态行"></a>状态行</h2><p>状态行由HTTP协议版本号、状态码和状态消息组成。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div></pre></td></tr></table></figure></p>
+<h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><p>HTTP状态码是一个三位数，总共分为5种类型。常见的状态码可以参考<a href="http://www.cnblogs.com/lxinxuan/archive/2009/10/22/1588053.html" target="_blank" rel="external">HTTP状态码大全</a></p>
+<ol>
+<li>1xx：指示信息–表示请求已接收，继续处理。</li>
+<li>2xx：成功–表示请求已被成功接收。</li>
+<li>3xx：重定向–要完成请求必须进行更进一步的操作。</li>
+<li>4xx：客户端错误–请求有语法错误或请求无法实现。</li>
+<li>5xx：服务器端错误–服务器未能实现合法的请求。</li>
+</ol>
+<h2 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h2><p>响应头的格式和请求头相同，常用的响应头有：</p>
+<ol>
+<li>Content-Encoding：用于指定媒体类型的修饰符，指示了已经被应用到实体正文的附加内容编码。</li>
+<li>Content-Language：用于指定资源所用的自然语言。</li>
+<li>Content-Length：用于指明实体正文的长度，以字节方式存储的十进制数字来表示，用其对应的ASCII码存储传输。这个长度不包括实体报头的长度。</li>
+<li>Content-Type：用于指明发送给接收者的实体正文的媒体类型。</li>
+<li>Expires：用于指明响应过期的日期和时间，为了客户端在一段时间以后更新缓存中(再次访问曾访问过的页面时，直接从缓存中加载，缩短响应时间和降低服务器负载)的页面，我们可以使用Expires实体报头域指定页面过期的时间，是一个绝对时间。</li>
+<li>Last-Modified：用于指示资源的最后修改日期和时间。</li>
+<li>Location：用于重定向接受者到一个新的位置。</li>
+</ol>
+<h1 id="HTTP其他特性"><a href="#HTTP其他特性" class="headerlink" title="HTTP其他特性"></a>HTTP其他特性</h1><p>随着HTTP版本的更新，引入了很多新的特性。包括持久连接、管道机制、分块传输编码、二进制协议、多工、头信息压缩和服务端推送等。有兴趣的可以自己去了解一下。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;HTTP协议是计算机网络的基本协议，对于前端工程师，HTTP协议是必须了解的一部分内容。前端面试中也会经常被问到这部分的内容，这里就总结一下。&lt;/p&gt;
+&lt;h1 id=&quot;HTTP协议的作用&quot;&gt;&lt;a href=&quot;#HTTP协议的作用&quot; class=&quot;headerlink&quot; ti
+    
+    </summary>
+    
+      <category term="计算机网络" scheme="http://yuhan.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="总结" scheme="http://yuhan.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="http" scheme="http://yuhan.com/tags/http/"/>
+    
+  </entry>
   
   <entry>
     <title>到底什么是vue</title>
@@ -1291,59 +1361,6 @@
       <category term="vue-router" scheme="http://yuhan.com/tags/vue-router/"/>
     
       <category term="echarts" scheme="http://yuhan.com/tags/echarts/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>webpack+vue项目中常用ES6语法小结</title>
-    <link href="http://yuhan.com/2016/10/25/some-ES6-grammer-I-used-in-my-project/"/>
-    <id>http://yuhan.com/2016/10/25/some-ES6-grammer-I-used-in-my-project/</id>
-    <published>2016-10-25T09:24:57.000Z</published>
-    <updated>2016-10-25T12:54:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>好久没有更新博客啦，最近入了阴阳师的坑，纯种非洲人，都没心情写博客了。这段时间在接触vue这个框架，用vue+webpack做一些小项目的时候经常会用到ES6的语法，用起来确实比较方便，今天就总结下在vue+webpack项目中经常会用到的一些ES6语法吧。首先来谈谈什么是ES6。</p>
-<h2 id="什么是ES6"><a href="#什么是ES6" class="headerlink" title="什么是ES6"></a>什么是ES6</h2><p>首先要说说ECMAScript是什么，ECMAScript是JavaScript的规格，而JavaScript是ECMAScript的一种实现，ECMAScript的实现还有Jscript和ActionScript等。ES6（ECMAScript6）一般指ECMAScript2015标准，它是JavaScript语言的下一代标准。</p>
-<h2 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h2><p>ES6标准虽然已经发布了，但是很多浏览器环境都还不支持，webpack是通过Babel这个转码器将ES6代码转为ES5，从而在现有环境执行。babel是在webpack的配置文件webpack.config.js的module参数中的loaders中配置，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">	...</div><div class="line">	module: &#123;</div><div class="line">		<span class="attr">loaders</span>: [</div><div class="line">		&#123;</div><div class="line">			<span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">			<span class="attr">loader</span>: <span class="string">'babel'</span>,</div><div class="line">			<span class="attr">exclude</span>: <span class="regexp">/node_modules/</span></div><div class="line">		&#125;,</div><div class="line">		...</div><div class="line">		]</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>配置完成后还需要安装”babel-loader”模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install babel-loader --save-dev</div></pre></td></tr></table></figure></p>
-<p>然后webpack就可以对用了ES6语法的js文件进行转码了。下面总结一些常用到的ES6语法。</p>
-<h2 id="let和const命令"><a href="#let和const命令" class="headerlink" title="let和const命令"></a>let和const命令</h2><h3 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a>let命令</h3><p>ES6中let命令用来声明变量，用法类似于var，但是let所声明的变量是局部变量，只在let命令所在的代码块内有效。所以在for循环中很适合用let变量做计数器。<br>let变量不会像var变量那样会进行变量提升，变量一定要在声明后使用，否则会报错。<br>只要块级作用域内存在let命令，它所声明的所有变量都绑定这个作业域，不收外部变量的影响，即形成了一个封闭的作用域。<br>let不允许在相同作用域内重复声明同一个变量。可以看出，let变量实际上为JavaScript新增了块级作用域</p>
-<h3 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a>const命令</h3><p>const声明一个只读的常量，一旦声明，值就不能改变。所以，const一旦声明就必须立即初始化，不能只声明不初始化。<br>const作用域和let命令相同，只在声明所在的块级作用域中有效。const命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置后面使用。</p>
-<h2 id="函数的扩展"><a href="#函数的扩展" class="headerlink" title="函数的扩展"></a>函数的扩展</h2><h3 id="函数参数的默认值"><a href="#函数参数的默认值" class="headerlink" title="函数参数的默认值"></a>函数参数的默认值</h3><p>在ES6之前不能直接为函数的参数指定默认值，只能采用变通的方法。ES6允许为函数参数设置默认值，直接写在参数定义的后面。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">x, y=<span class="string">'World'</span></span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(x, y);</div><div class="line">&#125;</div><div class="line">log(<span class="string">'Hello'</span>) <span class="comment">// Hello World</span></div><div class="line">log(<span class="string">'Hello'</span>, <span class="string">'China'</span>) <span class="comment">// Hello China</span></div></pre></td></tr></table></figure></p>
-<h3 id="参数默认值的位置"><a href="#参数默认值的位置" class="headerlink" title="参数默认值的位置"></a>参数默认值的位置</h3><p>通常定义了默认值的参数应该是函数的尾参数，如果是非尾部的参数设置默认值，实际上这个参数是没法省略的。除非显式输入undefined。</p>
-<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p>ES6允许使用“箭头”（=&gt;）定义函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> f = <span class="function"><span class="params">v</span> =&gt;</span> v;</div></pre></td></tr></table></figure></p>
-<p>上述箭头定义的函数等同于：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> v;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>若箭头函数不需要参数或者需要多于一个参数，就使用一个圆括号代表参数部分。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> f = <span class="function"><span class="params">()</span> =&gt;</span> <span class="number">5</span>;</div><div class="line"><span class="comment">// 等同于</span></div><div class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="number">5</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> sum = <span class="function">(<span class="params">num1, num2</span>) =&gt;</span> num1 + num2;</div><div class="line"><span class="comment">// 等同于</span></div><div class="line"><span class="keyword">var</span> sum = <span class="function"><span class="keyword">function</span>(<span class="params">num1, num2</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> num1 + num2;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>若箭头函数的代码部分多于一条语句，就要使用大括号将他们括起来，并且使用return语句返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sum = <span class="function">(<span class="params">num1, num2</span>) =&gt;</span> &#123; <span class="keyword">return</span> num1 + num2; &#125;</div></pre></td></tr></table></figure></p>
-<p><strong>使用注意点</strong></p>
-<ol>
-<li>函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</li>
-<li>不可当做构造函数，不可以使用new命令，否则会抛出错误。</li>
-<li>不可使用arguments对象，该对象在函数体内不存在，可以用Rest参数代替。</li>
-</ol>
-<h2 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h2><p>ES6之前，JavaScript一直没有模块（module）体系，ES6在语言规格的层面上，实现了模块功能，完全可以取代现有的CommonJS和AMD规范，成为浏览器和服务器通用的模块解决方案。<br>ES6模块不是对象，而是通过export命令显式指定输出的代码，输入时采用静态命令的形式。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;stat, exists, readFile&#125; <span class="keyword">from</span> <span class="string">'fs'</span>;</div></pre></td></tr></table></figure></p>
-<p>上面代码就是从fs模块加载3个方法，其他方法不加载。这种加载成为“编译时加载”。ES6可以在编译时就完成模块加载，效率要比CommonJS模块的加载方式高。</p>
-<h3 id="export命令"><a href="#export命令" class="headerlink" title="export命令"></a>export命令</h3><p>模块功能主要由两个命令构成，export和import。export命令用于规定模块的对外接口，import命令用于输入其他模块提供的功能。<br>一个模块就是一个独立的文件。该文件内部的所有变量，外部无法获取。如果你希望外部能够读取模块内部的某个变量，就必须使用export关键字输出该变量。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">var</span> firstName = <span class="string">'Michael'</span>;</div><div class="line"><span class="keyword">export</span> <span class="keyword">var</span> lastName = <span class="string">'Jackson'</span>;</div><div class="line"><span class="keyword">export</span> <span class="keyword">var</span> year = <span class="number">1958</span>;</div></pre></td></tr></table></figure></p>
-<p>还可以如下书写：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> firstName = <span class="string">'Michael'</span>;</div><div class="line"><span class="keyword">var</span> lastName = <span class="string">'Jackson'</span>;</div><div class="line"><span class="keyword">var</span> year = <span class="number">1958</span>;</div><div class="line"><span class="keyword">export</span> &#123;firstName, lastName, year&#125;;</div></pre></td></tr></table></figure></p>
-<p>export除了输出变量通用可以输出函数或者类，export输出的变量还可以用as关键字重命名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">v1</span>(<span class="params"></span>) </span>&#123; ... &#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">v2</span>(<span class="params"></span>) </span>&#123; ... &#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> &#123;</div><div class="line">  v1 <span class="keyword">as</span> streamV1,</div><div class="line">  v2 <span class="keyword">as</span> streamV2,</div><div class="line">  v2 <span class="keyword">as</span> streamLatestVersion</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<h3 id="import命令"><a href="#import命令" class="headerlink" title="import命令"></a>import命令</h3><p>使用export命令定义了模块的对外接口以后，其他JS文件就可以通过import命令加载这个模块（文件）。用法上面已经有介绍，如果想为输入的变量重命名，使用as关键字。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; lastName <span class="keyword">as</span> surname &#125; <span class="keyword">from</span> <span class="string">'./profile'</span>;</div></pre></td></tr></table></figure></p>
-<h3 id="export-default命令"><a href="#export-default命令" class="headerlink" title="export default命令"></a>export default命令</h3><p>从前面的例子可以看出，使用import命令的时候，需要知道所要加载的变量名或函数名，否则无法加载。export default命令，为模块指定默认输出，其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。</p>
-<p>我在项目中目前用到的ES6语法就这些了，以后有机会再进一步学习ES6的新语法。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;好久没有更新博客啦，最近入了阴阳师的坑，纯种非洲人，都没心情写博客了。这段时间在接触vue这个框架，用vue+webpack做一些小项目的时候经常会用到ES6的语法，用起来确实比较方便，今天就总结下在vue+webpack项目中经常会用到的一些ES6语法吧。首先来谈谈什么是
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://yuhan.com/categories/JavaScript/"/>
-    
-    
-      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
-    
-      <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
-    
-      <category term="webpack" scheme="http://yuhan.com/tags/webpack/"/>
     
   </entry>
   
