@@ -17,20 +17,20 @@
 
   <meta name="description" content="Canvas和SVG都是html5的新特性，它们都可以让你在浏览器中创建图像，但是它们在原理和运用上是大相径庭的。
 什么是CanvasCanvas就像一块幕布，可以利用JavaScript在上面绘制各种图形。Canvas是逐像素进行渲染的，一旦图形被绘制完成，浏览器就不会继续关注它。如果图形内容需要发生变化，那么整个场景就需要重新绘制。
-Canvas使用方式创建幕布首先，要用\标签定义一个指定尺寸">
+Canvas使用方式创建幕布首先，要用&amp;lt;canvas&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈谈Canvas和SVG">
 <meta property="og:url" content="http://yuhan.com/2017/11/11/canvas-and-svg/index.html">
 <meta property="og:site_name" content="Hieeyh's blog">
 <meta property="og:description" content="Canvas和SVG都是html5的新特性，它们都可以让你在浏览器中创建图像，但是它们在原理和运用上是大相径庭的。
 什么是CanvasCanvas就像一块幕布，可以利用JavaScript在上面绘制各种图形。Canvas是逐像素进行渲染的，一旦图形被绘制完成，浏览器就不会继续关注它。如果图形内容需要发生变化，那么整个场景就需要重新绘制。
-Canvas使用方式创建幕布首先，要用\标签定义一个指定尺寸">
-<meta property="og:updated_time" content="2017-11-11T07:03:34.000Z">
+Canvas使用方式创建幕布首先，要用&amp;lt;canvas&amp;">
+<meta property="og:updated_time" content="2017-11-11T07:12:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈Canvas和SVG">
 <meta name="twitter:description" content="Canvas和SVG都是html5的新特性，它们都可以让你在浏览器中创建图像，但是它们在原理和运用上是大相径庭的。
 什么是CanvasCanvas就像一块幕布，可以利用JavaScript在上面绘制各种图形。Canvas是逐像素进行渲染的，一旦图形被绘制完成，浏览器就不会继续关注它。如果图形内容需要发生变化，那么整个场景就需要重新绘制。
-Canvas使用方式创建幕布首先，要用\标签定义一个指定尺寸">
+Canvas使用方式创建幕布首先，要用&amp;lt;canvas&amp;">
 
   
 
@@ -187,7 +187,7 @@ Canvas使用方式创建幕布首先，要用\标签定义一个指定尺寸">
     
       <p>Canvas和SVG都是html5的新特性，它们都可以让你在浏览器中创建图像，但是它们在原理和运用上是大相径庭的。</p>
 <h1 id="什么是Canvas"><a href="#什么是Canvas" class="headerlink" title="什么是Canvas"></a>什么是Canvas</h1><p>Canvas就像一块幕布，可以利用JavaScript在上面绘制各种图形。Canvas是逐像素进行渲染的，一旦图形被绘制完成，浏览器就不会继续关注它。如果图形内容需要发生变化，那么整个场景就需要重新绘制。</p>
-<h2 id="Canvas使用方式"><a href="#Canvas使用方式" class="headerlink" title="Canvas使用方式"></a>Canvas使用方式</h2><h3 id="创建幕布"><a href="#创建幕布" class="headerlink" title="创建幕布"></a>创建幕布</h3><p>首先，要用\<canvas\>标签定义一个指定尺寸的矩形框，相当于上文所说的幕布，在这个矩形框内就可以进行图形的绘制了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 注意要指定矩形框的尺寸 --&gt;</div><div class="line">&lt;canvas id=&quot;myCanvas&quot; width=&quot;500&quot; height=&quot;300&quot;&gt;&lt;/canvas&gt;</div></pre></td></tr></table></figure></canvas\></p>
+<h2 id="Canvas使用方式"><a href="#Canvas使用方式" class="headerlink" title="Canvas使用方式"></a>Canvas使用方式</h2><h3 id="创建幕布"><a href="#创建幕布" class="headerlink" title="创建幕布"></a>创建幕布</h3><p>首先，要用<code>&lt;canvas&gt;</code>标签定义一个指定尺寸的矩形框，相当于上文所说的幕布，在这个矩形框内就可以进行图形的绘制了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 注意要指定矩形框的尺寸 --&gt;</div><div class="line">&lt;canvas id=&quot;myCanvas&quot; width=&quot;500&quot; height=&quot;300&quot;&gt;&lt;/canvas&gt;</div></pre></td></tr></table></figure></p>
 <h3 id="判断是否支持Canvas"><a href="#判断是否支持Canvas" class="headerlink" title="判断是否支持Canvas"></a>判断是否支持Canvas</h3><p>幕布创建完后，就可以用JavaScript来绘制图形了。在使用Canvas前，需要用canvas.getContext来测试浏览器是否支持Canvas。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> myCanvas = <span class="built_in">document</span>.getElementById(<span class="string">'myCanvas'</span>);</div><div class="line"><span class="keyword">if</span> (canvas.getContext) &#123;</div><div class="line">    <span class="comment">// 进行画图操作</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// 给予提示</span></div><div class="line">    alert(<span class="string">"你的浏览器不支持Canvas！"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h3 id="获取画图上下文"><a href="#获取画图上下文" class="headerlink" title="获取画图上下文"></a>获取画图上下文</h3><p>通过getContext(‘2d’)方法得到一个2D上下文对象，之后所有的画图工作都需要通过这个对象来完成。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</div></pre></td></tr></table></figure></p>
 <p>如果需要绘制3D图形，需要通过getContext(“webgl”)来得到一个上下文对象。</p>
@@ -198,9 +198,9 @@ Canvas使用方式创建幕布首先，要用\标签定义一个指定尺寸">
 <h1 id="什么是SVG"><a href="#什么是SVG" class="headerlink" title="什么是SVG"></a>什么是SVG</h1><p>SVG是一种使用XML描述2D图形的语言。SVG是基于XML的，这意味着SVG DOM中的每个元素都是可用的。在SVG中，每个被绘制的图形均被视为对象，如果 SVG对象的属性发生变化，那么浏览器能够自动重现图形，不需要自己处理重绘。</p>
 <h2 id="SVG实例"><a href="#SVG实例" class="headerlink" title="SVG实例"></a>SVG实例</h2><p>下面是一个简单的SVG的实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;svg width=&quot;100%&quot; height=&quot;100%&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;</div><div class="line">     &lt;circle cx=&quot;200&quot; cy=&quot;100&quot; r=&quot;50&quot; stroke=&quot;red&quot; stroke-width=&quot;2&quot; fill=&quot;green&quot;/&gt;</div><div class="line">&lt;/svg&gt;</div></pre></td></tr></table></figure></p>
 <ol>
-<li>SVG图形以<svg>标签开始，这是根元素。</svg></li>
+<li>SVG图形以<code>&lt;svg&gt;</code>标签开始，这是根元素。</li>
 <li>width和height属性设置图形的宽度和高度。version属性定义所使用的SVG版本，xmlns属性定义SVG的命名空间。</li>
-<li><circle></circle>标签用来创建一个圆，cx和cy属性定义圆心的x和y坐标。如果忽略这两个属性，那么圆点会被设置为(0, 0)，r属性定义圆的半径。</li>
+<li><code>&lt;circle&gt;</code>标签用来创建一个圆，cx和cy属性定义圆心的x和y坐标。如果忽略这两个属性，那么圆点会被设置为(0, 0)，r属性定义圆的半径。</li>
 <li>stroke和stroke-width属性控制如何显示形状的轮廓。</li>
 <li>fill属性设置图形内的颜色。</li>
 </ol>
