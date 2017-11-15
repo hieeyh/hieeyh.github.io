@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-11-15T07:30:44.000Z</updated>
+  <updated>2017-11-15T07:37:01.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -20,15 +20,18 @@
     <link href="http://yuhan.com/2017/11/15/nodejs-wechat-development/"/>
     <id>http://yuhan.com/2017/11/15/nodejs-wechat-development/</id>
     <published>2017-11-15T01:30:39.000Z</published>
-    <updated>2017-11-15T07:30:44.000Z</updated>
+    <updated>2017-11-15T07:37:01.000Z</updated>
     
     <content type="html"><![CDATA[<p>这篇文章只是一个学习笔记的形式，所以前后没有太强的逻辑性。</p>
-<h1 id="微信号的功能和分类"><a href="#微信号的功能和分类" class="headerlink" title="微信号的功能和分类"></a>微信号的功能和分类</h1><p>微信公众平台得账号主要分为企业号，订阅号和服务号，企业号现在改名外企业微信，同时微信新出了一种叫小程序的新的开放功能。</p>
-<p>企业号不太适合个人小型的开发，是为企业或者组织提供移动应用入口，帮助企业建立与员工、上下游供应商及企业应用间的连接。订阅号比较适合于个人和小团队，主要用于信息传播，帮助管理用户以及和用户互动。比如撰写文章，咨询传播，消息定制能。服务号适用于企业和组织，提供更强大的业务服务于用户管理能力。比如支付，智能接口等。认证之后的微信公众号会开放更多的接口和功能。</p>
+<h1 id="微信号的功能和分类"><a href="#微信号的功能和分类" class="headerlink" title="微信号的功能和分类"></a>微信号的功能和分类</h1><p>微信公众平台的账号主要分为企业号，订阅号和服务号，企业号现在改名为企业微信，同时微信新出了一种叫小程序的开放功能。</p>
+<p>企业号不太适合个人小型的开发，为企业或者组织提供移动应用入口，帮助企业建立与员工、上下游供应商及企业应用间的连接。订阅号比较适合于个人和小团队，主要用于信息传播，帮助管理用户以及和用户互动。比如撰写文章，咨询传播，消息定制能。服务号适用于企业和组织，提供更强大的业务服务于用户管理能力。比如支付，智能接口等。认证之后的微信公众号会开放更多的接口和功能。</p>
 <h2 id="订阅号和服务号的差别"><a href="#订阅号和服务号的差别" class="headerlink" title="订阅号和服务号的差别"></a>订阅号和服务号的差别</h2><ol>
 <li>订阅号和服务号在微信中出现的位置不同；</li>
-<li>单月发送的消息数量不同，订阅号一天可以发送一个，服务号一个月最多四个；</li>
-<li>订阅号没有9大接口和支付功能。<br>服务好的九大接口有哪些呢？</li>
+<li>单月发送的消息数量不同，订阅号一天可以发送一条，服务号一个月最多四条；</li>
+<li>订阅号没有9大接口和支付功能。</li>
+</ol>
+<p>服务号的九大接口有哪些呢？</p>
+<ol>
 <li>语音识别</li>
 <li>客服接口</li>
 <li>OAuth 2.0网页授权</li>
@@ -39,25 +42,25 @@
 <li>用户分组接口</li>
 <li>上传下载多媒体文件</li>
 </ol>
-<h1 id="接入微信公众号"><a href="#接入微信公众号" class="headerlink" title="接入微信公众号"></a>接入微信公众号</h1><p>首先，要配置微信公众号后台，然后，验证公众号。</p>
+<h1 id="接入微信公众号"><a href="#接入微信公众号" class="headerlink" title="接入微信公众号"></a>接入微信公众号</h1><p>首先，要配置微信公众号后台，然后，需要验证公众号。</p>
 <h2 id="配置微信公众号"><a href="#配置微信公众号" class="headerlink" title="配置微信公众号"></a>配置微信公众号</h2><p>配置微信公众号需要填写URL，Token和EncodingAESKey，URL是开发者用来接收微信消息的接口URL，Token由开发者任意填写，来生成一个签名，与接口URL进行比对，保证安全。EncodingAESKey是随机生成，用作消息体加密和解密的密钥。</p>
 <h2 id="验证公众号"><a href="#验证公众号" class="headerlink" title="验证公众号"></a>验证公众号</h2><p>验证微信公众号的流程如下：</p>
 <ol>
-<li>将维信服务器发来的token、timestamp、nonce三个参数进行字典排序；</li>
+<li>将微信服务器发来的token、timestamp、nonce三个参数进行字典排序；</li>
 <li>将上面进行排序后的字符串拼接成一个字符串进行sha1加密；</li>
 <li>将加密后的字符串与signature对比，如果相同表示这个请求来源于微信，直接原样返回echostr参数内容，验证成功。</li>
 </ol>
 <p>部分代码实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> config = &#123;</div><div class="line">  <span class="attr">wechat</span>: &#123;</div><div class="line">    <span class="attr">appID</span>: <span class="string">'xxxxxxxxx'</span>,</div><div class="line">    <span class="attr">appSecret</span>: <span class="string">'gggggggg'</span>,</div><div class="line">    <span class="attr">token</span>: <span class="string">'wwwwwwwwww'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Koa()</div><div class="line">app.use(<span class="function"><span class="keyword">function</span> *(<span class="params">next</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> token = config.wechat.token</div><div class="line">  <span class="keyword">var</span> signature = <span class="keyword">this</span>.query.signature</div><div class="line">  <span class="keyword">var</span> nonce = <span class="keyword">this</span>.query.nonce</div><div class="line">  <span class="keyword">var</span> timestamp = <span class="keyword">this</span>.query.timestamp</div><div class="line">  <span class="keyword">var</span> ecostr = <span class="keyword">this</span>.query.ecostr</div><div class="line">  <span class="keyword">var</span> str = [token, timestamp, nonce].sort().join(<span class="string">''</span>)</div><div class="line">  <span class="keyword">var</span> sha = sha1(str)</div><div class="line">  <span class="keyword">if</span> (sha === signature) &#123;</div><div class="line">    <span class="keyword">this</span>.body = ecostr + <span class="string">''</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.body = <span class="string">'wrong'</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">app.listen(<span class="number">1234</span>)</div></pre></td></tr></table></figure></p>
-<h1 id="公众号消息类型"><a href="#公众号消息类型" class="headerlink" title="公众号消息类型"></a>公众号消息类型</h1><p>公众号可以发生的消息类型主要有文本消息，图片消息，语音消息，视频消息，小视频消息，地理位置消息和链接消息。消息内容都是XML格式。</p>
+<h1 id="公众号消息类型"><a href="#公众号消息类型" class="headerlink" title="公众号消息类型"></a>公众号消息类型</h1><p>公众号可以发送的消息类型主要有文本消息，图片消息，语音消息，视频消息，小视频消息，地理位置消息和链接消息。消息内容都是XML格式的。</p>
 <h1 id="开发前注意事项"><a href="#开发前注意事项" class="headerlink" title="开发前注意事项"></a>开发前注意事项</h1><ol>
 <li>微信公众号接口只支持80端口；</li>
 <li>微信后台配置的URL是唯一能接收到消息和事件的入口，在公众号中的所有操作都是基于这个URL进行交互的；</li>
-<li>调所有微信接口时几乎全部使用https协议；</li>
+<li>调用所有微信接口时几乎全部使用https协议；</li>
 <li>用户向公众号发送消息时，会传来OpenID，该OpenID是用户微信号加密后的值，每个用户在每个公众号中的OpenID是唯一的；</li>
 <li>在开发阶段要注意报错信息，全局返回码非常重要；</li>
 <li>在和微信服务器交互的时候，需要满足各个接口的规范限制，调用频率限制，也要特别注意模板消息，用户数据等敏感信息的使用规范。</li>
 </ol>
-<h1 id="access-token"><a href="#access-token" class="headerlink" title="access_token"></a>access_token</h1><p>首先access_token要注意两点，access_token每两个小时自动失效，需要重新获取。access_token只要更新了，之前的那个就不能用了。所以，我们的系统需要每隔两个小时启动去刷新一次票据，这样无论何时我们内部调用接口，该票据始终是最新的。为了方便频繁调用，需要把票据存储在一个地方，并且是唯一的一个地方。有了access_token以后就可以做任何接口允许的事情啦。完成请求处理需要5个步骤：</p>
+<h1 id="access-token"><a href="#access-token" class="headerlink" title="access_token"></a>access_token</h1><p>使用access_token要注意两点，access_token每两个小时自动失效，需要重新获取。access_token只要更新了，之前的那个就不能用了。所以，我们的系统需要每隔两个小时启动去刷新一次票据，这样无论何时我们内部调用接口，该票据始终是最新的。为了方便频繁调用，需要把票据存储在一个地方，并且是唯一的一个地方。有了access_token以后就可以做任何接口允许的事情啦。完成请求处理需要5个步骤：</p>
 <ol>
 <li>处理POST类型的控制力逻辑，接收XML数据包</li>
 <li>解析数据包，获得数据包里的数据</li>
@@ -81,7 +84,6 @@
 <li>界面操作</li>
 <li>摇一摇，扫一扫</li>
 </ol>
-<h1 id="node-raw-body模块"><a href="#node-raw-body模块" class="headerlink" title="node raw-body模块"></a>node raw-body模块</h1><p>通过raw-body模块，可以把this上的request对象，其实也就是http模块中的request对象，去拼装它的数据，最终可以拿到一个xml数据。</p>
 ]]></content>
     
     <summary type="html">
