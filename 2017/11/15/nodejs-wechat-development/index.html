@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>nodejs微信公众号开发笔记 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="总结,nodejs," />
+  
+
+  <meta name="description" content="这篇文章只是一个学习笔记的形式，所以前后没有太强的逻辑性。
+微信号的功能和分类微信公众平台得账号主要分为企业号，订阅号和服务号，企业号现在改名外企业微信，同时微信新出了一种叫小程序的新的开放功能。
+企业号不太适合个人小型的开发，是为企业或者组织提供移动应用入口，帮助企业建立与员工、上下游供应商及企业应用间的连接。订阅号比较适合于个人和小团队，主要用于信息传播，帮助管理用户以及和用户互动。比如撰写文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs微信公众号开发笔记">
+<meta property="og:url" content="http://yuhan.com/2017/11/15/nodejs-wechat-development/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="这篇文章只是一个学习笔记的形式，所以前后没有太强的逻辑性。
+微信号的功能和分类微信公众平台得账号主要分为企业号，订阅号和服务号，企业号现在改名外企业微信，同时微信新出了一种叫小程序的新的开放功能。
+企业号不太适合个人小型的开发，是为企业或者组织提供移动应用入口，帮助企业建立与员工、上下游供应商及企业应用间的连接。订阅号比较适合于个人和小团队，主要用于信息传播，帮助管理用户以及和用户互动。比如撰写文">
+<meta property="og:updated_time" content="2017-11-15T07:30:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nodejs微信公众号开发笔记">
+<meta name="twitter:description" content="这篇文章只是一个学习笔记的形式，所以前后没有太强的逻辑性。
+微信号的功能和分类微信公众平台得账号主要分为企业号，订阅号和服务号，企业号现在改名外企业微信，同时微信新出了一种叫小程序的新的开放功能。
+企业号不太适合个人小型的开发，是为企业或者组织提供移动应用入口，帮助企业建立与员工、上下游供应商及企业应用间的连接。订阅号比较适合于个人和小团队，主要用于信息传播，帮助管理用户以及和用户互动。比如撰写文">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#微信号的功能和分类"><span class="toc-text">微信号的功能和分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#订阅号和服务号的差别"><span class="toc-text">订阅号和服务号的差别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#接入微信公众号"><span class="toc-text">接入微信公众号</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置微信公众号"><span class="toc-text">配置微信公众号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证公众号"><span class="toc-text">验证公众号</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#公众号消息类型"><span class="toc-text">公众号消息类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开发前注意事项"><span class="toc-text">开发前注意事项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#access-token"><span class="toc-text">access_token</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#微信中如何引入网页"><span class="toc-text">微信中如何引入网页</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SDK与公众号的区别"><span class="toc-text">SDK与公众号的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#node-raw-body模块"><span class="toc-text">node raw-body模块</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-nodejs-wechat-development" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">nodejs微信公众号开发笔记</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.11.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/总结/">总结</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>这篇文章只是一个学习笔记的形式，所以前后没有太强的逻辑性。</p>
+<h1 id="微信号的功能和分类"><a href="#微信号的功能和分类" class="headerlink" title="微信号的功能和分类"></a>微信号的功能和分类</h1><p>微信公众平台得账号主要分为企业号，订阅号和服务号，企业号现在改名外企业微信，同时微信新出了一种叫小程序的新的开放功能。</p>
+<p>企业号不太适合个人小型的开发，是为企业或者组织提供移动应用入口，帮助企业建立与员工、上下游供应商及企业应用间的连接。订阅号比较适合于个人和小团队，主要用于信息传播，帮助管理用户以及和用户互动。比如撰写文章，咨询传播，消息定制能。服务号适用于企业和组织，提供更强大的业务服务于用户管理能力。比如支付，智能接口等。认证之后的微信公众号会开放更多的接口和功能。</p>
+<h2 id="订阅号和服务号的差别"><a href="#订阅号和服务号的差别" class="headerlink" title="订阅号和服务号的差别"></a>订阅号和服务号的差别</h2><ol>
+<li>订阅号和服务号在微信中出现的位置不同；</li>
+<li>单月发送的消息数量不同，订阅号一天可以发送一个，服务号一个月最多四个；</li>
+<li>订阅号没有9大接口和支付功能。<br>服务好的九大接口有哪些呢？</li>
+<li>语音识别</li>
+<li>客服接口</li>
+<li>OAuth 2.0网页授权</li>
+<li>生成带参数的二维码</li>
+<li>获取用户地理位置</li>
+<li>获取用户基本信息</li>
+<li>获取关注者列表</li>
+<li>用户分组接口</li>
+<li>上传下载多媒体文件</li>
+</ol>
+<h1 id="接入微信公众号"><a href="#接入微信公众号" class="headerlink" title="接入微信公众号"></a>接入微信公众号</h1><p>首先，要配置微信公众号后台，然后，验证公众号。</p>
+<h2 id="配置微信公众号"><a href="#配置微信公众号" class="headerlink" title="配置微信公众号"></a>配置微信公众号</h2><p>配置微信公众号需要填写URL，Token和EncodingAESKey，URL是开发者用来接收微信消息的接口URL，Token由开发者任意填写，来生成一个签名，与接口URL进行比对，保证安全。EncodingAESKey是随机生成，用作消息体加密和解密的密钥。</p>
+<h2 id="验证公众号"><a href="#验证公众号" class="headerlink" title="验证公众号"></a>验证公众号</h2><p>验证微信公众号的流程如下：</p>
+<ol>
+<li>将维信服务器发来的token、timestamp、nonce三个参数进行字典排序；</li>
+<li>将上面进行排序后的字符串拼接成一个字符串进行sha1加密；</li>
+<li>将加密后的字符串与signature对比，如果相同表示这个请求来源于微信，直接原样返回echostr参数内容，验证成功。</li>
+</ol>
+<p>部分代码实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> config = &#123;</div><div class="line">  <span class="attr">wechat</span>: &#123;</div><div class="line">    <span class="attr">appID</span>: <span class="string">'xxxxxxxxx'</span>,</div><div class="line">    <span class="attr">appSecret</span>: <span class="string">'gggggggg'</span>,</div><div class="line">    <span class="attr">token</span>: <span class="string">'wwwwwwwwww'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Koa()</div><div class="line">app.use(<span class="function"><span class="keyword">function</span> *(<span class="params">next</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> token = config.wechat.token</div><div class="line">  <span class="keyword">var</span> signature = <span class="keyword">this</span>.query.signature</div><div class="line">  <span class="keyword">var</span> nonce = <span class="keyword">this</span>.query.nonce</div><div class="line">  <span class="keyword">var</span> timestamp = <span class="keyword">this</span>.query.timestamp</div><div class="line">  <span class="keyword">var</span> ecostr = <span class="keyword">this</span>.query.ecostr</div><div class="line">  <span class="keyword">var</span> str = [token, timestamp, nonce].sort().join(<span class="string">''</span>)</div><div class="line">  <span class="keyword">var</span> sha = sha1(str)</div><div class="line">  <span class="keyword">if</span> (sha === signature) &#123;</div><div class="line">    <span class="keyword">this</span>.body = ecostr + <span class="string">''</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.body = <span class="string">'wrong'</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">app.listen(<span class="number">1234</span>)</div></pre></td></tr></table></figure></p>
+<h1 id="公众号消息类型"><a href="#公众号消息类型" class="headerlink" title="公众号消息类型"></a>公众号消息类型</h1><p>公众号可以发生的消息类型主要有文本消息，图片消息，语音消息，视频消息，小视频消息，地理位置消息和链接消息。消息内容都是XML格式。</p>
+<h1 id="开发前注意事项"><a href="#开发前注意事项" class="headerlink" title="开发前注意事项"></a>开发前注意事项</h1><ol>
+<li>微信公众号接口只支持80端口；</li>
+<li>微信后台配置的URL是唯一能接收到消息和事件的入口，在公众号中的所有操作都是基于这个URL进行交互的；</li>
+<li>调所有微信接口时几乎全部使用https协议；</li>
+<li>用户向公众号发送消息时，会传来OpenID，该OpenID是用户微信号加密后的值，每个用户在每个公众号中的OpenID是唯一的；</li>
+<li>在开发阶段要注意报错信息，全局返回码非常重要；</li>
+<li>在和微信服务器交互的时候，需要满足各个接口的规范限制，调用频率限制，也要特别注意模板消息，用户数据等敏感信息的使用规范。</li>
+</ol>
+<h1 id="access-token"><a href="#access-token" class="headerlink" title="access_token"></a>access_token</h1><p>首先access_token要注意两点，access_token每两个小时自动失效，需要重新获取。access_token只要更新了，之前的那个就不能用了。所以，我们的系统需要每隔两个小时启动去刷新一次票据，这样无论何时我们内部调用接口，该票据始终是最新的。为了方便频繁调用，需要把票据存储在一个地方，并且是唯一的一个地方。有了access_token以后就可以做任何接口允许的事情啦。完成请求处理需要5个步骤：</p>
+<ol>
+<li>处理POST类型的控制力逻辑，接收XML数据包</li>
+<li>解析数据包，获得数据包里的数据</li>
+<li>拼装定义好的消息</li>
+<li>包装成XML的格式</li>
+<li>5s内返回</li>
+</ol>
+<h1 id="微信中如何引入网页"><a href="#微信中如何引入网页" class="headerlink" title="微信中如何引入网页"></a>微信中如何引入网页</h1><ol>
+<li>绑定域名</li>
+<li>引入JS文件</li>
+<li>JS SDK初始化</li>
+</ol>
+<h1 id="SDK与公众号的区别"><a href="#SDK与公众号的区别" class="headerlink" title="SDK与公众号的区别"></a>SDK与公众号的区别</h1><p>公众号：是微信这个原生应用中，开发的特殊账号，让很多人可以通过原生的聊天界面，与公众号互动，其实就是与我们的服务器互动。<br>微信的SDK：不是在公众号中直接使用的，而是在微信内置浏览器中使用的。<br>SDK的作用：搭建了一座桥，让我们可以在微信内置浏览器的网页中调用微信的原生应用，以实现拍照、语音、及扫一扫等功能。<br>主要用到的SDK接口如下：</p>
+<ol>
+<li>基础接口：判断当前微信客户端是否支持指定JS接口，有了这个判断，你就可以大胆的在网页中使用。</li>
+<li>分享接口：可以自定义分享给好友的内容，比如标题啊，封面啊，甚至是描述，这样就可以实现每个人分享出去的同一个网页内容是不同的，千人千面。</li>
+<li>图像接口：最强大最实用的一个功能，如果是做微信应用的话，这个可以大大增加你的发挥空间。可以让你通过手机拍照或者相册选图级预览，甚至上传和下载，连存图片的服务器你都不用准备。</li>
+<li>音频接口：除图像接口外，另外一个更强大的接口，可以录音，可以播放语音，可以上传和下载语音。</li>
+<li>智能接口：提供了设备信息，获取当前的网络状况。</li>
+<li>地理位置接口</li>
+<li>界面操作</li>
+<li>摇一摇，扫一扫</li>
+</ol>
+<h1 id="node-raw-body模块"><a href="#node-raw-body模块" class="headerlink" title="node raw-body模块"></a>node raw-body模块</h1><p>通过raw-body模块，可以把this上的request对象，其实也就是http模块中的request对象，去拼装它的数据，最终可以拿到一个xml数据。</p>
+
+    
+  </div>
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <span id="busuanzi_container_page_pv" style="line-height: 50px; font-size: 16px;">
+    本文总阅读量：<span id="busuanzi_value_page_pv"></span>次
+  </span>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
