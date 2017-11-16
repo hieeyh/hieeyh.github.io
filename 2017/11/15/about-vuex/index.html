@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vuex学习笔记 | Hieeyh&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="学习笔记,vuex,总结," />
+  
+
+  <meta name="description" content="在我最近开发的两个还比较大型的项目中，都用到了Vuex来管理状态，Vuex官网上的定义是，Vuex是一个专门为Vue.js应用程序开发的状态管理模式，采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。也就是，Vuex提供了一个不同组件间通信的方式，不再是只有父子组件才能实现通信，其他任何组件之间都能通过Vuex来实现通信。所以，Vuex适合在比较复杂和大型的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vuex学习笔记">
+<meta property="og:url" content="http://yuhan.com/2017/11/15/about-vuex/index.html">
+<meta property="og:site_name" content="Hieeyh's blog">
+<meta property="og:description" content="在我最近开发的两个还比较大型的项目中，都用到了Vuex来管理状态，Vuex官网上的定义是，Vuex是一个专门为Vue.js应用程序开发的状态管理模式，采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。也就是，Vuex提供了一个不同组件间通信的方式，不再是只有父子组件才能实现通信，其他任何组件之间都能通过Vuex来实现通信。所以，Vuex适合在比较复杂和大型的">
+<meta property="og:updated_time" content="2017-11-16T02:46:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vuex学习笔记">
+<meta name="twitter:description" content="在我最近开发的两个还比较大型的项目中，都用到了Vuex来管理状态，Vuex官网上的定义是，Vuex是一个专门为Vue.js应用程序开发的状态管理模式，采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。也就是，Vuex提供了一个不同组件间通信的方式，不再是只有父子组件才能实现通信，其他任何组件之间都能通过Vuex来实现通信。所以，Vuex适合在比较复杂和大型的">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b562041e145db0625df0be0bd27a9baa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于我
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vuex核心思想"><span class="toc-text">Vuex核心思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个简单的例子"><span class="toc-text">一个简单的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vuex核心概念"><span class="toc-text">Vuex核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#State"><span class="toc-text">State</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在Vue组件中获得Vuex状态"><span class="toc-text">在Vue组件中获得Vuex状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mapState辅助函数"><span class="toc-text">mapState辅助函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getter"><span class="toc-text">Getter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mapGetters辅助函数"><span class="toc-text">mapGetters辅助函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mutation"><span class="toc-text">Mutation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#提交载荷"><span class="toc-text">提交载荷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mutation必须是同步函数"><span class="toc-text">Mutation必须是同步函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在组件中提交Mutation"><span class="toc-text">在组件中提交Mutation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Action"><span class="toc-text">Action</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#触发Action"><span class="toc-text">触发Action</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Module"><span class="toc-text">Module</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-about-vuex" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Vuex学习笔记</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.11.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>hieeyh</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>在我最近开发的两个还比较大型的项目中，都用到了Vuex来管理状态，Vuex官网上的定义是，Vuex是一个专门为Vue.js应用程序开发的状态管理模式，采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。也就是，Vuex提供了一个不同组件间通信的方式，不再是只有父子组件才能实现通信，其他任何组件之间都能通过Vuex来实现通信。所以，Vuex适合在比较复杂和大型的单页应用中使用，小型简单的应用就没必要了，用了反而繁琐。</p>
+<h1 id="Vuex核心思想"><a href="#Vuex核心思想" class="headerlink" title="Vuex核心思想"></a>Vuex核心思想</h1><p>Vuex应用的核心是store（仓库）。store就是一个容器，包含着应用中大部分的状态（即state）。Vuex和单纯的全局对象有以下两点不同：</p>
+<ol>
+<li>Vuex的状态存储是响应式的，当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么相应的组件也会相应地得到高效更新。</li>
+<li>不能直接改变store中的状态，改变store中的状态唯一途径就是显式地提交mutations，这样可以方便地追踪每一个状态变化。</li>
+</ol>
+<h2 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">state</span>: &#123;</div><div class="line">    <span class="attr">count</span>: <span class="number">0</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123;</div><div class="line">    increment(state) &#123;</div><div class="line">      state.count++;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在Vue实例中，可以通过store.state来获取Vuex对象，并通过store.commit方法来触发状态变更。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">store.commit(<span class="string">'increment'</span>);</div></pre></td></tr></table></figure></p>
+<h1 id="Vuex核心概念"><a href="#Vuex核心概念" class="headerlink" title="Vuex核心概念"></a>Vuex核心概念</h1><p>Vuex核心概念主要有State、Getter、Mutation、Action和Module几个。</p>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><p>Vuex使用了单一状态树，一个store对象就存储了整个应用层的状态，让我们可以更方便地定位到某一个具体的状态，在调试时能简单获取到当前整个应用的快照。</p>
+<ol>
+<li>要使用store，首先必须Vue.use(vuex)，然后将store(const store = new Vuex.store()) inject定义到Vue实例app中new Vue({store}),实现从根组件注入到所有子组件中，接着就可以在子组件中使用this.$store调用了。</li>
+<li>当一个组件需要使用多个某store的状态属性或getters，可以使用shared helper – 共享帮手 mapState，他会返回一个对象。 在mapState里面我们既可以调用store的state，也可以调用store的getters。</li>
+</ol>
+<h3 id="在Vue组件中获得Vuex状态"><a href="#在Vue组件中获得Vuex状态" class="headerlink" title="在Vue组件中获得Vuex状态"></a>在Vue组件中获得Vuex状态</h3><p>由于Vuex的状态存储是响应式的，从store实例中读取状态最简单的方法就是在计算属性中返回某个状态。<br>Vuex通过store选项，提供了一种机制将状态从根组件注入到每一个子组件中。通过在根实例中注册store选项，该store实例会注入到根组件下的所有子组件中，且子组件能通过this.$store访问到。</p>
+<h3 id="mapState辅助函数"><a href="#mapState辅助函数" class="headerlink" title="mapState辅助函数"></a>mapState辅助函数</h3><p>当一个组件需要获取多个状态时，将这些状态都声明为计算属性会有些冗余和重复，我们可以使用mapState辅助函数帮我们生产计算属性。</p>
+<h2 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h2><p>Vuex提供了getters属性，用途类似stores的计算属性，getters中的方法接受两个参数，分别为state以及getters（其他getters），用法如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">state</span>: &#123;</div><div class="line">    <span class="attr">todos</span>: [</div><div class="line">      &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;,</div><div class="line">      &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">getters</span>: &#123;</div><div class="line">    <span class="attr">doneTodos</span>: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">return</span> state.todos.filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.done)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>Getter会暴露为store.getters对象。</p>
+<h3 id="mapGetters辅助函数"><a href="#mapGetters辅助函数" class="headerlink" title="mapGetters辅助函数"></a>mapGetters辅助函数</h3><p>可将store的getters映射到本地的计算属性中来，除了可以使用数组之外，还可以使用对象起别名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...maoGetters([</div><div class="line">    <span class="string">'doneTodoCount'</span>,</div><div class="line">    <span class="string">'anotherGetter'</span>,</div><div class="line">])</div></pre></td></tr></table></figure></p>
+<h2 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h2><p>能改变Vuex store中的state状态的唯一方法是提交mutation变更。mutation和事件很像：都有字符串类型的type以及handle句柄。我们在handler中实际修改state，state为每个mutation的第一个参数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">    <span class="attr">state</span>: &#123;</div><div class="line">        <span class="attr">conut</span>:<span class="number">1</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">mutations</span>: &#123;</div><div class="line">        increment(state) &#123;</div><div class="line">            state.count++</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line">store.commit(<span class="string">'increment'</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="提交载荷"><a href="#提交载荷" class="headerlink" title="提交载荷"></a>提交载荷</h3><p>commit的第二个可选参数为payload有效载荷，可以为普通类型或对象类型等等。commit方法还可以通过对象形式调用，这种情况下，该对象就被当成payload。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">store.commit(&#123;</div><div class="line">    <span class="attr">type</span>:<span class="string">'increment'</span>,</div><div class="line">    <span class="attr">amount</span>: <span class="number">10</span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// ...</span></div><div class="line">mutations: &#123;</div><div class="line">  increment (state, payload) &#123;</div><div class="line">    state.count += payload.amount</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Mutation必须是同步函数"><a href="#Mutation必须是同步函数" class="headerlink" title="Mutation必须是同步函数"></a>Mutation必须是同步函数</h3><p>Mutation必须都是同步的，它的改变必须在调用之后立即执行，因为他是唯一可以修改state的，如果他使用了异步方法，将会使我们的state无法追踪，定位问题也变得十分困难。</p>
+<h3 id="在组件中提交Mutation"><a href="#在组件中提交Mutation" class="headerlink" title="在组件中提交Mutation"></a>在组件中提交Mutation</h3><p>在组件中commit mutation时，可以使用this.$store.commit()或者使用mapMutations方法，后者可以将组件中的方法映射到store.commit调用。</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>Action是提交Mutation的，它可以有任意的异步操作。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">state</span>: &#123;</div><div class="line">    <span class="attr">count</span>: <span class="number">0</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123;</div><div class="line">    increment (state) &#123;</div><div class="line">      state.count++</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">actions</span>: &#123;</div><div class="line">    increment (context) &#123;</div><div class="line">      context.commit(<span class="string">'increment'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="触发Action"><a href="#触发Action" class="headerlink" title="触发Action"></a>触发Action</h3><p>Action通过store.dispatch方法触发：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">store.dispatch(<span class="string">'increment'</span>)</div></pre></td></tr></table></figure></p>
+<h2 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h2><p>由于Vuex使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store对象就有可能变得相当臃肿。为了解决以上问题，Vuex允许将store分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> moduleA = &#123;</div><div class="line">  <span class="attr">state</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">actions</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">getters</span>: &#123; ... &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> moduleB = &#123;</div><div class="line">  <span class="attr">state</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">actions</span>: &#123; ... &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">modules</span>: &#123;</div><div class="line">    <span class="attr">a</span>: moduleA,</div><div class="line">    <span class="attr">b</span>: moduleB</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">store.state.a <span class="comment">// -&gt; moduleA 的状态</span></div><div class="line">store.state.b <span class="comment">// -&gt; moduleB 的状态</span></div></pre></td></tr></table></figure></p>
+<p>Vuex的学习主要是通过官方文档和实战，Vue及其相关产品的文档都写得很清楚，对初学者十分友好。</p>
+
+    
+  </div>
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <span id="busuanzi_container_page_pv" style="line-height: 50px; font-size: 16px;">
+    本文总阅读量：<span id="busuanzi_value_page_pv"></span>次
+  </span>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于我
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+  <section class="duoshuo-comments">
+    <!-- 跟帖评论框 start -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <!-- 跟帖评论框 end -->
+  </section>
+
+
+
+  <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+
+
+
+  <script type="text/javascript">
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "a5af0d1c98814710a9e617972e948fec",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yuhan.com/"/>
-  <updated>2017-11-15T07:37:01.000Z</updated>
+  <updated>2017-11-16T02:46:26.000Z</updated>
   <id>http://yuhan.com/</id>
   
   <author>
@@ -14,6 +14,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vuex学习笔记</title>
+    <link href="http://yuhan.com/2017/11/15/about-vuex/"/>
+    <id>http://yuhan.com/2017/11/15/about-vuex/</id>
+    <published>2017-11-15T07:43:38.000Z</published>
+    <updated>2017-11-16T02:46:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在我最近开发的两个还比较大型的项目中，都用到了Vuex来管理状态，Vuex官网上的定义是，Vuex是一个专门为Vue.js应用程序开发的状态管理模式，采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。也就是，Vuex提供了一个不同组件间通信的方式，不再是只有父子组件才能实现通信，其他任何组件之间都能通过Vuex来实现通信。所以，Vuex适合在比较复杂和大型的单页应用中使用，小型简单的应用就没必要了，用了反而繁琐。</p>
+<h1 id="Vuex核心思想"><a href="#Vuex核心思想" class="headerlink" title="Vuex核心思想"></a>Vuex核心思想</h1><p>Vuex应用的核心是store（仓库）。store就是一个容器，包含着应用中大部分的状态（即state）。Vuex和单纯的全局对象有以下两点不同：</p>
+<ol>
+<li>Vuex的状态存储是响应式的，当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么相应的组件也会相应地得到高效更新。</li>
+<li>不能直接改变store中的状态，改变store中的状态唯一途径就是显式地提交mutations，这样可以方便地追踪每一个状态变化。</li>
+</ol>
+<h2 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">state</span>: &#123;</div><div class="line">    <span class="attr">count</span>: <span class="number">0</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123;</div><div class="line">    increment(state) &#123;</div><div class="line">      state.count++;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在Vue实例中，可以通过store.state来获取Vuex对象，并通过store.commit方法来触发状态变更。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">store.commit(<span class="string">'increment'</span>);</div></pre></td></tr></table></figure></p>
+<h1 id="Vuex核心概念"><a href="#Vuex核心概念" class="headerlink" title="Vuex核心概念"></a>Vuex核心概念</h1><p>Vuex核心概念主要有State、Getter、Mutation、Action和Module几个。</p>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><p>Vuex使用了单一状态树，一个store对象就存储了整个应用层的状态，让我们可以更方便地定位到某一个具体的状态，在调试时能简单获取到当前整个应用的快照。</p>
+<ol>
+<li>要使用store，首先必须Vue.use(vuex)，然后将store(const store = new Vuex.store()) inject定义到Vue实例app中new Vue({store}),实现从根组件注入到所有子组件中，接着就可以在子组件中使用this.$store调用了。</li>
+<li>当一个组件需要使用多个某store的状态属性或getters，可以使用shared helper – 共享帮手 mapState，他会返回一个对象。 在mapState里面我们既可以调用store的state，也可以调用store的getters。</li>
+</ol>
+<h3 id="在Vue组件中获得Vuex状态"><a href="#在Vue组件中获得Vuex状态" class="headerlink" title="在Vue组件中获得Vuex状态"></a>在Vue组件中获得Vuex状态</h3><p>由于Vuex的状态存储是响应式的，从store实例中读取状态最简单的方法就是在计算属性中返回某个状态。<br>Vuex通过store选项，提供了一种机制将状态从根组件注入到每一个子组件中。通过在根实例中注册store选项，该store实例会注入到根组件下的所有子组件中，且子组件能通过this.$store访问到。</p>
+<h3 id="mapState辅助函数"><a href="#mapState辅助函数" class="headerlink" title="mapState辅助函数"></a>mapState辅助函数</h3><p>当一个组件需要获取多个状态时，将这些状态都声明为计算属性会有些冗余和重复，我们可以使用mapState辅助函数帮我们生产计算属性。</p>
+<h2 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h2><p>Vuex提供了getters属性，用途类似stores的计算属性，getters中的方法接受两个参数，分别为state以及getters（其他getters），用法如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">state</span>: &#123;</div><div class="line">    <span class="attr">todos</span>: [</div><div class="line">      &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;,</div><div class="line">      &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">getters</span>: &#123;</div><div class="line">    <span class="attr">doneTodos</span>: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">return</span> state.todos.filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.done)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>Getter会暴露为store.getters对象。</p>
+<h3 id="mapGetters辅助函数"><a href="#mapGetters辅助函数" class="headerlink" title="mapGetters辅助函数"></a>mapGetters辅助函数</h3><p>可将store的getters映射到本地的计算属性中来，除了可以使用数组之外，还可以使用对象起别名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...maoGetters([</div><div class="line">    <span class="string">'doneTodoCount'</span>,</div><div class="line">    <span class="string">'anotherGetter'</span>,</div><div class="line">])</div></pre></td></tr></table></figure></p>
+<h2 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h2><p>能改变Vuex store中的state状态的唯一方法是提交mutation变更。mutation和事件很像：都有字符串类型的type以及handle句柄。我们在handler中实际修改state，state为每个mutation的第一个参数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">    <span class="attr">state</span>: &#123;</div><div class="line">        <span class="attr">conut</span>:<span class="number">1</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">mutations</span>: &#123;</div><div class="line">        increment(state) &#123;</div><div class="line">            state.count++</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line">store.commit(<span class="string">'increment'</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="提交载荷"><a href="#提交载荷" class="headerlink" title="提交载荷"></a>提交载荷</h3><p>commit的第二个可选参数为payload有效载荷，可以为普通类型或对象类型等等。commit方法还可以通过对象形式调用，这种情况下，该对象就被当成payload。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">store.commit(&#123;</div><div class="line">    <span class="attr">type</span>:<span class="string">'increment'</span>,</div><div class="line">    <span class="attr">amount</span>: <span class="number">10</span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// ...</span></div><div class="line">mutations: &#123;</div><div class="line">  increment (state, payload) &#123;</div><div class="line">    state.count += payload.amount</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Mutation必须是同步函数"><a href="#Mutation必须是同步函数" class="headerlink" title="Mutation必须是同步函数"></a>Mutation必须是同步函数</h3><p>Mutation必须都是同步的，它的改变必须在调用之后立即执行，因为他是唯一可以修改state的，如果他使用了异步方法，将会使我们的state无法追踪，定位问题也变得十分困难。</p>
+<h3 id="在组件中提交Mutation"><a href="#在组件中提交Mutation" class="headerlink" title="在组件中提交Mutation"></a>在组件中提交Mutation</h3><p>在组件中commit mutation时，可以使用this.$store.commit()或者使用mapMutations方法，后者可以将组件中的方法映射到store.commit调用。</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>Action是提交Mutation的，它可以有任意的异步操作。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">state</span>: &#123;</div><div class="line">    <span class="attr">count</span>: <span class="number">0</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123;</div><div class="line">    increment (state) &#123;</div><div class="line">      state.count++</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">actions</span>: &#123;</div><div class="line">    increment (context) &#123;</div><div class="line">      context.commit(<span class="string">'increment'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="触发Action"><a href="#触发Action" class="headerlink" title="触发Action"></a>触发Action</h3><p>Action通过store.dispatch方法触发：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">store.dispatch(<span class="string">'increment'</span>)</div></pre></td></tr></table></figure></p>
+<h2 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h2><p>由于Vuex使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store对象就有可能变得相当臃肿。为了解决以上问题，Vuex允许将store分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> moduleA = &#123;</div><div class="line">  <span class="attr">state</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">actions</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">getters</span>: &#123; ... &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> moduleB = &#123;</div><div class="line">  <span class="attr">state</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">mutations</span>: &#123; ... &#125;,</div><div class="line">  <span class="attr">actions</span>: &#123; ... &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  <span class="attr">modules</span>: &#123;</div><div class="line">    <span class="attr">a</span>: moduleA,</div><div class="line">    <span class="attr">b</span>: moduleB</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">store.state.a <span class="comment">// -&gt; moduleA 的状态</span></div><div class="line">store.state.b <span class="comment">// -&gt; moduleB 的状态</span></div></pre></td></tr></table></figure></p>
+<p>Vuex的学习主要是通过官方文档和实战，Vue及其相关产品的文档都写得很清楚，对初学者十分友好。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在我最近开发的两个还比较大型的项目中，都用到了Vuex来管理状态，Vuex官网上的定义是，Vuex是一个专门为Vue.js应用程序开发的状态管理模式，采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。也就是，Vuex提供了一个不同组件
+    
+    </summary>
+    
+      <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
+    
+    
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="vuex" scheme="http://yuhan.com/tags/vuex/"/>
+    
+      <category term="总结" scheme="http://yuhan.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
   
   <entry>
     <title>nodejs微信公众号开发笔记</title>
@@ -160,7 +213,7 @@
     <link href="http://yuhan.com/2017/10/26/about-http/"/>
     <id>http://yuhan.com/2017/10/26/about-http/</id>
     <published>2017-10-26T12:33:23.000Z</published>
-    <updated>2017-10-27T02:39:46.000Z</updated>
+    <updated>2017-11-15T07:45:12.000Z</updated>
     
     <content type="html"><![CDATA[<p>HTTP协议是计算机网络的基本协议，对于前端工程师，HTTP协议是必须了解的一部分内容。前端面试中也会经常被问到这部分的内容，这里就总结一下。</p>
 <h1 id="HTTP协议的作用"><a href="#HTTP协议的作用" class="headerlink" title="HTTP协议的作用"></a>HTTP协议的作用</h1><p>HTTP协议是应用层的协议，它已经不涉及数据包之类的传输，它规定了网络中客户端和服务器之间的通信格式。客户端通过URL向HTTP服务端即Web服务器发送请求，Web服务器根据接收到的请求后，向客户端发送响应信息。</p>
@@ -1215,11 +1268,11 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
+      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
       <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="vue-router" scheme="http://yuhan.com/tags/vue-router/"/>
-    
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -1284,9 +1337,9 @@
       <category term="vue" scheme="http://yuhan.com/categories/vue/"/>
     
     
-      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
-    
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="vue" scheme="http://yuhan.com/tags/vue/"/>
     
       <category term="transition" scheme="http://yuhan.com/tags/transition/"/>
     
@@ -1342,59 +1395,6 @@
       <category term="generator" scheme="http://yuhan.com/tags/generator/"/>
     
       <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ES6学习笔记之Symbol</title>
-    <link href="http://yuhan.com/2016/12/05/ES6-symbol/"/>
-    <id>http://yuhan.com/2016/12/05/ES6-symbol/</id>
-    <published>2016-12-05T09:03:43.000Z</published>
-    <updated>2017-03-04T07:17:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>前端技术日新月异，不断有新技术出现，我们就需要不断地学习新知识，虽然ES6已经提出很久了，但是最近我才有时间静下心来好好学习一下里面提出的新规则。今天总结下ES6提出的这个新的原始数据类型–Symbol。</p>
-<h1 id="为啥需要Symbol"><a href="#为啥需要Symbol" class="headerlink" title="为啥需要Symbol"></a>为啥需要Symbol</h1><p>一个新规则的提出，必然是因为有需求，熟悉ES5的人都知道，ES5里面对象的属性名都是字符串，如果你需要使用一个别人提供的对象，你对这个对象有哪些属性也不是很清楚，但又想为这个对象新增一些属性，那么你新增的属性名就很可能和原来的属性名发送冲突，显然我们是不希望这种情况发生的。所以，我们需要确保每个属性名都是独一无二的，这样就可以防止属性名的冲突了。因此，ES6里就引入了Symbol，用它来产生一个独一无二的值。</p>
-<h1 id="Symbol是什么"><a href="#Symbol是什么" class="headerlink" title="Symbol是什么"></a>Symbol是什么</h1><p>我们已经知道ES6中引入了一个叫Symbol的东西，但是这个东西到底是什么呢？是一个函数还是一个对象或者是其他什么？Symbol实际上是ES6引入的一种原始数据类型，除了Symbol，JavaScript还有其他5种数据类型，分别是Undefined、Null、Boolean、String、Number，这5种数据类型都是ES5中就有的。</p>
-<h1 id="怎么生成一个Symbol类型的值"><a href="#怎么生成一个Symbol类型的值" class="headerlink" title="怎么生成一个Symbol类型的值"></a>怎么生成一个Symbol类型的值</h1><p>既然我们已经知道了Symbol是一种原始的数据类型，那么怎么生成这种数据类型的值呢？Symbol值是通过Symbol函数生成的，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>();</div><div class="line"><span class="built_in">console</span>.log(s);  <span class="comment">// Symbol()</span></div><div class="line"><span class="keyword">typeof</span> s;  <span class="comment">// "symbol"</span></div></pre></td></tr></table></figure></p>
-<p>上面代码中，s就是一个Symbol类型的值，它是独一无二的。</p>
-<h2 id="Symbol函数前不能用new"><a href="#Symbol函数前不能用new" class="headerlink" title="Symbol函数前不能用new"></a>Symbol函数前不能用new</h2><p>Symbol函数不是一个构造函数，前面不能用new操作符。所以Symbol类型的值也不是一个对象，不能添加任何属性，它只是一个类似于字符型的数据类型。如果强行在Symbol函数前加上new操作符，会报错，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> <span class="built_in">Symbol</span>();</div><div class="line"><span class="comment">// Uncaught TypeError: Symbol is not a constructor(…)</span></div></pre></td></tr></table></figure></p>
-<h2 id="Symbol函数的参数"><a href="#Symbol函数的参数" class="headerlink" title="Symbol函数的参数"></a>Symbol函数的参数</h2><h3 id="字符串作为参数"><a href="#字符串作为参数" class="headerlink" title="字符串作为参数"></a>字符串作为参数</h3><p>用上面的方法生成的Symbol值不好进行区分，Symbol函数还可以接受一个字符串参数，来对产生的Symbol值进行描述，方便我们区分不同的Symbol值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> s1 = <span class="built_in">Symbol</span>(<span class="string">'s1'</span>);</div><div class="line"><span class="keyword">let</span> s2 = <span class="built_in">Symbol</span>(<span class="string">'s2'</span>);</div><div class="line"><span class="built_in">console</span>.log(s1);  <span class="comment">// Symbol(s1)</span></div><div class="line"><span class="built_in">console</span>.log(s2);  <span class="comment">// Symbol(s2)</span></div><div class="line">s1 === s2;  <span class="comment">//  false</span></div><div class="line"><span class="keyword">let</span> s3 = <span class="built_in">Symbol</span>(<span class="string">'s2'</span>);</div><div class="line">s2 === s3;  <span class="comment">//  false</span></div></pre></td></tr></table></figure></p>
-<p>从上面代码可以看出：</p>
-<ol>
-<li>给Symbol函数加了参数之后，控制台输出的时候可以区分到底是哪一个值；</li>
-<li>Symbol函数的参数只是对当前Symbol值的描述，因此相同参数的Symbol函数返回值是不相等的；</li>
-</ol>
-<h3 id="对象作为参数"><a href="#对象作为参数" class="headerlink" title="对象作为参数"></a>对象作为参数</h3><p>如果Symbol函数的参数是一个对象，就会调用该对象的toString方法，将其转化为一个字符串，然后才生成一个Symbol值。所以，说到底，Symbol函数的参数只能是字符串。</p>
-<h3 id="Symbol值可以进行运算么？"><a href="#Symbol值可以进行运算么？" class="headerlink" title="Symbol值可以进行运算么？"></a>Symbol值可以进行运算么？</h3><p>既然Symbol是一种数据类型，那我们一定想知道Symbol值是否能进行运算。告诉你，Symbol值是不能进行运算的,不仅不能和Symbol值进行运算，也不能和其他类型的值进行运算，否则会报错。<br>Symbol值可以显式转化为字符串和布尔值，但是不能转为数值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mysym1 = <span class="built_in">Symbol</span>(<span class="string">'my symbol'</span>);</div><div class="line">mysym1.toString() <span class="comment">//  'Symbol('my symbol')'</span></div><div class="line"><span class="built_in">String</span>(mysym1)  <span class="comment">//  'Symbol('my symbol')'</span></div><div class="line"><span class="keyword">var</span> mysym2 = <span class="built_in">Symbol</span>();</div><div class="line"><span class="built_in">Boolean</span>(mysym2);  <span class="comment">// true</span></div><div class="line"><span class="built_in">Number</span>(mysym2)  <span class="comment">// TypeError: Cannot convert a Symbol value to a number(…)</span></div></pre></td></tr></table></figure></p>
-<h3 id="Symbol如何作为属性名"><a href="#Symbol如何作为属性名" class="headerlink" title="Symbol如何作为属性名"></a>Symbol如何作为属性名</h3><p>Symbol就是为对象的属性名而生，那么Symbol值怎么作为对象的属性名呢？有下面几种写法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a = &#123;&#125;;</div><div class="line"><span class="keyword">let</span> s4 = <span class="built_in">Symbol</span>();</div><div class="line"><span class="comment">// 第一种写法</span></div><div class="line">a[s4] = <span class="string">'mySymbol'</span>;</div><div class="line"><span class="comment">// 第二种写法</span></div><div class="line">a = &#123;</div><div class="line">    [s4]: <span class="string">'mySymbol'</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 第三种写法</span></div><div class="line"><span class="built_in">Object</span>.defineProperty(a, s4, &#123;<span class="attr">value</span>: <span class="string">'mySymbol'</span>&#125;);</div><div class="line">a.s4;  <span class="comment">//  undefined</span></div><div class="line">a.s4 = <span class="string">'mySymbol'</span>;</div><div class="line">a[s4]  <span class="comment">//  undefined</span></div><div class="line">a[<span class="string">'s4'</span>]  <span class="comment">// 'mySymbol'</span></div></pre></td></tr></table></figure></p>
-<p>从上面代码可以看出：</p>
-<ol>
-<li>使用对象的Symbol值作为属性名时，获取相应的属性值不能用点运算符；</li>
-<li>如果用点运算符来给对象的属性赋Symbol类型的值，实际上属性名会变成一个字符串，而不是一个Symbol值；</li>
-<li>在对象内部，使用Symbol值定义属性时，Symbol值必须放在方括号之中，否则只是一个字符串。</li>
-</ol>
-<h2 id="Symbol值作为属性名的遍历"><a href="#Symbol值作为属性名的遍历" class="headerlink" title="Symbol值作为属性名的遍历"></a>Symbol值作为属性名的遍历</h2><p>使用for…in和for…of都无法遍历到Symbol值的属性，Symbol值作为对象的属性名，也无法通过Object.keys()、Object.getOwnPropertyNames()来获取了。但是，不同担心，这种平常的需求肯定是会有解决办法的。我们可以使用Object.getOwnPropertySymbols()方法获取一个对象上的Symbol属性名。也可以使用Reflect.ownKeys()返回所有类型的属性名，包括常规属性名和 Symbol属性名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> s5 = <span class="built_in">Symbol</span>(<span class="string">'s5'</span>);</div><div class="line"><span class="keyword">let</span> s6 = <span class="built_in">Symbol</span>(<span class="string">'s6'</span>);</div><div class="line"><span class="keyword">let</span> a = &#123;</div><div class="line">    [s5]: <span class="string">'s5'</span>,</div><div class="line">    [s6]: <span class="string">'s6'</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">Object</span>.getOwnPropertySymbols(a);   <span class="comment">// [Symbol(s5), Symbol(s6)]</span></div><div class="line">a.hello = <span class="string">'hello'</span>;</div><div class="line"><span class="built_in">Reflect</span>.ownKeys(a);  <span class="comment">//  ["hello", Symbol(s5), Symbol(s6)]</span></div></pre></td></tr></table></figure></p>
-<p>利用Symbol值作为对象属性的名称时，不会被常规方法遍历到这一特性，可以为对象定义一些非私有的但是又希望只有内部可用的方法。</p>
-<h2 id="Symbol-for-和Symbol-keyFor"><a href="#Symbol-for-和Symbol-keyFor" class="headerlink" title="Symbol.for()和Symbol.keyFor()"></a>Symbol.for()和Symbol.keyFor()</h2><p>Symbol.for()函数也可以用来生成Symbol值，但该函数有一个特殊的用处，就是可以重复使用一个Symbol值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> s7 = <span class="built_in">Symbol</span>.for(<span class="string">'s7'</span>);</div><div class="line"><span class="built_in">console</span>.log(s7); <span class="comment">// Symbol(s7)</span></div><div class="line">s7.toString(); <span class="comment">// "Symbol(s7)"</span></div><div class="line"><span class="keyword">let</span> s8 = <span class="built_in">Symbol</span>.for(<span class="string">'s7'</span>);</div><div class="line">s7 === s8 <span class="comment">//  true</span></div><div class="line"><span class="keyword">let</span> s9 = <span class="built_in">Symbol</span>();</div><div class="line"><span class="built_in">Symbol</span>.keyFor(s9); <span class="comment">// undefined</span></div><div class="line"><span class="built_in">Symbol</span>.keyFor(s8); <span class="comment">// "s8"</span></div></pre></td></tr></table></figure></p>
-<p><strong>Symbol.for()</strong>函数要接受一个字符串作为参数，先搜索有没有以该参数作为名称的Symbol值，如果有，就直接返回这个Symbol值，否则就新建并返回一个以该字符串为名称的Symbol值。上面代码中，s7和s8实际上就是同一个Symbol值，所以两者是相等的。<br><strong>Symbol.keyFor()</strong>函数是用来查找一个Symbol值的登记信息的，Symbol()写法没有登记机制，所以返回undefined；而Symbol.for()函数会将生成的Symbol值登记在全局环境中，所以Symbol.keyFor()函数可以查找到用Symbol.for()函数生成的Symbol值。</p>
-<h2 id="内置Symbol值"><a href="#内置Symbol值" class="headerlink" title="内置Symbol值"></a>内置Symbol值</h2><p>ES6提供了11个内置的Symbol值，分别是Symbol.hasInstance 、Symbol.isConcatSpreadable 、Symbol.species 、Symbol.match 、Symbol.replace 、Symbol.search 、Symbol.split 、Symbol.iterator 、Symbol.toPrimitive 、Symbol.toStringTag 、Symbol.unscopables 等。<br>有兴趣的可以自行了解：<a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="external">http://es6.ruanyifeng.com/#docs/symbol</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前端技术日新月异，不断有新技术出现，我们就需要不断地学习新知识，虽然ES6已经提出很久了，但是最近我才有时间静下心来好好学习一下里面提出的新规则。今天总结下ES6提出的这个新的原始数据类型–Symbol。&lt;/p&gt;
-&lt;h1 id=&quot;为啥需要Symbol&quot;&gt;&lt;a href=&quot;#
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://yuhan.com/categories/JavaScript/"/>
-    
-    
-      <category term="ES6" scheme="http://yuhan.com/tags/ES6/"/>
-    
-      <category term="学习笔记" scheme="http://yuhan.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="symbol" scheme="http://yuhan.com/tags/symbol/"/>
     
   </entry>
   
